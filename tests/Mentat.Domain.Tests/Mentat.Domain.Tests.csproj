@@ -19,4 +19,7 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Mentat.Domain\Mentat.Domain.csproj" />
+  </ItemGroup>
 </Project>
