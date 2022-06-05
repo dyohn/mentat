@@ -22,4 +22,13 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Mentat.Domain\Mentat.Domain.csproj" />
   </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <StandardHeader IncludeInNewFiles="True" Text="${FileName}&#xA;${AuthorName}&#xA;${Date}" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>

@@ -40,4 +40,28 @@ Global
 		{D3233F62-BFCD-4851-B354-AF8CABCAE3CB} = {D174EA58-A87A-438D-AF31-6A4A6411EE63}
 		{10D4393E-3F31-4104-830F-31AF89C58AB3} = {CFEDC76C-F3C5-411A-830A-309EDF1F33C3}
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedFlat
+		$0.TextStylePolicy = $2
+		$2.inheritsSet = null
+		$2.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $3
+		$3.scope = text/x-csharp
+		$0.TextStylePolicy = $4
+		$4.FileWidth = 80
+		$4.TabsToSpaces = True
+		$4.scope = text/plain
+		$0.TextStylePolicy = $5
+		$5.inheritsSet = null
+		$5.scope = text/x-json
+		$0.JSONFormattingPolicy = $6
+		$6.AutoStructureCompletion = True
+		$6.BracePositions = SemiExpanded
+		$6.FormatOnPaste = True
+		$6.scope = text/x-json
+		$0.StandardHeader = $7
+		$7.Text = @${FileName}\n${AuthorName}\n${Date}
+	EndGlobalSection
 EndGlobal
