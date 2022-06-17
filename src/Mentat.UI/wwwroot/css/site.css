@@ -92,3 +92,8 @@ body {
 .vh-60 {
     min-height: 60vh;
 }
+
+.card-text {
+    font-size: 1.5rem;
+    line-height: 1;
+}
