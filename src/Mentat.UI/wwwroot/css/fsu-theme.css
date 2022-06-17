@@ -2625,6 +2625,78 @@ fieldset:disabled a.btn {
             box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
         }
 
+.btn-gold {
+    color: #FFF;
+    font-weight: bold;
+    background-color: #CEB888;
+    border-color: #CEB888;
+}
+
+    .btn-gold:hover {
+        color: #CEB888;
+        font-weight: bold;
+        background-color: #FFF;
+        border-color: #FFF;
+    }
+
+    .btn-gold:focus, .btn-gold.focus {
+        box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+    }
+
+    .btn-gold.disabled, .btn-gold:disabled {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-gold:not(:disabled):not(.disabled):active, .btn-gold:not(:disabled):not(.disabled).active,
+    .show > .btn-gold.dropdown-toggle {
+        color: #fff;
+        background-color: #0062cc;
+        border-color: #005cbf;
+    }
+
+        .btn-gold:not(:disabled):not(.disabled):active:focus, .btn-gold:not(:disabled):not(.disabled).active:focus,
+        .show > .btn-gold.dropdown-toggle:focus {
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+        }
+
+.btn-white {
+    color: #000;
+    font-weight: bold;
+    background-color: #FFF;
+    border-color: #FFF;
+}
+
+    .btn-white:hover {
+        color: #FFF;
+        font-weight: bold;
+        background-color: #000;
+        border-color: #000;
+    }
+
+    .btn-white:focus, .btn-white.focus {
+        box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+    }
+
+    .btn-white.disabled, .btn-white:disabled {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-white:not(:disabled):not(.disabled):active, .btn-white:not(:disabled):not(.disabled).active,
+    .show > .btn-white.dropdown-toggle {
+        color: #fff;
+        background-color: #0062cc;
+        border-color: #005cbf;
+    }
+
+        .btn-white:not(:disabled):not(.disabled):active:focus, .btn-white:not(:disabled):not(.disabled).active:focus,
+        .show > .btn-white.dropdown-toggle:focus {
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+        }
+
 .btn-secondary {
     color: #fff;
     background-color: #6c757d;
@@ -3141,8 +3213,8 @@ fieldset:disabled a.btn {
     }
 
 .btn-lg, .btn-group-lg > .btn {
-    padding: 0.5rem 1rem;
-    font-size: 1.25rem;
+    padding: 1rem 1.5rem;
+    font-size: 1.5rem;
     line-height: 1.5;
     border-radius: 0.3rem;
 }
@@ -4796,6 +4868,11 @@ input[type="button"].btn-block {
 
 .card-text:last-child {
     margin-bottom: 0;
+}
+
+.card-text {
+    font-size: 1.15rem;
+    line-height: 1;
 }
 
 .card-link:hover {
