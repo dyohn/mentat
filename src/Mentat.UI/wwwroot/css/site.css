@@ -61,6 +61,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  height: 100% !important;
 }
 .footer {
   position: absolute;
@@ -78,4 +79,16 @@ body {
 
 .bg-secondary {
     background-color: #CEB888 !important;
+}
+
+.vh-50 {
+    min-height: 50vh;
+}
+
+.vh-75 {
+    min-height: 75vh;
+}
+
+.vh-60 {
+    min-height: 60vh;
 }
