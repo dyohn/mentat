@@ -4760,7 +4760,8 @@ input[type="button"].btn-block {
     background-color: #fff;
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
+    height: 400px;
 }
 
     .card > hr {
@@ -6739,7 +6740,7 @@ a.close.disabled {
 }
 
 .bg-primary {
-    background-color: #007bff !important;
+    background-color: #782F40 !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
@@ -6749,7 +6750,7 @@ button.bg-primary:focus {
 }
 
 .bg-secondary {
-    background-color: #6c757d !important;
+    background-color: #CEB888 !important;
 }
 
 a.bg-secondary:hover, a.bg-secondary:focus,
@@ -6820,6 +6821,10 @@ button.bg-dark:focus {
 
 .bg-white {
     background-color: #fff !important;
+}
+
+.bg-black {
+    background-color: #000 !important;
 }
 
 .bg-transparent {
@@ -10625,6 +10630,10 @@ button.bg-dark:focus {
 
 .text-primary {
     color: #007bff !important;
+}
+
+.text-on-dark {
+    color: #CEB888 !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {

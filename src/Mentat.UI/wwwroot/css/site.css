@@ -69,3 +69,13 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+/* FSU Theme Colors */
+
+.bg-primary {
+    background-color: #782F40;
+}
+
+.bg-secondary {
+    background-color: #CEB888 !important;
+}
