@@ -13,6 +13,9 @@
   <ItemGroup>
     <Folder Include="Interfaces\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.16.0" />
+  </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
