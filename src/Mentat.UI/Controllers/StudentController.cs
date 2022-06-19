@@ -4,7 +4,7 @@ namespace Mentat.UI.Controllers
 {
     public class StudentController : Controller
     {
-        public IActionResult StudentView()
+        public IActionResult Index()
         {
             return View();
         }
