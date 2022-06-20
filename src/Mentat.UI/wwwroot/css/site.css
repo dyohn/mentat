@@ -97,3 +97,18 @@ body {
     font-size: 1.5rem;
     line-height: 1;
 }
+
+.title-text {
+    font-size: 3.5rem;
+    color: #782F40;
+    font-weight: 600;
+}
+
+.subtitle-text {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+body, html {
+    background-color: #f7edd7;
+}
