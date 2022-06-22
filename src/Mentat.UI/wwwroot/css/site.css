@@ -112,3 +112,17 @@ body {
 body, html {
     background-color: #f7edd7;
 }
+
+.dot {
+    height: 1750px;
+    width: 1750px;
+    background-color: #CEB888;
+    border-radius: 50%;
+    position: absolute;
+    top: -1000px;
+    left: -250px;
+}
+
+.navbar {
+    z-index: 10;
+}
