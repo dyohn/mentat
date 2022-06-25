@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using Mentat.Domain.Interfaces;
+// using Mentat.Domain.Models;
+
 namespace Mentat.UI
 {
     public class Startup
@@ -24,6 +27,10 @@ namespace Mentat.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            // Configure Dependency Injection classes here
+            // services.AddScoped<IBashTestConfig, BashTestConfig>();
+            // services.AddScoped<IBashTestDriver, BashTestDriver>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
