@@ -17,10 +17,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Xunit.DependencyInjection" Version="8.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Mentat.Domain\Mentat.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Xunit.DependencyInjection" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
