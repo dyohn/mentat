@@ -11,6 +11,7 @@ namespace Mentat.UI.Controllers
         public IActionResult GradingScriptForm()
         {
             //doesnt currently workk
+            //testing push
             string test = this.Request.Form["language"];          
             Console.WriteLine(test);
             return View();
