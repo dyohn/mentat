@@ -9,30 +9,30 @@
                 <h5>Generate New Grading Script</h5>
             </div>
             <div class="card-body">
-                <form>
+                <form id="grading_script_form" action="/Home" method="post">
                     <div class="mb-3">
                         <label class="form-label">Language</label>
-                        <input type="text" class="form-control" />
+                        <input type="text" runat="server" id="language" class="form-control" />
                         <small class="form-text text-muted">The programming language of the solution domain</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Test File Names</label>
-                        <input type="text" class="form-control" />
+                        <input type="text" runat="server" id="file_names" class="form-control" />
                         <small class="form-text text-muted">A list of the names of the test files to be used</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Sample Executable Name</label>
-                        <input type="text" class="form-control" />
+                        <input type="text" runat="server" id="exec_name" class="form-control" />
                         <small class="form-text text-muted">The name of the sample executable to be used</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Timeout</label>
-                        <input type="text" class="form-control" />
+                        <input type="text" runat="server" id="duration" class="form-control" />
                         <small class="form-text text-muted">How long to wait before terminating student code during each test</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Diff Command</label>
-                        <input type="text" class="form-control" />
+                        <input type="text" runat="diff_cmd" id="language" class="form-control" />
                         <small class="form-text text-muted">
                             The diff command to be used for comparing student output to the output from the sample executable
                         </small>
