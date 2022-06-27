@@ -13,10 +13,11 @@
             </div>
             <div class="card-body">
 
-                <form asp-action="Index" asp-controller="Form">
+
+                <form action="GetFormData" method="post">
                     <div class="mb-3">
                         <label class="form-label" asp-for="language"></label>
-                        <input class="form-control" asp-for="language"/>
+                        <input class="form-control" asp-for="language" />
                         <small class="form-text text-muted">The programming language of the solution domain</small>
                     </div>
                     <div class="mb-3">
@@ -45,6 +46,7 @@
                         <button class="btn btn-primary">Generate</button>
                     </div>
                 </form>
+
 
             </div>
             <div class="class-footer">
