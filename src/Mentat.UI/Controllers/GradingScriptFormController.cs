@@ -8,14 +8,19 @@ namespace Mentat.UI.Controllers
 {
     public class GradingScriptFormController : Controller
     {
-        public IActionResult GradingScriptForm()
+        [HttpGet]
+        public IActionResult Index()
         {
-            //doesnt currently workk
-            //testing push
-            string test = this.Request.Form["language"];          
-            Console.WriteLine(test);
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(string Language)
+        {
+            return Content($"Hello {Language}");
         }
     }
 }
+
+
 

@@ -1,4 +1,7 @@
-﻿<h1>Grading Script Configuration</h1>
+﻿@model Mentat.UI.Models.GradingScriptFormModel
+
+
+<h1>Grading Script Configuration</h1>
 
 <hr />
 
@@ -9,30 +12,31 @@
                 <h5>Generate New Grading Script</h5>
             </div>
             <div class="card-body">
-                <form id="grading_script_form" action="/Home" method="post">
+
+                <form asp-action="Index" asp-controller="Form">
                     <div class="mb-3">
-                        <label class="form-label">Language</label>
-                        <input type="text" runat="server" id="language" class="form-control" />
+                        <label class="form-label" asp-for="language"></label>
+                        <input class="form-control" asp-for="language"/>
                         <small class="form-text text-muted">The programming language of the solution domain</small>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Test File Names</label>
-                        <input type="text" runat="server" id="file_names" class="form-control" />
+                        <label class="form-label" asp-for="file_names"></label>
+                        <input class="form-control" asp-for="file_names" />
                         <small class="form-text text-muted">A list of the names of the test files to be used</small>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Sample Executable Name</label>
-                        <input type="text" runat="server" id="exec_name" class="form-control" />
+                        <label class="form-label" asp-for="exec_name"></label>
+                        <input class="form-control" asp-for="exec_name" />
                         <small class="form-text text-muted">The name of the sample executable to be used</small>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Timeout</label>
-                        <input type="text" runat="server" id="duration" class="form-control" />
+                        <label class="form-label" asp-for="duration"></label>
+                        <input class="form-control" asp-for="duration" />
                         <small class="form-text text-muted">How long to wait before terminating student code during each test</small>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Diff Command</label>
-                        <input type="text" runat="diff_cmd" id="language" class="form-control" />
+                        <label class="form-label" asp-for="diff_cmd"></label>
+                        <input class="form-control" asp-for="diff_cmd" />
                         <small class="form-text text-muted">
                             The diff command to be used for comparing student output to the output from the sample executable
                         </small>
@@ -41,6 +45,7 @@
                         <button class="btn btn-primary">Generate</button>
                     </div>
                 </form>
+
             </div>
             <div class="class-footer">
 
