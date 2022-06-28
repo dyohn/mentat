@@ -4313,15 +4313,15 @@ input[type="button"].btn-block {
     padding: 0.5rem 1rem;
 }
 
-    .nav-link:hover, .nav-link:focus {
-        text-decoration: none;
-    }
+.nav-link:hover, .nav-link:focus {
+    text-decoration: none;
+}
 
-    .nav-link.disabled {
-        color: #6c757d;
-        pointer-events: none;
-        cursor: default;
-    }
+.nav-link.disabled {
+    color: #6c757d;
+    pointer-events: none;
+    cursor: default;
+}
 
 .nav-tabs {
     border-bottom: 1px solid #dee2e6;
@@ -10812,6 +10812,14 @@ a.text-dark:hover, a.text-dark:focus {
 
 .invisible {
     visibility: hidden !important;
+}
+
+.top-buffer {
+    margin-top: 25px;
+}
+
+.bottom-buffer {
+    margin-bottom: 25px;
 }
 
 @media print {

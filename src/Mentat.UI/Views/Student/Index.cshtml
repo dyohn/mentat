@@ -1,12 +1,24 @@
-﻿@{
+﻿@model FlashCardVM
+
+@{
     ViewData["Title"] = "Student";
 }
 
-<div class="container d-flex vh-60">
-    <span class="dot"></span>
-    <div>
+@Html.HiddenFor(m => m.CardID)
 
-    </div>
+<span class="dot"></span>
+<div class="row bottom-buffer col-sm-12">
+    @Html.TextAreaFor(m => m.CardQuestion, 5, 90, new { @maxLength = "250", disabled = true })
+</div>
+<div class="row col-sm-12">
+    <div class="col-sm-3"></div>
+    <a class="" id="show-hide" onclick="toggleShowHideOfFlashCard();" href="javascript:;">Show</a>
+</div>
+<div style="display:none">
+    @Html.TextAreaFor(m => m.HiddenCardAnswer, 0, 0, new { @maxLength = "250", disabled = true })
+</div>
+<div class="row top-buffer col-sm-12 light-text">
+    @Html.TextAreaFor(m => m.CardAnswer, 5, 115, new { @maxLength = "250", disabled = true })
 </div>
 
-<script src="~\Scripts\Student.js"></script>
+<script src="~/js/Student.js"></script>
