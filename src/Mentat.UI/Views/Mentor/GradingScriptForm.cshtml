@@ -17,27 +17,27 @@
                 <form action="GetFormData" method="post">
                     <div class="mb-3">
                         <label class="form-label" asp-for="language"></label>
-                        <input class="form-control" asp-for="language" />
+                        <input required class="form-control" asp-for="language" />
                         <small class="form-text text-muted">The programming language of the solution domain</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" asp-for="file_names"></label>
-                        <input class="form-control" asp-for="file_names" />
+                        <input required class="form-control" asp-for="file_names" />
                         <small class="form-text text-muted">A list of the names of the test files to be used</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" asp-for="exec_name"></label>
-                        <input class="form-control" asp-for="exec_name" />
+                        <input required class="form-control" asp-for="exec_name" />
                         <small class="form-text text-muted">The name of the sample executable to be used</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" asp-for="duration"></label>
-                        <input class="form-control" asp-for="duration" />
+                        <input required class="form-control" asp-for="duration" />
                         <small class="form-text text-muted">How long to wait before terminating student code during each test</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" asp-for="diff_cmd"></label>
-                        <input class="form-control" asp-for="diff_cmd" />
+                        <input required class="form-control" asp-for="diff_cmd" />
                         <small class="form-text text-muted">
                             The diff command to be used for comparing student output to the output from the sample executable
                         </small>
