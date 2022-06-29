@@ -5,11 +5,17 @@ using System.Web;
 using MongoDB.Driver;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mentat.UI.Services;
 
 namespace Mentat.UI.Controllers
 {
     public class CardController : Controller
     {
+
+        public CardController(ICardService cardService) 
+        {
+            this.cardService = cardService;
+        }
         // GET: CardController
         public ActionResult Index()
         {
@@ -17,8 +23,14 @@ namespace Mentat.UI.Controllers
             Models.MongoHelper.FlashCards =
                            Models.MongoHelper.database.GetCollection<Models.Card>("FlashCards");
 
+            var cards = cardService.Get();
+
             var filter = Builders<Models.Card>.Filter.Ne("_id", "");
             var result = Models.MongoHelper.FlashCards.Find(filter).ToList();
+
+            //var result = cardService.Get().Find(filter).ToList();
+
+            
 
             return View(result);
         }
@@ -69,6 +81,8 @@ namespace Mentat.UI.Controllers
         }
 
         private static Random random = new Random();
+        private readonly ICardService cardService;
+
         private object GenRandomId(int v)
         {
             string strarr = "abcdefghijklmnopqrstuvwxyz123456789";
