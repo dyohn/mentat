@@ -57,7 +57,12 @@ namespace Mentat.UI.Controllers
                 cardService.Create(new Models.Card
                 {
                   _id = id,
-                  notes = collection["notes"]
+                  notes = collection["notes"],
+                  subject = collection["subject"],
+                  question = collection["question"],
+                  answer = collection["answer"],
+                  difficulty_level = collection["difficulty_level"]
+
                 });
                 
                 return RedirectToAction(nameof(Index));
@@ -101,6 +106,10 @@ namespace Mentat.UI.Controllers
                 }
 
                 existingCard.notes = collection["notes"];
+                existingCard.subject = collection["subject"];
+                existingCard.question = collection["question"];
+                existingCard.answer = collection["answer"];
+                existingCard.difficulty_level = collection["difficulty_level"];
                 cardService.Update(id, existingCard);
 
                 return RedirectToAction(nameof(Index));
