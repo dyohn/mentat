@@ -62,10 +62,38 @@ body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+  line-height: 60px;
+}
+
+.footer-content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align:left;
+}
+
+.footer-content p {
+  font-size: 75%;
+}
+
+.footer-content a {
+  color: rgb(120, 47, 64);
+  text-decoration: none;
+
+}
+.socials{
+  list-style: none;
+
+}
+
+.socials a {
+  color: rgb(120, 47, 64);
+  text-decoration: none;
 }
