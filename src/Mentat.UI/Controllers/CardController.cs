@@ -12,6 +12,8 @@ namespace Mentat.UI.Controllers
 {
     public class CardController : Controller
     {
+        private static Random random = new Random();
+        private readonly ICardService cardService;
 
         public CardController(ICardService cardService) 
         {
@@ -29,17 +31,16 @@ namespace Mentat.UI.Controllers
         // GET: CardController/Details/5
         public ActionResult Details(string id)
         {
-            Models.MongoHelper.ConnectToMongoService();
-            Models.MongoHelper.FlashCards =
-                           Models.MongoHelper.database.GetCollection<Models.Card>("FlashCards");
+            var card = cardService.Get(id);
+            if (card == null)
+            {
+                return NotFound($"Card with ID = {id} not found");
+            }
 
-            var filter = Builders<Models.Card>.Filter.Eq("_id", id);
-            var result = Models.MongoHelper.FlashCards.Find(filter).FirstOrDefault();
-
-            return View(result);
+            return View(card);
         }
 
-        // POST: CardController/Create
+        // GET: CardController/Create
         public ActionResult Create()
         {
             return View();
@@ -61,14 +62,11 @@ namespace Mentat.UI.Controllers
                 
                 return RedirectToAction(nameof(Index));
             }
-            catch(Exception e)
+            catch (Exception)
             {
                 return View();
             }
         }
-
-        private static Random random = new Random();
-        private readonly ICardService cardService;
 
         private object GenRandomId(int v)
         {
@@ -80,14 +78,13 @@ namespace Mentat.UI.Controllers
         // GET: CardController/Edit/5
         public ActionResult Edit(string id)
         {
-            Models.MongoHelper.ConnectToMongoService();
-            Models.MongoHelper.FlashCards =
-                           Models.MongoHelper.database.GetCollection<Models.Card>("FlashCards");
+            var card = cardService.Get(id);
+            if (card == null)
+            {
+                return NotFound($"Card with ID = {id} not found");
+            }
 
-            var filter = Builders<Models.Card>.Filter.Eq("_id", id);
-            var result = Models.MongoHelper.FlashCards.Find(filter).FirstOrDefault();
-
-            return View(result);
+            return View(card);
         }
 
         // POST: CardController/Edit/5
@@ -97,16 +94,14 @@ namespace Mentat.UI.Controllers
         {
             try
             {
-                Models.MongoHelper.ConnectToMongoService();
-                Models.MongoHelper.FlashCards =
-                               Models.MongoHelper.database.GetCollection<Models.Card>("FlashCards");
+                var existingCard = cardService.Get(id);
+                if (existingCard == null)
+                {
+                    return NotFound($"Card with ID = {id} not found");
+                }
 
-                var filter = Builders<Models.Card>.Filter.Eq("_id", id);
-                var update = Builders<Models.Card>.Update
-                    .Set("notes", collection["notes"]);
-
-                var result = Models.MongoHelper.FlashCards.UpdateOneAsync(filter,update);
-
+                existingCard.notes = collection["notes"];
+                cardService.Update(id, existingCard);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -119,14 +114,13 @@ namespace Mentat.UI.Controllers
         // GET: CardController/Delete/5
         public ActionResult Delete(string id)
         {
-            Models.MongoHelper.ConnectToMongoService();
-            Models.MongoHelper.FlashCards =
-                           Models.MongoHelper.database.GetCollection<Models.Card>("FlashCards");
+            var card = cardService.Get(id);
+            if (card == null)
+            {
+                return NotFound($"Card with ID = {id} not found");
+            }
 
-            var filter = Builders<Models.Card>.Filter.Eq("_id", id);
-            var result = Models.MongoHelper.FlashCards.Find(filter).FirstOrDefault();
-
-            return View(result);
+            return View(card);
         }
 
         // POST: CardController/Delete/5
@@ -136,15 +130,14 @@ namespace Mentat.UI.Controllers
         {
             try
             {
-                Models.MongoHelper.ConnectToMongoService();
-                Models.MongoHelper.FlashCards =
-                               Models.MongoHelper.database.GetCollection<Models.Card>("FlashCards");
+                var card = cardService.Get(id);
+                if (card == null)
+                {
+                    return NotFound($"Card with ID = {id} not found");
+                }
 
-                var filter = Builders<Models.Card>.Filter.Eq("_id", id);
+                cardService.Remove(id);
 
-                var result = Models.MongoHelper.FlashCards.DeleteOneAsync(filter);
-
-                
                 return RedirectToAction(nameof(Index));
             }
             catch
