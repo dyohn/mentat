@@ -72,39 +72,38 @@ body {
 }
 
 .page-footer {
-    background: #d5d4d4;
-    padding: 50px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 25px;
-
+  background: #d5d4d4;
+  padding: 2px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 1.777;
 }
 
 .footer-copyright {
-    background: white;
-    padding: 17px;
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
+  background: white;
+  padding: 17px;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
 }
 
 .footer-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
 }
 
 .footer-content p {
-  margin: 1rem 0 1rem 0;
+  margin: 1rem 0 5rem 0;
   font-size: 80%;
 }
 
@@ -116,15 +115,15 @@ body {
 }
 
 .footer-content a:hover {
-   color: white;
-   transition: color .4s ease;
+  color: white;
+  transition: color .4s ease;
 }
 .socials {
-    list-style: none;
-    display: flex;
-    align-items:center;
-    justify-content: center;
-    margin: 2rem 0 1rem 0;
+  list-style: none;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  margin: 2rem 0 1rem 0;
 }
 
 .socials a {
@@ -133,15 +132,15 @@ body {
 }
 
 .socials li{
-    margin: 0 7px;
+  margin: 0 7px;
 }
 
 .socials a i {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 
 .socials a:hover i{
-    color: white;
-    transition: color .4s ease;
+  color: white;
+  transition: color .4s ease;
 }
 
