@@ -80,20 +80,43 @@ body {
 }
 
 .footer-content p {
-  font-size: 75%;
+  margin: 2rem 0 1rem 0;
+  font-size: 80%;
 }
 
 .footer-content a {
   color: rgb(120, 47, 64);
   text-decoration: none;
+  font-weight: 600;
 
 }
-.socials{
-  list-style: none;
 
+.footer-content a:hover {
+   color: white;
+   transition: color .4s ease;
+}
+.socials {
+    list-style: none;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    margin: 2rem 0 1rem 0;
 }
 
 .socials a {
   color: rgb(120, 47, 64);
   text-decoration: none;
+}
+
+.socials li{
+    margin: 0 7px;
+}
+
+.socials a i {
+    font-size: 1.2rem;
+}
+
+.socials a:hover i{
+    color: white;
+    transition: color .4s ease;
 }
