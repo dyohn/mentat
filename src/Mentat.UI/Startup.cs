@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
 using Mentat.Domain.Interfaces;
+using Mentat.Domain.IService;
+using Mentat.Domain.Service;
 // using Mentat.Domain.Models;
 
 namespace Mentat.UI
@@ -29,6 +30,7 @@ namespace Mentat.UI
             services.AddControllersWithViews();
 
             // Configure Dependency Injection classes here
+            services.AddScoped<IStudentService, StudentService>();
             // services.AddScoped<IBashTestConfig, BashTestConfig>();
             // services.AddScoped<IBashTestDriver, BashTestDriver>();
         }

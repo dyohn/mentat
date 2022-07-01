@@ -1,6 +1,10 @@
-﻿namespace Mentat.Domain.IService
+﻿using System.Collections.Generic;
+using Mentat.Domain.Models;
+
+namespace Mentat.Domain.IService
 {
-    class IStudentService
+    public interface IStudentService
     {
+        StudentVM GetStudentVM();
     }
 }
