@@ -1,5 +1,4 @@
-﻿@model Mentat.UI.Models.GradingScriptFormModel
-
+﻿@model GradingScriptFormModel
 
 <h1>Grading Script Configuration</h1>
 
@@ -13,40 +12,40 @@
             </div>
             <div class="card-body">
 
+                @using (Html.BeginForm("CreateGradingScriptForm", "Mentor"))
+                {
+                    <h4>Languages</h4>
+                    for (int i = 0; i < Model.languages.Count; i++)
+                    {
 
-                <form action="GetFormData" method="post">
-                    <div class="mb-3">
-                        <label class="form-label" asp-for="language"></label>
-                        <input required class="form-control" asp-for="language" />
-                        <small class="form-text text-muted">The programming language of the solution domain</small>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" asp-for="file_names"></label>
-                        <input required class="form-control" asp-for="file_names" />
-                        <small class="form-text text-muted">A list of the names of the test files to be used</small>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" asp-for="exec_name"></label>
-                        <input required class="form-control" asp-for="exec_name" />
-                        <small class="form-text text-muted">The name of the sample executable to be used</small>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" asp-for="duration"></label>
-                        <input required class="form-control" asp-for="duration" />
-                        <small class="form-text text-muted">How long to wait before terminating student code during each test</small>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" asp-for="diff_cmd"></label>
-                        <input required class="form-control" asp-for="diff_cmd" />
-                        <small class="form-text text-muted">
-                            The diff command to be used for comparing student output to the output from the sample executable
-                        </small>
-                    </div>
-                    <div class="mb-3">
-                        <button class="btn btn-primary">Generate</button>
-                    </div>
-                </form>
+                        @Html.CheckBoxFor(r => Model.languages[i].selected)
+                        <label>@Model.languages[i].name</label>
 
+
+                        @Html.HiddenFor(h => @Model.languages[i].id)
+                        @Html.HiddenFor(h => @Model.languages[i].name)
+                    }
+
+                    <h4 class="mt-4">File Names</h4>
+                    <small class="form-text text-muted">A comma separated list of the names of the test files to be used</small>
+                    @Html.TextBoxFor(r => Model.file_names, new { @class = "form-control", @required = "required" })
+
+                    <h4 class="mt-4">Executable Name</h4>
+                    <small class="form-text text-muted">The name of the sample executable to be used</small>
+                    @Html.TextBoxFor(r => Model.exec_name, new { @class = "form-control", @required = "required" })
+
+                    <h4 class="mt-4">Duration</h4>
+                    <small class="form-text text-muted">How many seconds to wait before terminating student code during each test</small>
+                    @Html.TextBoxFor(r => Model.duration, new { @class = "form-control", @type = "number", @min = 0, @required = "required" })
+
+                    <h4 class="mt-4">Diff Command</h4>
+                    <small class="form-text text-muted">
+                        The diff command to be used for comparing student output to the output from the sample executable
+                    </small>
+                    @Html.TextBoxFor(r => Model.diff_cmd, new { @class = "form-control", @required = "required" })
+
+                    <input id="Button" type="submit" value="Save" class="mt-3 btn btn-primary" />
+                }
 
             </div>
             <div class="class-footer">

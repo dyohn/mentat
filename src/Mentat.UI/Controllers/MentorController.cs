@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Mentat.UI.Models;
 
@@ -13,23 +11,37 @@ namespace Mentat.UI.Controllers
     {  
         public IActionResult GradingScriptForm()
         {
-            return View();
+            // default languages for checkboxes on form
+            var languages = new List<Language>()
+            {
+                new Language(){ name = "C", id = 1, selected = false},
+                new Language(){ name = "C++", id = 2, selected = false},
+                new Language(){ name = "Python", id = 3, selected = false},
+                new Language(){ name = "Java", id = 4, selected = false},
+
+            };
+
+            var model = new GradingScriptFormModel();
+            model.languages = languages;
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult GetFormData(string language, string file_names, string exec_name, string duration, string diff_cmd)
+        public IActionResult CreateGradingScriptForm(GradingScriptFormModel gradingScriptFormModel)
         {
-            GradingScriptFormModel form = new GradingScriptFormModel();
-            form.language = language;
-            form.file_names = file_names;
-            form.exec_name = exec_name;
-            form.duration = duration;
-            form.diff_cmd = diff_cmd;
-            Console.WriteLine(form.language);
-            Console.WriteLine(form.file_names);
-            Console.WriteLine(form.exec_name);
-            Console.WriteLine(form.duration);
-            Console.WriteLine(form.diff_cmd);
+            // just writing to console for now
+            foreach (Language language in gradingScriptFormModel.languages)
+            {
+                if (language.selected)
+                {
+                    Console.WriteLine(language.name);
+                }
+               
+            }
+            Console.WriteLine(gradingScriptFormModel.file_names);
+            Console.WriteLine(gradingScriptFormModel.exec_name);
+            Console.WriteLine(gradingScriptFormModel.duration);
+            Console.WriteLine(gradingScriptFormModel.diff_cmd);
             return View("/Views/Home/Index.cshtml");
         }
     }
