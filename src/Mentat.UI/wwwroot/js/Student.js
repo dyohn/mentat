@@ -14,26 +14,40 @@ function hideCardAndClearOverlay(showHideLink, index) {
 }
 
 function goToPrevious(index) {
-    var cardCount = getCardCountAndHideCurrentCard(index);
-    var divToShow = index === 0
-        ? cardCount - 1
+    var cardCount = getCardCount();
+    var indexToShow = index === 1
+        ? cardCount
         : index - 1;
-    $("[id$=flashcard_" + divToShow + "]").show();
-    hideAnswerOfCardNoLongerVisible(index);
+    processCardChange(index, indexToShow);
+    updateSelectedCardIndex(indexToShow);
 }
 
 function goToNext(index) {
-    var cardCount = getCardCountAndHideCurrentCard(index);
-    var divToShow = index === cardCount - 1
-        ? 0
+    var cardCount = getCardCount();
+    var indexToShow = index === cardCount
+        ? 1
         : index + 1;
-    $("[id$=flashcard_" + divToShow + "]").show();
-    hideAnswerOfCardNoLongerVisible(index);
+    processCardChange(index, indexToShow);
+    updateSelectedCardIndex(indexToShow);
 }
 
-function getCardCountAndHideCurrentCard(index) {
-    $("[id$=flashcard_" + index + "]").hide();
-    return $("#NumberOfFlashCards").val();
+function processCardChange(index, indexToShow) {
+    hideCurrentCard(index);
+    showCard(indexToShow);
+    hideAnswerOfCardNoLongerVisible(index);
+    $("#CurrentIndex").val(indexToShow);
+}
+
+function getCardCount() {
+    return parseInt($("#NumberOfFlashCards").val());
+}
+
+function hideCurrentCard(index) {
+    $("[id$=flashcard_" + index + "]").hide();   
+}
+
+function showCard(indexToShow) {
+    $("[id$=flashcard_" + indexToShow + "]").show();
 }
 
 function hideAnswerOfCardNoLongerVisible(index) {
@@ -41,4 +55,19 @@ function hideAnswerOfCardNoLongerVisible(index) {
     if (showHideLink.text() === "Hide") {
         hideCardAndClearOverlay(showHideLink, index);
     }
+}
+
+function updateSelectedCardIndex(newIndex) {
+    $("#SelectedCardIndex").val(newIndex);
+}
+
+function updateSelectedCard(sender) {
+    var newIndex = parseInt(sender.value);
+    var cardCount = getCardCount();
+    var isNewCardIndexValid = /^\d+$/.test(sender.value) && newIndex > 0 && newIndex <= cardCount;
+    if (!isNewCardIndexValid) {
+        toastr.error("Please choose a valid Flashcard (1&nbsp;through&nbsp;" + cardCount + ").", "Flashcard selection");
+        return;
+    }
+    processCardChange(parseInt($("#CurrentIndex").val()), newIndex);
 }

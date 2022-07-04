@@ -4,7 +4,8 @@ namespace Mentat.Domain.Models
 {
     public class StudentVM
     {
-        public long SelectedCardID { get; set; }
+        public int SelectedCardIndex { get; set; }
+        public int CurrentIndex => SelectedCardIndex;
         public List<FlashCardVM> AvailableCards { get; set; }
         public int NumberOfFlashCards => AvailableCards.Count;
     }
