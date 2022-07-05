@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Card>
+@{
     ViewData["Title"] = "Home";
 }
 
@@ -18,16 +19,25 @@
 
               <!-- The slideshow -->
               <div class="carousel-inner">
-                <div class="carousel-item active">
-                     <div class="card-carousel d-block mx-auto">
-                      <div class="card-body">
-                        <h5 class="card-title">Question 1</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Difficulty</h6>
-                        <p class="card-text">A moderate length answer. A moderate length answer. A moderate length answer. A moderate length answer. </p>
-                      </div>
+                  @{int i = 0;}
+                  @foreach (var item in Model)
+                 {
+                    i++;
+                    var active = i == 1 ? "active" : "";
+                    <div class="carousel-item @active">
+                         <div class="card-carousel d-block mx-auto">
+                          <div class="card-body">
+                            <h5 class="card-title">@item.question</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@item.difficulty_level</h6>
+                            <p class="card-text">@item.answer</p>
+                          </div>
+                        </div>
                     </div>
-                </div>
-                <div class="carousel-item">
+                 }
+
+
+
+@*                <div class="carousel-item">
                      <div class="card-carousel d-block mx-auto">
                       <div class="card-body">
                         <h5 class="card-title">Question 2</h5>
@@ -44,7 +54,7 @@
                         <p class="card-text">A short answer.</p>
                       </div>
                     </div>
-                </div>
+                </div>*@
               </div>
 
               <!-- Left and right controls -->
