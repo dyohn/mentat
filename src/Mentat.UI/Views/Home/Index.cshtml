@@ -1,4 +1,5 @@
 ﻿@model List<Card>
+
 @{
     ViewData["Title"] = "Home";
 }
@@ -8,16 +9,20 @@
     
     <div class="container pt-5">
         <div id="myCarousel">
-            <div id="demo" class="carousel slide" data-ride="carousel">
+            <div id="carouselCard" class="carousel slide" data-ride="carousel">
 
-              <!-- Indicators -->
+              <!-- Card Indicator -->
               <ul class="carousel-indicators">
-                <li data-target="#demo" data-slide-to="0" class="active"></li>
-                <li data-target="#demo" data-slide-to="1"></li>
-                <li data-target="#demo" data-slide-to="2"></li>
+                @{int j = 0;}
+                @foreach (var item in Model)
+                {
+                    var jActive = j == 0 ? "active" : "";
+                    <li data-target="#carouselCard" data-slide-to="@j" class="@jActive"></li>
+                    j++;
+                }
               </ul>
 
-              <!-- The slideshow -->
+              <!-- Cards -->
               <div class="carousel-inner">
                   @{int i = 0;}
                   @foreach (var item in Model)
@@ -27,41 +32,20 @@
                     <div class="carousel-item @active">
                          <div class="card-carousel d-block mx-auto">
                           <div class="card-body">
-                            <h5 class="card-title">@item.question</h5>
+                            <h5 class="card-title carousel-card-title">@item.question</h5>
                             <h6 class="card-subtitle mb-2 text-muted">@item.difficulty_level</h6>
                             <p class="card-text">@item.answer</p>
                           </div>
                         </div>
                     </div>
                  }
-
-
-
-@*                <div class="carousel-item">
-                     <div class="card-carousel d-block mx-auto">
-                      <div class="card-body">
-                        <h5 class="card-title">Question 2</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Difficulty</h6>
-                        <p class="card-text">Very long answer. Very long answer. Very long answer. Very long answer. Very long answer. Very long answer. Very long answer. Very long answer. Very long answer. Very long answer. </p>
-                      </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                     <div class="card-carousel d-block mx-auto">
-                      <div class="card-body">
-                        <h5 class="card-title">Question 3</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Difficulty</h6>
-                        <p class="card-text">A short answer.</p>
-                      </div>
-                    </div>
-                </div>*@
               </div>
 
-              <!-- Left and right controls -->
-              <a class="carousel-control-prev" href="#demo" data-slide="prev">
+              <!-- L/R Arrows -->
+              <a class="carousel-control-prev" href="#carouselCard" data-slide="prev">
                 <span class="carousel-control-prev-icon"></span>
               </a>
-              <a class="carousel-control-next" href="#demo" data-slide="next">
+              <a class="carousel-control-next" href="#carouselCard" data-slide="next">
                 <span class="carousel-control-next-icon"></span>
               </a>
             </div>

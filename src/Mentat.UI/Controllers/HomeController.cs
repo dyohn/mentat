@@ -45,6 +45,7 @@ namespace Mentat.UI.Controllers
             return randomCards;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             var cards = cardService.Get();
