@@ -41,7 +41,8 @@ namespace Mentat.Domain.Service
                         HiddenCardAnswer = "366. Come on, this is easy.",
                         CardColor = "150,120,221"
                     }
-                }
+                },
+                SelectedCardIndex = 1
             };
 
             return vm;
