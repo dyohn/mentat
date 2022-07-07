@@ -18,9 +18,6 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C28C0F18-0691-4A71-9911-DBA43E57D89F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C28C0F18-0691-4A71-9911-DBA43E57D89F}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -35,25 +32,29 @@ Global
 		{10D4393E-3F31-4104-830F-31AF89C58AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10D4393E-3F31-4104-830F-31AF89C58AB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C28C0F18-0691-4A71-9911-DBA43E57D89F} = {D174EA58-A87A-438D-AF31-6A4A6411EE63}
 		{D3233F62-BFCD-4851-B354-AF8CABCAE3CB} = {D174EA58-A87A-438D-AF31-6A4A6411EE63}
 		{10D4393E-3F31-4104-830F-31AF89C58AB3} = {CFEDC76C-F3C5-411A-830A-309EDF1F33C3}
 	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {17F428EB-0AF3-4D7C-AD00-5954040950D1}
+	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = PrefixedFlat
-		$0.TextStylePolicy = $2
+		$0.TextStylePolicy = $5
 		$2.inheritsSet = null
 		$2.scope = text/x-csharp
 		$0.CSharpFormattingPolicy = $3
 		$3.scope = text/x-csharp
-		$0.TextStylePolicy = $4
 		$4.FileWidth = 80
 		$4.TabsToSpaces = True
 		$4.scope = text/plain
-		$0.TextStylePolicy = $5
 		$5.inheritsSet = null
 		$5.scope = text/x-json
 		$0.JSONFormattingPolicy = $6
