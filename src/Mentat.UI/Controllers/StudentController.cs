@@ -1,12 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Mentat.Domain.IService;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Mentat.UI.Controllers
 {
     public class StudentController : Controller
     {
-        public IActionResult StudentView()
+        private readonly IStudentService _studentService;
+
+        public StudentController(IStudentService studentService)
         {
-            return View();
+            _studentService = studentService;
+        }
+
+        public ActionResult Index()
+        {
+            var vm = _studentService.GetStudentVM();
+            return View(vm);
         }
     }
 }

@@ -4,7 +4,7 @@ namespace Mentat.UI.Controllers
 {
     public class MentorController : Controller
     {
-        public IActionResult MentorView()
+        public IActionResult Index()
         {
             return View();
         }

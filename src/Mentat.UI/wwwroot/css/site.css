@@ -61,6 +61,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  height: 100% !important;
 }
 .footer {
   position: absolute;
@@ -68,4 +69,60 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+/* FSU Theme Colors */
+
+.bg-primary {
+    background-color: #782F40;
+}
+
+.bg-secondary {
+    background-color: #CEB888 !important;
+}
+
+.vh-50 {
+    min-height: 50vh;
+}
+
+.vh-75 {
+    min-height: 75vh;
+}
+
+.vh-60 {
+    min-height: 60vh;
+}
+
+.card-text {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.title-text {
+    font-size: 3.5rem;
+    color: #782F40;
+    font-weight: 600;
+}
+
+.subtitle-text {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+body, html {
+    background-color: #f7edd7;
+}
+
+.dot {
+    height: 1750px;
+    width: 1750px;
+    background-color: #CEB888;
+    border-radius: 50%;
+    position: absolute;
+    top: -1000px;
+    left: -250px;
+}
+
+.navbar {
+    z-index: 10;
 }
