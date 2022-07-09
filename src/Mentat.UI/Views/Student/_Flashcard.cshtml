@@ -4,7 +4,7 @@
 
 @Html.HiddenFor(m => m.CardID)
 <div class="row bottom-buffer col-sm-12">
-    @Html.TextAreaFor(m => m.CardQuestion, 5, 90, new { @maxLength = "250", disabled = true, id = "CardQuestion_"+ @ViewData["index"] })
+    @Html.TextAreaFor(m => m.CardQuestion, 5, 90, new { @maxLength = "250", disabled = true, id = "CardQuestion_" + @ViewData["index"] })
 </div>
 <div class="row col-sm-12">
     <div class="col-sm-2"></div>
@@ -17,8 +17,43 @@
     <a href="#" onclick="goToNext(@ViewData["index"]);"><span class="fa fa-arrow-circle-right fa-3x"></span></a>
 </div>
 <div style="display:none">
-    @Html.TextAreaFor(m => m.HiddenCardAnswer, 0, 0, new { @maxLength = "250", disabled = true, id = "HiddenCardAnswer_"+ @ViewData["index"] })
+    @Html.TextAreaFor(m => m.HiddenCardAnswer, 0, 0, new { @maxLength = "250", disabled = true, id = "HiddenCardAnswer_" + @ViewData["index"] })
 </div>
 <div class="row top-buffer col-sm-12 light-text">
-    @Html.TextAreaFor(m => m.CardAnswerOverlay, 5, 117, new { @maxLength = "250", disabled = true, id = "CardAnswerOverlay_"+ @ViewData["index"] })
+    @Html.TextAreaFor(m => m.CardAnswerOverlay, 5, 117, new { @maxLength = "250", disabled = true, id = "CardAnswerOverlay_" + @ViewData["index"] })
 </div>
+<div class="row top-buffer col-sm-12">
+    <button type="button" onclick="window.location.href = 'https://localhost:38557/Card/Create';">Add FlashCard</button>
+
+    <div class="row top-buffer col-sm-12">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th align="center">List of Flashcards</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 1; i <= 5; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => m.CardQuestion)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="m.Id" title="Edit Flashcard"><i class="fa-solid fa-file-pen"></i></a> |
+                            <a asp-action="Delete" asp-route-id="m.Id" title="Delete Flashcard"><i class="fa-solid fa-trash-can"></i></a> |
+                            <a asp-action="Details" asp-route-id="m.Id" title="View Details"><i class="fa-solid fa-eye"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<link rel="stylesheet" href="/css/all.min.css"
+
+

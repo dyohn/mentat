@@ -6,19 +6,36 @@
     ViewData["Title"] = "Student";
 }
 
+<style>
+
+    .CardNumBox {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+</style>
+
 @Html.HiddenFor(m => m.NumberOfFlashCards)
 @Html.HiddenFor(m => m.CurrentIndex)
 <span class="dot"></span>
+
 <div class="row bottom-buffer col-sm-12">
-    <div class="col-sm-9"></div>
-    @Html.TextBoxFor(m => m.SelectedCardIndex, new { style="width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
+    <div class="col-sm-9">
+        <span><img src="/images/fluent_brain-circuit-20-filled.png"></span>
+        <span class="align-middle title-text">Study</span>
+    </div>
+    <div class="CardNumBox col-sm-3">
+        @Html.TextBoxFor(m => m.SelectedCardIndex, new { style = "width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
+    </div>
 </div>
-@for(var i = 1; i <= Model.NumberOfFlashCards; i++)
+
+@for (var i = 1; i <= Model.NumberOfFlashCards; i++)
 {
     var display = i == 1 ? "inline" : "none";
     <div id="flashcard_@i" style="display:@display">
-        @Html.Partial("_Flashcard", Model.AvailableCards[i - 1], new ViewDataDictionary(ViewData) { {"index", i} })
+        @Html.Partial("_Flashcard", Model.AvailableCards[i - 1], new ViewDataDictionary(ViewData) { { "index", i } })
     </div>
 }
 
-<script src="~/js/Student.js"></script>
+
+
