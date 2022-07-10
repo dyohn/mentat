@@ -1,6 +1,6 @@
 ﻿using System;
 using Mentat.Domain.Interfaces;
-using System.IO;
+using System.Text;
 
 namespace Mentat.Domain.Bash
 {
@@ -21,26 +21,33 @@ namespace Mentat.Domain.Bash
 
         public void Build()
         {
+            // config has all the details and shouldn't be null
             if(_config is null)
             {
-                throw new Exception("Config is null");
+                throw new NullReferenceException();
             }
 
             // build a script with the configuration stuff
-            var script = "";
+            // this is just a mock
 
-            // assume the file can be bash or python
-            // its python
+            var scriptBuilder = new StringBuilder();
 
-            var fileExtension = "py";
+            foreach (var testFileName in _config.TestFileNames)
+            {
+                scriptBuilder.Append(testFileName).AppendLine();
+            }
+
+            var fileExtension = _config.Language == "python" ? "py" : "cpp";
 
             var fileName = $"{_config.SampleExecutableName}.{fileExtension}";
 
             // save the script or whatever
+            var script = scriptBuilder.ToString();
 
-            _fileManagerService.SaveScript(script, fileName);
-
-            // now done
+            if (!string.IsNullOrEmpty(script))
+            {
+                _fileManagerService.SaveScript(Encoding.UTF8.GetBytes(script), fileName);
+            }
         }
 
         public void Configure(ITestConfig config)

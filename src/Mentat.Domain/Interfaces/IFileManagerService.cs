@@ -8,6 +8,6 @@ namespace Mentat.Domain.Interfaces
 {
     public interface IFileManagerService
     {
-        public void SaveScript(string script, string scriptName);
+        public void SaveScript(byte[] script, string scriptName);
     }
 }
