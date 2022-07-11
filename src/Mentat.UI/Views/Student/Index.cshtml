@@ -18,7 +18,6 @@
 @Html.HiddenFor(m => m.NumberOfFlashCards)
 @Html.HiddenFor(m => m.CurrentIndex)
 <span class="dot"></span>
-
 <div class="row bottom-buffer col-sm-12">
     <div class="col-sm-9">
         <span><img src="/images/fluent_brain-circuit-20-filled.png"></span>
@@ -37,5 +36,33 @@
     </div>
 }
 
+<div class="row top-buffer col-sm-12">
+    <button type="button">Add Flashcard</button>
+</div>
+<div class="row top-buffer col-sm-12">
+    <table class="table top-buffer">
+        <thead>
+            <tr>
+                <th align="center">List of Flashcards</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 1; i <= Model.NumberOfFlashCards; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => m.AvailableCards[i - 1].CardQuestion)
+                    </td>
+                    <td>
+                        <a href="javascript:;" title="View Details"><i class="fa-solid fa-eye"></i></a> |
+                        <a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen"></i></a> |
+                        <a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-
+<script src="~/js/Student.js"></script>
