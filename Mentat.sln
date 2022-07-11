@@ -1,25 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D174EA58-A87A-438D-AF31-6A4A6411EE63}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CFEDC76C-F3C5-411A-830A-309EDF1F33C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentat.Domain", "src\Mentat.Domain\Mentat.Domain.csproj", "{C28C0F18-0691-4A71-9911-DBA43E57D89F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mentat.Domain", "src\Mentat.Domain\Mentat.Domain.csproj", "{C28C0F18-0691-4A71-9911-DBA43E57D89F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentat.UI", "src\Mentat.UI\Mentat.UI.csproj", "{D3233F62-BFCD-4851-B354-AF8CABCAE3CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mentat.UI", "src\Mentat.UI\Mentat.UI.csproj", "{D3233F62-BFCD-4851-B354-AF8CABCAE3CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentat.Domain.Tests", "tests\Mentat.Domain.Tests\Mentat.Domain.Tests.csproj", "{10D4393E-3F31-4104-830F-31AF89C58AB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mentat.Domain.Tests", "tests\Mentat.Domain.Tests\Mentat.Domain.Tests.csproj", "{10D4393E-3F31-4104-830F-31AF89C58AB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentat.Repository", "Mentat.Repository\Mentat.Repository.csproj", "{BF399C5F-21B6-433B-AB2E-48E1CA1BC906}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C28C0F18-0691-4A71-9911-DBA43E57D89F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -34,26 +33,35 @@ Global
 		{10D4393E-3F31-4104-830F-31AF89C58AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10D4393E-3F31-4104-830F-31AF89C58AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10D4393E-3F31-4104-830F-31AF89C58AB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF399C5F-21B6-433B-AB2E-48E1CA1BC906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF399C5F-21B6-433B-AB2E-48E1CA1BC906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF399C5F-21B6-433B-AB2E-48E1CA1BC906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF399C5F-21B6-433B-AB2E-48E1CA1BC906}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C28C0F18-0691-4A71-9911-DBA43E57D89F} = {D174EA58-A87A-438D-AF31-6A4A6411EE63}
 		{D3233F62-BFCD-4851-B354-AF8CABCAE3CB} = {D174EA58-A87A-438D-AF31-6A4A6411EE63}
 		{10D4393E-3F31-4104-830F-31AF89C58AB3} = {CFEDC76C-F3C5-411A-830A-309EDF1F33C3}
+		{BF399C5F-21B6-433B-AB2E-48E1CA1BC906} = {D174EA58-A87A-438D-AF31-6A4A6411EE63}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {08984368-A2E5-46C9-B786-6CDA7109A178}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = PrefixedFlat
-		$0.TextStylePolicy = $2
+		$0.TextStylePolicy = $5
 		$2.inheritsSet = null
 		$2.scope = text/x-csharp
 		$0.CSharpFormattingPolicy = $3
 		$3.scope = text/x-csharp
-		$0.TextStylePolicy = $4
 		$4.FileWidth = 80
 		$4.TabsToSpaces = True
 		$4.scope = text/plain
-		$0.TextStylePolicy = $5
 		$5.inheritsSet = null
 		$5.scope = text/x-json
 		$0.JSONFormattingPolicy = $6

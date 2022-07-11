@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Mentat.UI.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Mentat.UI.Models;
 
 namespace Mentat.UI.Services
 {
