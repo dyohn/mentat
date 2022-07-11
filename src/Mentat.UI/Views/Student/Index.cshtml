@@ -20,5 +20,8 @@
         @Html.Partial("_Flashcard", Model.AvailableCards[i - 1], new ViewDataDictionary(ViewData) { {"index", i} })
     </div>
 }
+<div class="row top-buffer col-sm-12">
+    <button type="button">Add Flashcard</button>
+</div>
 
 <script src="~/js/Student.js"></script>
