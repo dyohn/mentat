@@ -1,0 +1,74 @@
+﻿@model Mentat.UI.Models.Assignment
+
+@{
+    ViewData["Title"] = "Add Assignment";
+}
+
+@using (Html.BeginForm("SubmitForm", "Mentor", FormMethod.Post))
+{
+    <h2>Add Assignment Form</h2>
+    <div>
+        Mentor Name
+    </div>
+    @Html.TextBoxFor(model => model.mentorName)
+    <div>
+        Assignment Name
+    </div>
+    @Html.TextBoxFor(model => model.assignmentName)
+    <div>
+        Assignment Type
+    </div>
+    @Html.RadioButtonFor(m => m.assignmentType, ".c") @:.c
+    @Html.RadioButtonFor(m => m.assignmentType, ".cpp") @:.cpp
+    <div>
+        Sample Executable Name
+    </div>
+    @Html.TextBoxFor(model => model.sampleExecutableName)
+    <div>
+        Test File Names
+    </div>
+    @Html.TextAreaFor(model => model.testFileNames)
+    <div>
+    <input type="submit" value="Submit" />
+    </div>
+}
+@*<h2>Add Assignment</h2>*@
+
+
+
+@*<form asp-action="SubmitForm" method="post">
+    <div>
+        <label asp-for="mentorName">Mentor Name</label>
+    </div>
+    <div>
+        <input asp-for="mentorName" name="mentorName" type="text" />
+    </div>
+    <div>
+        <label asp-for="assignmentName">Assignment Name</label>
+    </div>
+    <div>
+        <input asp-for="assignmentName" name="assignmentName" type="text" />
+    </div>
+    <div>
+        <label asp-for="assignmentType">Assignment Type</label>
+    </div>
+    <div>
+    <input type="radio" asp-for="assignmentType" value=".c" />.c<br />
+    <input type="radio" asp-for="assignmentType" value=".cpp" />.cpp<br />
+    </div>
+    <div>
+        <label asp-for="sampleExecutableName">Sample Executable</label>
+    </div>
+    <div>
+        <input asp-for="sampleExecutableName" name="sampleExecutableName" type="text" />
+    </div>
+    <div>
+        <label asp-for="testFileNames">Test Files</label>
+    </div>
+    <div>
+        <input asp-for="testFileNames" name="testFileNames" type="text" />
+    </div>
+    <div>
+        <input type="submit" value="Submit" />
+    </div>
+</form>*@
