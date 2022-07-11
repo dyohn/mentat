@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Mentat.Domain.Tests
 {
-    public class UnitTest1
+    public class BashTestDriverTests
     {
         [Fact]
         public void ThrowsExceptionWhenBuildingFromNullConfig()

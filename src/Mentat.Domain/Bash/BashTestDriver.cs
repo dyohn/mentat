@@ -22,14 +22,12 @@ namespace Mentat.Domain.Bash
         public void Build()
         {
             // config has all the details and shouldn't be null
-            if(_config is null)
+            if (_config is null)
             {
                 throw new NullReferenceException();
             }
-
             // build a script with the configuration stuff
             // this is just a mock
-
             var scriptBuilder = new StringBuilder();
 
             foreach (var testFileName in _config.TestFileNames)
