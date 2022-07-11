@@ -1,12 +1,59 @@
-﻿@{
+﻿@model List<Card>
+
+@{
     ViewData["Title"] = "Home";
 }
 
-<div class="container d-flex vh-60">
+<div class="container">
     <span class="dot"></span>
+    
+    <div class="container pt-5">
+        <div id="myCarousel">
+            <div id="carouselCard" class="carousel slide" data-ride="carousel">
 
-    <div class="wrapper my-auto">
-        <div class="row d-flex">
+              <!-- Card Indicator -->
+              <ul class="carousel-indicators">
+                @{int j = 0;}
+                @foreach (var item in Model)
+                {
+                    var jActive = j == 0 ? "active" : "";
+                    <li data-target="#carouselCard" data-slide-to="@j" class="@jActive"></li>
+                    j++;
+                }
+              </ul>
+
+              <!-- Cards -->
+              <div class="carousel-inner">
+                  @{int i = 0;}
+                  @foreach (var item in Model)
+                 {
+                    i++;
+                    var active = i == 1 ? "active" : "";
+                    <div class="carousel-item @active">
+                         <div class="card-carousel d-block mx-auto">
+                          <div class="card-body">
+                            <h5 class="card-title carousel-card-title">@item.question</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@item.difficulty_level</h6>
+                            <p class="card-text">@item.answer</p>
+                          </div>
+                        </div>
+                    </div>
+                 }
+              </div>
+
+              <!-- L/R Arrows -->
+              <a class="carousel-control-prev" href="#carouselCard" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </a>
+              <a class="carousel-control-next" href="#carouselCard" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
             <div class="col-sm-12">
                 <span><img src="~/images/fluent_brain-circuit-20-filled.png" /></span>
                 <span class="align-middle title-text">Mentat</span>

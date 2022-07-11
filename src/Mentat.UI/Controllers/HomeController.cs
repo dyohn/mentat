@@ -6,21 +6,51 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Mentat.UI.Models;
+using Mentat.UI.Services;
 
 namespace Mentat.UI.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ICardService cardService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ICardService cardService)
         {
             _logger = logger;
+            this.cardService = cardService;
         }
 
+        List<Card> GetRandomCards(List<Card> cards, int numCards)
+        {
+            if (cards.Count < numCards)
+            {
+                return cards;
+            }
+
+            HashSet<int> indices = new HashSet<int>();
+            Random random = new Random();
+
+            List<Card> randomCards = new List<Card>();
+            while (indices.Count < numCards)
+            {
+                int index = random.Next(cards.Count);
+                if (!indices.Contains(index))
+                {
+                    indices.Add(index);
+                    randomCards.Add(cards[index]);
+                }
+            }
+
+            return randomCards;
+        }
+
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var cards = cardService.Get();
+            var randomCards = GetRandomCards(cards, 5);
+            return View(randomCards);
         }
 
         public IActionResult Privacy()

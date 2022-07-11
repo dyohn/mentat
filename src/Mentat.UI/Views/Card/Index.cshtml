@@ -13,6 +13,21 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.question)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.answer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isCustom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.difficulty_level)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.notes)
             </th>
             <th></th>
@@ -22,10 +37,25 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.subject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.question)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.answer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isCustom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.difficulty_level)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.notes)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item._id }) |
+                @Html.ActionLink("Edit", "Edit", new {  id=item._id }) |
                 @Html.ActionLink("Details", "Details", new { id=item._id }) |
                 @Html.ActionLink("Delete", "Delete", new { id=item._id })
             </td>
