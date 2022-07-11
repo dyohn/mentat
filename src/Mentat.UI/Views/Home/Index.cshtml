@@ -1,4 +1,4 @@
-﻿@model List<Mentat.UI.ViewModels.CardViewModel>
+﻿@model Mentat.UI.ViewModels.CardViewModel
 
 @{
     ViewData["Title"] = "Home";
@@ -14,7 +14,7 @@
               <!-- Card Indicator -->
               <ul class="carousel-indicators">
                 @{int j = 0;}
-                @foreach (var item in Model)
+                @foreach (var item in Model.cards)
                 {
                     var jActive = j == 0 ? "active" : "";
                     <li data-target="#carouselCard" data-slide-to="@j" class="@jActive"></li>
@@ -25,7 +25,7 @@
               <!-- Cards -->
               <div class="carousel-inner">
                   @{int i = 0;}
-                  @foreach (var item in Model)
+                  @foreach (var item in Model.cards)
                  {
                     i++;
                     var active = i == 1 ? "active" : "";

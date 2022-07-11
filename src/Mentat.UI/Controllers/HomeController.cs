@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Mentat.UI.Models;
 using Mentat.UI.Services;
+using Mentat.UI.ViewModels;
 
 namespace Mentat.UI.Controllers
 {
@@ -21,7 +22,7 @@ namespace Mentat.UI.Controllers
             this.cardService = cardService;
         }
 
-        List<Card> GetRandomCards(List<Card> cards, int numCards)
+        static List<Card> GetRandomCards(List<Card> cards, int numCards)
         {
             if (cards.Count < numCards)
             {
@@ -50,7 +51,7 @@ namespace Mentat.UI.Controllers
         {
             var cards = cardService.Get();
             var randomCards = GetRandomCards(cards, 5);
-            return View(randomCards);
+            return View(new CardViewModel(randomCards));
         }
 
         public IActionResult Privacy()

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using MongoDB.Driver;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mentat.UI.Services;
-using Mentat.UI.Models;
+using Mentat.UI.ViewModels;
 
 namespace Mentat.UI.Controllers
 {
@@ -24,8 +21,7 @@ namespace Mentat.UI.Controllers
         // GET: CardController
         public ActionResult Index()
         {
-            var cards = cardService.Get();
-            return View(cards);
+            return View(new CardViewModel(cardService.Get()));
         }
 
         // GET: CardController/Details/5
@@ -37,7 +33,7 @@ namespace Mentat.UI.Controllers
                 return NotFound($"Card with ID = {id} not found");
             }
 
-            return View(card);
+            return View(new CardViewModel(card));
         }
 
         // GET: CardController/Create
@@ -89,7 +85,7 @@ namespace Mentat.UI.Controllers
                 return NotFound($"Card with ID = {id} not found");
             }
 
-            return View(card);
+            return View(new CardViewModel(card));
         }
 
         // POST: CardController/Edit/5
@@ -129,7 +125,7 @@ namespace Mentat.UI.Controllers
                 return NotFound($"Card with ID = {id} not found");
             }
 
-            return View(card);
+            return View(new CardViewModel(card));
         }
 
         // POST: CardController/Delete/5
