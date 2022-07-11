@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mentat.UI", "src\Mentat.UI\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mentat.Domain.Tests", "tests\Mentat.Domain.Tests\Mentat.Domain.Tests.csproj", "{10D4393E-3F31-4104-830F-31AF89C58AB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mentat.Repository", "Mentat.Repository\Mentat.Repository.csproj", "{BF399C5F-21B6-433B-AB2E-48E1CA1BC906}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mentat.Repository", "src\Mentat.Repository\Mentat.Repository.csproj", "{89431E89-2CA7-4CED-A201-EC4DD92837F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,10 @@ Global
 		{10D4393E-3F31-4104-830F-31AF89C58AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10D4393E-3F31-4104-830F-31AF89C58AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10D4393E-3F31-4104-830F-31AF89C58AB3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BF399C5F-21B6-433B-AB2E-48E1CA1BC906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF399C5F-21B6-433B-AB2E-48E1CA1BC906}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF399C5F-21B6-433B-AB2E-48E1CA1BC906}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF399C5F-21B6-433B-AB2E-48E1CA1BC906}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89431E89-2CA7-4CED-A201-EC4DD92837F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89431E89-2CA7-4CED-A201-EC4DD92837F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89431E89-2CA7-4CED-A201-EC4DD92837F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89431E89-2CA7-4CED-A201-EC4DD92837F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,7 +45,7 @@ Global
 		{C28C0F18-0691-4A71-9911-DBA43E57D89F} = {D174EA58-A87A-438D-AF31-6A4A6411EE63}
 		{D3233F62-BFCD-4851-B354-AF8CABCAE3CB} = {D174EA58-A87A-438D-AF31-6A4A6411EE63}
 		{10D4393E-3F31-4104-830F-31AF89C58AB3} = {CFEDC76C-F3C5-411A-830A-309EDF1F33C3}
-		{BF399C5F-21B6-433B-AB2E-48E1CA1BC906} = {D174EA58-A87A-438D-AF31-6A4A6411EE63}
+		{89431E89-2CA7-4CED-A201-EC4DD92837F1} = {D174EA58-A87A-438D-AF31-6A4A6411EE63}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {08984368-A2E5-46C9-B786-6CDA7109A178}
