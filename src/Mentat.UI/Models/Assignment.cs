@@ -8,16 +8,16 @@ namespace Mentat.UI.Models
 {
     public class Assignment
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         [Required]
-        public string mentorName { get; set; }
+        public string MentorName { get; set; }
         [Required]
-        public string assignmentName { get; set; }
+        public string AssignmentName { get; set; }
         [Required]
-        public string assignmentType { get; set; }
+        public string AssignmentType { get; set; }
         [Required]
-        public string sampleExecutableName { get; set; }
+        public string SampleExecutableName { get; set; }
         [Required]
-        public string testFileNames { get; set; }
+        public string TestFileNames { get; set; }
     }
 }

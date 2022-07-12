@@ -10,24 +10,24 @@
     <div>
         Mentor Name
     </div>
-    @Html.TextBoxFor(model => model.mentorName)
+    @Html.TextBoxFor(model => model.MentorName)
     <div>
         Assignment Name
     </div>
-    @Html.TextBoxFor(model => model.assignmentName)
+    @Html.TextBoxFor(model => model.AssignmentName)
     <div>
         Assignment Type
     </div>
-    @Html.RadioButtonFor(m => m.assignmentType, ".c") @:.c
-    @Html.RadioButtonFor(m => m.assignmentType, ".cpp") @:.cpp
+    @Html.RadioButtonFor(m => m.AssignmentType, ".c") @:.c
+    @Html.RadioButtonFor(m => m.AssignmentType, ".cpp") @:.cpp
     <div>
         Sample Executable Name
     </div>
-    @Html.TextBoxFor(model => model.sampleExecutableName)
+    @Html.TextBoxFor(model => model.SampleExecutableName)
     <div>
         Test File Names
     </div>
-    @Html.TextAreaFor(model => model.testFileNames)
+    @Html.TextAreaFor(model => model.TestFileNames)
     <div>
     <input type="submit" value="Submit" />
     </div>

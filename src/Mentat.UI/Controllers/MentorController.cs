@@ -19,11 +19,11 @@ namespace Mentat.UI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitForm(Models.Assignment assignment)
         {
-            var mentorName = assignment.mentorName;
-            var assignmentName = assignment.assignmentName;
-            var assignmentType = assignment.assignmentType;
-            var sampleExecutableName = assignment.sampleExecutableName;
-            var testFileNames = assignment.testFileNames;
+            var mentorName = assignment.MentorName;
+            var assignmentName = assignment.AssignmentName;
+            var assignmentType = assignment.AssignmentType;
+            var sampleExecutableName = assignment.SampleExecutableName;
+            var testFileNames = assignment.TestFileNames;
             return View();
         }
     }
