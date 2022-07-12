@@ -1,0 +1,34 @@
+﻿@model Mentat.UI.Models.Assignment
+
+@{
+    ViewData["Title"] = "Add Assignment";
+}
+
+@using (Html.BeginForm("SubmitForm", "Mentor", FormMethod.Post))
+{
+    <h2>Add Assignment Form</h2>
+    <div>
+        Mentor Name
+    </div>
+    @Html.TextBoxFor(model => model.MentorName)
+    <div>
+        Assignment Name
+    </div>
+    @Html.TextBoxFor(model => model.AssignmentName)
+    <div>
+        Assignment Type
+    </div>
+    @Html.RadioButtonFor(m => m.AssignmentType, ".c") @:.c
+    @Html.RadioButtonFor(m => m.AssignmentType, ".cpp") @:.cpp
+    <div>
+        Sample Executable Name
+    </div>
+    @Html.TextBoxFor(model => model.SampleExecutableName)
+    <div>
+        Test File Names
+    </div>
+    @Html.TextAreaFor(model => model.TestFileNames)
+    <div>
+    <input type="submit" value="Submit" />
+    </div>
+}

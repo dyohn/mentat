@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Mentat.Domain.Interfaces;
 using Mentat.Domain.IService;
 using Mentat.Domain.Service;
+using Microsoft.EntityFrameworkCore;
 // using Mentat.Domain.Models;
 
 namespace Mentat.UI
@@ -31,6 +32,7 @@ namespace Mentat.UI
 
             // Configure Dependency Injection classes here
             services.AddScoped<IStudentService, StudentService>();
+
             // services.AddScoped<IBashTestConfig, BashTestConfig>();
             // services.AddScoped<IBashTestDriver, BashTestDriver>();
         }
