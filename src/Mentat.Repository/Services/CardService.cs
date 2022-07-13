@@ -13,30 +13,30 @@ namespace Mentat.Repository.Services
             _cards = database.GetCollection<Card>(settings.CardCollectionName);
         }
 
-        public Card Create(Card card)
+        public Card CreateCard(Card card)
         {
             _cards.InsertOne(card);
             return card;
         }
 
-        public List<Card> Get()
+        public List<Card> GetCards()
         {
            return _cards.Find(card => true).ToList();
         }
 
-        public Card Get(string id)
+        public Card GetCard(string id)
         {
-            return _cards.Find(card => (string) card._id == id).FirstOrDefault();
+            return _cards.Find(card => card._id as string == id).FirstOrDefault();
         }
 
-        public void Remove(string id)
+        public void RemoveCard(string id)
         {
-            _cards.DeleteOne(card => (string)card._id == id);
+            _cards.DeleteOne(card => card._id as string == id);
         }
 
-        public void Update(string id, Card card)
+        public void UpdateCard(string id, Card card)
         {
-            _cards.ReplaceOne(card => (string)card._id == id, card);
+            _cards.ReplaceOne(card => card._id as string == id, card);
         }
     }
 }

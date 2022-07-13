@@ -14,7 +14,7 @@
               <!-- Card Indicator -->
               <ul class="carousel-indicators">
                 @{int j = 0;}
-                @foreach (var item in Model.cards)
+                @foreach (var item in Model.Cards)
                 {
                     var jActive = j == 0 ? "active" : "";
                     <li data-target="#carouselCard" data-slide-to="@j" class="@jActive"></li>
@@ -25,16 +25,16 @@
               <!-- Cards -->
               <div class="carousel-inner">
                   @{int i = 0;}
-                  @foreach (var item in Model.cards)
+                  @foreach (var item in Model.Cards)
                  {
                     i++;
                     var active = i == 1 ? "active" : "";
                     <div class="carousel-item @active">
                          <div class="card-carousel d-block mx-auto">
                           <div class="card-body">
-                            <h5 class="card-title carousel-card-title">@item.question</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">@item.difficulty_level</h6>
-                            <p class="card-text">@item.answer</p>
+                            <h5 class="card-title carousel-card-title">@item.Question</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@item.DifficultyLevel</h6>
+                            <p class="card-text">@item.Answer</p>
                           </div>
                         </div>
                     </div>

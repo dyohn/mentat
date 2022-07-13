@@ -21,13 +21,13 @@ namespace Mentat.UI.Controllers
         // GET: CardController
         public ActionResult Index()
         {
-            return View(new CardViewModel(cardService.Get()));
+            return View(new CardViewModel(cardService.GetCards()));
         }
 
         // GET: CardController/Details/5
         public ActionResult Details(string id)
         {
-            var card = cardService.Get(id);
+            var card = cardService.GetCard(id);
             if (card == null)
             {
                 return NotFound($"Card with ID = {id} not found");
@@ -50,14 +50,14 @@ namespace Mentat.UI.Controllers
             try
             {                
                 object id = GenRandomId(24);
-                cardService.Create(new Repository.Models.Card
+                cardService.CreateCard(new Repository.Models.Card
                 {
                   _id = id,
-                  notes = collection["notes"],
-                  subject = collection["subject"],
-                  question = collection["question"],
-                  answer = collection["answer"],
-                  difficulty_level = collection["difficulty_level"]
+                  Notes = collection["notes"],
+                  Subject = collection["subject"],
+                  Question = collection["question"],
+                  Answer = collection["answer"],
+                  DifficultyLevel = collection["difficulty_level"]
 
                 });
                 
@@ -79,7 +79,7 @@ namespace Mentat.UI.Controllers
         // GET: CardController/Edit/5
         public ActionResult Edit(string id)
         {
-            var card = cardService.Get(id);
+            var card = cardService.GetCard(id);
             if (card == null)
             {
                 return NotFound($"Card with ID = {id} not found");
@@ -95,18 +95,18 @@ namespace Mentat.UI.Controllers
         {
             try
             {
-                var existingCard = cardService.Get(id);
+                var existingCard = cardService.GetCard(id);
                 if (existingCard == null)
                 {
                     return NotFound($"Card with ID = {id} not found");
                 }
 
-                existingCard.notes = collection["notes"];
-                existingCard.subject = collection["subject"];
-                existingCard.question = collection["question"];
-                existingCard.answer = collection["answer"];
-                existingCard.difficulty_level = collection["difficulty_level"];
-                cardService.Update(id, existingCard);
+                existingCard.Notes = collection["notes"];
+                existingCard.Subject = collection["subject"];
+                existingCard.Question = collection["question"];
+                existingCard.Answer = collection["answer"];
+                existingCard.DifficultyLevel = collection["difficulty_level"];
+                cardService.UpdateCard(id, existingCard);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -119,7 +119,7 @@ namespace Mentat.UI.Controllers
         // GET: CardController/Delete/5
         public ActionResult Delete(string id)
         {
-            var card = cardService.Get(id);
+            var card = cardService.GetCard(id);
             if (card == null)
             {
                 return NotFound($"Card with ID = {id} not found");
@@ -135,13 +135,13 @@ namespace Mentat.UI.Controllers
         {
             try
             {
-                var card = cardService.Get(id);
+                var card = cardService.GetCard(id);
                 if (card == null)
                 {
                     return NotFound($"Card with ID = {id} not found");
                 }
 
-                cardService.Remove(id);
+                cardService.RemoveCard(id);
 
                 return RedirectToAction(nameof(Index));
             }

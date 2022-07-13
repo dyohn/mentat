@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Mentat.Repository.Models;
@@ -29,27 +28,13 @@ namespace Mentat.UI.Controllers
                 return cards;
             }
 
-            HashSet<int> indices = new HashSet<int>();
-            Random random = new Random();
-
-            List<Card> randomCards = new List<Card>();
-            while (indices.Count < numCards)
-            {
-                int index = random.Next(cards.Count);
-                if (!indices.Contains(index))
-                {
-                    indices.Add(index);
-                    randomCards.Add(cards[index]);
-                }
-            }
-
-            return randomCards;
+            return cards.OrderBy(card => Guid.NewGuid()).Take(numCards).ToList();
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var cards = cardService.Get();
+            var cards = cardService.GetCards();
             var randomCards = GetRandomCards(cards, 5);
             return View(new CardViewModel(randomCards));
         }
