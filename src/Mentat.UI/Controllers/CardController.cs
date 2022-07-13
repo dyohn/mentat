@@ -49,15 +49,15 @@ namespace Mentat.UI.Controllers
         {
             try
             {                
-                object id = Guid.NewGuid();
+                var id = Guid.NewGuid().ToString();
                 cardService.CreateCard(new Repository.Models.Card
                 {
-                  _id = id,
-                  notes = collection["notes"],
-                  subject = collection["subject"],
-                  question = collection["question"],
-                  answer = collection["answer"],
-                  difficulty_level = collection["difficulty_level"]
+                  Id = id,
+                  Notes = collection["notes"],
+                  Subject = collection["subject"],
+                  Question = collection["question"],
+                  Answer = collection["answer"],
+                  DifficultyLevel = collection["difficulty_level"]
 
                 });
                 
@@ -94,11 +94,11 @@ namespace Mentat.UI.Controllers
                     return NotFound($"Card with ID = {id} not found");
                 }
 
-                existingCard.notes = collection["notes"];
-                existingCard.subject = collection["subject"];
-                existingCard.question = collection["question"];
-                existingCard.answer = collection["answer"];
-                existingCard.difficulty_level = collection["difficulty_level"];
+                existingCard.Notes = collection["notes"];
+                existingCard.Subject = collection["subject"];
+                existingCard.Question= collection["question"];
+                existingCard.Answer = collection["answer"];
+                existingCard.DifficultyLevel = collection["difficulty_level"];
                 cardService.UpdateCard(id, existingCard);
 
                 return RedirectToAction(nameof(Index));

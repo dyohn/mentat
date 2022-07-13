@@ -13,34 +13,34 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="subject" class="control-label"></label>
-                <input asp-for="subject" class="form-control" />
-                <span asp-validation-for="subject" class="text-danger"></span>
+                <label asp-for="Subject" class="control-label"></label>
+                <input asp-for="Subject" class="form-control" />
+                <span asp-validation-for="Subject" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="question" class="control-label"></label>
-                <input asp-for="question" class="form-control" />
-                <span asp-validation-for="question" class="text-danger"></span>
+                <label asp-for="Question" class="control-label"></label>
+                <input asp-for="Question" class="form-control" />
+                <span asp-validation-for="Question" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="answer" class="control-label"></label>
-                <input asp-for="answer" class="form-control" />
-                <span asp-validation-for="answer" class="text-danger"></span>
+                <label asp-for="Answer" class="control-label"></label>
+                <input asp-for="Answer" class="form-control" />
+                <span asp-validation-for="Answer" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="isCustom" /> @Html.DisplayNameFor(model => model.isCustom)
+                    <input class="form-check-input" asp-for="IsCustom" /> @Html.DisplayNameFor(model => model.IsCustom)
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="difficulty_level" class="control-label"></label>
-                <input asp-for="difficulty_level" class="form-control" />
-                <span asp-validation-for="difficulty_level" class="text-danger"></span>
+                <label asp-for="DifficultyLevel" class="control-label"></label>
+                <input asp-for="DifficultyLevel" class="form-control" />
+                <span asp-validation-for="DifficultyLevel" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="notes" class="control-label"></label>
-                <input asp-for="notes" class="form-control" />
-                <span asp-validation-for="notes" class="text-danger"></span>
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
