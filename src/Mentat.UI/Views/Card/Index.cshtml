@@ -13,46 +13,46 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Subject)
+                @Html.DisplayNameFor(model => model.subject)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Question)
+                @Html.DisplayNameFor(model => model.question)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Answer)
+                @Html.DisplayNameFor(model => model.answer)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.isCustom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DifficultyLevel)
+                @Html.DisplayNameFor(model => model.difficulty_level)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Notes)
+                @Html.DisplayNameFor(model => model.notes)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Cards) {
+@foreach (var item in Model.cards) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Subject)
+                @Html.DisplayFor(modelItem => item.subject)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Question)
+                @Html.DisplayFor(modelItem => item.question)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Answer)
+                @Html.DisplayFor(modelItem => item.answer)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsCustom)
+                @Html.DisplayFor(modelItem => item.isCustom)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DifficultyLevel)
+                @Html.DisplayFor(modelItem => item.difficulty_level)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Notes)
+                @Html.DisplayFor(modelItem => item.notes)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new {  id=item._id }) |

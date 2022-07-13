@@ -9,16 +9,16 @@ namespace Mentat.Repository.Models
     {
         public Object? _id { get; set; }
 
-        public string? Subject { get; set; }
+        public string? subject { get; set; }
 
-        public string? Question { get; set; }
+        public string? question { get; set; }
 
-        public string? Answer { get; set; }
+        public string? answer { get; set; }
 
-        public bool IsCustom { get; set; }
+        public bool isCustom { get; set; }
 
-        public string? DifficultyLevel { get; set; }
+        public string? difficulty_level { get; set; }
 
-        public string? Notes { get; set; }
+        public string? notes { get; set; }
     }
 }

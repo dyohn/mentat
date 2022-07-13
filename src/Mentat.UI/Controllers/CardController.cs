@@ -49,15 +49,15 @@ namespace Mentat.UI.Controllers
         {
             try
             {                
-                object id = GenRandomId(24);
+                object id = Guid.NewGuid();
                 cardService.CreateCard(new Repository.Models.Card
                 {
                   _id = id,
-                  Notes = collection["notes"],
-                  Subject = collection["subject"],
-                  Question = collection["question"],
-                  Answer = collection["answer"],
-                  DifficultyLevel = collection["difficulty_level"]
+                  notes = collection["notes"],
+                  subject = collection["subject"],
+                  question = collection["question"],
+                  answer = collection["answer"],
+                  difficulty_level = collection["difficulty_level"]
 
                 });
                 
@@ -67,13 +67,6 @@ namespace Mentat.UI.Controllers
             {
                 return View();
             }
-        }
-
-        private object GenRandomId(int v)
-        {
-            string strarr = "abcdefghijklmnopqrstuvwxyz123456789";
-            return new string(Enumerable.Repeat(strarr, v).Select(s => s[random.Next(s.Length)]).ToArray());
-
         }
 
         // GET: CardController/Edit/5
@@ -101,11 +94,11 @@ namespace Mentat.UI.Controllers
                     return NotFound($"Card with ID = {id} not found");
                 }
 
-                existingCard.Notes = collection["notes"];
-                existingCard.Subject = collection["subject"];
-                existingCard.Question = collection["question"];
-                existingCard.Answer = collection["answer"];
-                existingCard.DifficultyLevel = collection["difficulty_level"];
+                existingCard.notes = collection["notes"];
+                existingCard.subject = collection["subject"];
+                existingCard.question = collection["question"];
+                existingCard.answer = collection["answer"];
+                existingCard.difficulty_level = collection["difficulty_level"];
                 cardService.UpdateCard(id, existingCard);
 
                 return RedirectToAction(nameof(Index));
