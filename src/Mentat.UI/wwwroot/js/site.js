@@ -3,7 +3,7 @@
 
 // Write your JavaScript code.
 var para = document.getElementsByClassName("long-text");
-var maxWords = 35;
+var maxWords = 30;
 
 
 for (var j = 0; j < para.length; j++) {
