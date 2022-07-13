@@ -6,7 +6,7 @@ namespace Mentat.Repository.Models
     public class Card
     {
         [BsonId]
-        [BsonElement("_id")]        
+        [BsonElement("_id")]
         public string Id { get; set; }
 
         [BsonElement("subject")]
