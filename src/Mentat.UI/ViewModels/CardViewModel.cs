@@ -6,34 +6,36 @@ namespace Mentat.UI.ViewModels
 {
     public class CardViewModel
     {
-        public Object _id { get; set; }
+        public Object Id { get; set; }
 
-        public string subject { get; set; }
+        public string Subject { get; set; }
 
-        public string question { get; set; }
+        public string Question { get; set; }
 
-        public string answer { get; set; }
+        public string Answer { get; set; }
 
-        public bool isCustom { get; set; }
+        public bool IsCustom { get; set; }
 
-        public string difficulty_level { get; set; }
+        public string DifficultyLevel { get; set; }
 
-        public string notes { get; set; }
+        public string Notes { get; set; }
 
-        public List<Card> cards { get; set; }
+        public List<Card> Cards { get; set; }
+
         public CardViewModel(Card card)
         {
-            _id = card._id;
-            subject = card.subject;
-            question = card.question;
-            answer = card.answer;
-            isCustom = card.isCustom;    
-            difficulty_level = card.difficulty_level;   
-            notes = card.notes; 
+            Id = card._id;
+            Subject = card.subject;
+            Question = card.question;
+            Answer = card.answer;
+            IsCustom = card.isCustom;    
+            DifficultyLevel = card.difficulty_level;   
+            Notes = card.notes; 
         }
+
         public CardViewModel(List<Card> cards)
         {
-            this.cards = cards;
+            Cards = cards;
         }
     }
 }
