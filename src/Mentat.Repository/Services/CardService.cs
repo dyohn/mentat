@@ -1,7 +1,7 @@
-﻿using Mentat.UI.Models;
+﻿using Mentat.Repository.Models;
 using MongoDB.Driver;
 
-namespace Mentat.UI.Services
+namespace Mentat.Repository.Services
 {
     public class CardService : ICardService
     {

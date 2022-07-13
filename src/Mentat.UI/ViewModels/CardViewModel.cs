@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Mentat.UI.Models;
+using Mentat.Repository.Models;
 
 namespace Mentat.UI.ViewModels
 {

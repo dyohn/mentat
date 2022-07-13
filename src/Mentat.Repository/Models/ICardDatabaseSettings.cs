@@ -1,4 +1,4 @@
-﻿namespace Mentat.UI.Models
+﻿namespace Mentat.Repository.Models
 {
     public interface ICardDatabaseSettings
     {

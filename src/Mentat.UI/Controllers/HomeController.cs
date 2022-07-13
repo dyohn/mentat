@@ -5,8 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Mentat.UI.Models;
-using Mentat.UI.Services;
+using Mentat.Repository.Models;
+using Mentat.Repository.Services;
 using Mentat.UI.ViewModels;
 
 namespace Mentat.UI.Controllers

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Mentat.UI.Models
+namespace Mentat.Repository.Models
 {
     public class Card
     {

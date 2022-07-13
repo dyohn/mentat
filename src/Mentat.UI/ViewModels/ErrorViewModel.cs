@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace Mentat.UI.Models
-{
-    public class ErrorViewModel
-    {
-        public string RequestId { get; set; }
+namespace Mentat.UI.ViewModels;
 
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-    }
+public class ErrorViewModel
+{
+    public string RequestId { get; set; }
+
+    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 }

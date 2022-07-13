@@ -1,6 +1,6 @@
-﻿using Mentat.UI.Models;
+﻿using Mentat.Repository.Models;
 
-namespace Mentat.UI.Services
+namespace Mentat.Repository.Services
 {
     public interface ICardService
     {

@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Mentat.UI.Services;
+using Mentat.Repository.Services;
 using Mentat.UI.ViewModels;
 
 namespace Mentat.UI.Controllers
@@ -50,7 +50,7 @@ namespace Mentat.UI.Controllers
             try
             {                
                 object id = GenRandomId(24);
-                cardService.Create(new Models.Card
+                cardService.Create(new Repository.Models.Card
                 {
                   _id = id,
                   notes = collection["notes"],
