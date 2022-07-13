@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Mentat.Repository.Models
+﻿namespace Mentat.Repository.Models
 {
     public class Card
     {
