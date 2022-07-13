@@ -1,19 +1,29 @@
-﻿namespace Mentat.Repository.Models
+﻿using System.Text.Json.Serialization;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Mentat.Repository.Models
 {
     public class Card
     {
-        public Object? _id { get; set; }
+        [BsonElement("_id")]
+        public Object? Id { get; set; }
 
-        public string? subject { get; set; }
+        [BsonElement("subject")]
+        public string? Subject { get; set; }
 
-        public string? question { get; set; }
+        [BsonElement("question")]
+        public string? Question { get; set; }
 
-        public string? answer { get; set; }
+        [BsonElement("answer")]
+        public string? Answer { get; set; }
 
-        public bool isCustom { get; set; }
+        [BsonElement("isCustom")]
+        public bool IsCustom { get; set; }
 
-        public string? difficulty_level { get; set; }
+        [BsonElement("difficulty_level")]
+        public string? DifficultyLevel { get; set; }
 
-        public string? notes { get; set; }
+        [BsonElement("notes")]
+        public string? Notes { get; set; }
     }
 }

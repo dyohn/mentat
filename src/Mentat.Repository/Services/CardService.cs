@@ -10,6 +10,7 @@ namespace Mentat.Repository.Services
         public CardService(ICardDatabaseSettings settings, IMongoClient mongoClient)
         {
             var database = mongoClient.GetDatabase(settings.DatabaseName);
+
             _cards = database.GetCollection<Card>(settings.CardCollectionName);
         }
 
@@ -26,17 +27,17 @@ namespace Mentat.Repository.Services
 
         public Card GetCard(string id)
         {
-            return _cards.Find(card => card._id as string == id).FirstOrDefault();
+            return _cards.Find(card => card.Id as string == id).FirstOrDefault();
         }
 
         public void RemoveCard(string id)
         {
-            _cards.DeleteOne(card => card._id as string == id);
+            _cards.DeleteOne(card => card.Id as string == id);
         }
 
         public void UpdateCard(string id, Card card)
         {
-            _cards.ReplaceOne(card => card._id as string == id, card);
+            _cards.ReplaceOne(card => card.Id as string == id, card);
         }
     }
 }

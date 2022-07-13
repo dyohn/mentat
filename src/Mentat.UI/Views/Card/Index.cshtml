@@ -37,27 +37,27 @@
 @foreach (var card in Model.Cards) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => card.subject)
+                @Html.DisplayFor(modelItem => card.Subject)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => card.question)
+                @Html.DisplayFor(modelItem => card.Question)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => card.answer)
+                @Html.DisplayFor(modelItem => card.Answer)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => card.isCustom)
+                @Html.DisplayFor(modelItem => card.IsCustom)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => card.difficulty_level)
+                @Html.DisplayFor(modelItem => card.DifficultyLevel)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => card.notes)
+                @Html.DisplayFor(modelItem => card.Notes)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=card._id }) |
-                @Html.ActionLink("Details", "Details", new { id=card._id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=card._id })
+                @Html.ActionLink("Edit", "Edit", new {  id=card.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=card.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=card.Id })
             </td>
         </tr>
 }

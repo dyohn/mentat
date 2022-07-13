@@ -24,13 +24,13 @@ namespace Mentat.UI.ViewModels
 
         public CardViewModel(Card card)
         {
-            Id = card._id;
-            Subject = card.subject;
-            Question = card.question;
-            Answer = card.answer;
-            IsCustom = card.isCustom;    
-            DifficultyLevel = card.difficulty_level;   
-            Notes = card.notes; 
+            Id = card.Id;
+            Subject = card.Subject;
+            Question = card.Question;
+            Answer = card.Answer;
+            IsCustom = card.IsCustom;    
+            DifficultyLevel = card.DifficultyLevel;   
+            Notes = card.Notes; 
         }
 
         public CardViewModel(List<Card> cards)
