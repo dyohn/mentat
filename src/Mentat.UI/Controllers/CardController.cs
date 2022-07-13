@@ -49,7 +49,7 @@ namespace Mentat.UI.Controllers
         {
             try
             {                
-                object id = Guid.NewGuid();
+                var id = Guid.NewGuid().ToString();
                 cardService.CreateCard(new Repository.Models.Card
                 {
                   Id = id,

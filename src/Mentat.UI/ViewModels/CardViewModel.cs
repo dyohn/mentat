@@ -6,7 +6,7 @@ namespace Mentat.UI.ViewModels
 {
     public class CardViewModel
     {
-        public Object Id { get; set; }
+        public string Id { get; set; }
 
         public string Subject { get; set; }
 

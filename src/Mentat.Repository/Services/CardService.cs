@@ -27,17 +27,17 @@ namespace Mentat.Repository.Services
 
         public Card GetCard(string id)
         {
-            return _cards.Find(card => card.Id as string == id).FirstOrDefault();
+            return _cards.Find(card => card.Id.Equals(id)).SingleOrDefault();
         }
 
         public void RemoveCard(string id)
         {
-            _cards.DeleteOne(card => card.Id as string == id);
+            _cards.DeleteOne(card => card.Id.Equals(id));
         }
 
         public void UpdateCard(string id, Card card)
         {
-            _cards.ReplaceOne(card => card.Id as string == id, card);
+            _cards.ReplaceOne(card => card.Id.Equals(id), card);
         }
     }
 }
