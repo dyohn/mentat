@@ -18,6 +18,9 @@
   <ItemGroup>
     <PackageReference Include="MongoDB.Driver" Version="2.16.1" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mentat.Repository\Mentat.Repository.csproj" />
+  </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>

@@ -77,6 +77,14 @@ body {
     background-color: #782F40;
 }
 
+.fsu-maroon-color {
+    color: #782F40;
+}
+
+.fsu-black-color {
+    color: #000;
+}
+
 .bg-secondary {
     background-color: #CEB888 !important;
 }
