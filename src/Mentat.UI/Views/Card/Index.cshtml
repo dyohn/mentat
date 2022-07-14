@@ -1,0 +1,65 @@
+﻿@model Mentat.UI.ViewModels.CardViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Question)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Answer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCustom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DifficultyLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var card in Model.Cards) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => card.Subject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => card.Question)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => card.Answer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => card.IsCustom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => card.DifficultyLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => card.Notes)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=card.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=card.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=card.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
