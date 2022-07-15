@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Mentat.Repository.Models;
 
 namespace Mentat.UI.ViewModels
@@ -36,6 +35,10 @@ namespace Mentat.UI.ViewModels
         public CardViewModel(List<Card> cards)
         {
             Cards = cards;
+        }
+
+        public CardViewModel()
+        {
         }
     }
 }

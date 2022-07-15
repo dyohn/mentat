@@ -1,4 +1,5 @@
 ﻿using Mentat.Repository.Models;
+using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 
 namespace Mentat.Repository.Services
@@ -12,12 +13,6 @@ namespace Mentat.Repository.Services
             var database = mongoClient.GetDatabase(settings.DatabaseName);
 
             _cards = database.GetCollection<Card>(settings.CardCollectionName);
-        }
-
-        public Card CreateCard(Card card)
-        {
-            _cards.InsertOne(card);
-            return card;
         }
 
         public List<Card> GetCards()
@@ -35,9 +30,38 @@ namespace Mentat.Repository.Services
             _cards.DeleteOne(card => card.Id.Equals(id));
         }
 
-        public void UpdateCard(string id, Card card)
+        public void SaveCard(string id, IFormCollection collection)
         {
-            _cards.ReplaceOne(card => card.Id.Equals(id), card);
+            var card = new Card();
+            if (id != null)
+            {
+                card = GetCard(id);
+                if (card == null)
+                {
+                    throw new Exception("Card ID invalid.");
+                }
+            }
+
+            card.Notes = collection["notes"];
+            card.Subject = collection["subject"];
+            card.Question = collection["question"];
+            card.Answer = collection["answer"];
+            card.DifficultyLevel = collection["difficultyLevel"];
+
+            InsertOrUpdateCard(card);
+        }
+
+        private void InsertOrUpdateCard(Card card)
+        {
+            if (card.Id == null)
+            {
+                card.Id = Guid.NewGuid().ToString();
+                _cards.InsertOne(card);
+            }
+            else
+            {
+                _cards.ReplaceOne(c => c.Id.Equals(card.Id), card);
+            }
         }
     }
 }

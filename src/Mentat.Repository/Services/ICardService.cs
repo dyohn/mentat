@@ -1,4 +1,5 @@
 ﻿using Mentat.Repository.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Mentat.Repository.Services
 {
@@ -7,11 +8,9 @@ namespace Mentat.Repository.Services
         List<Card> GetCards();
 
         Card GetCard(string id);
-
-        Card CreateCard(Card card);
-
-        void UpdateCard(string id, Card card);
         
         void RemoveCard(string id);
+
+        void SaveCard(string id, IFormCollection collection);
     }
 }
