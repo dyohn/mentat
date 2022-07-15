@@ -13,12 +13,12 @@ namespace Mentat.UI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ICardService cardService;
+        private readonly ICardService _cardService;
 
         public HomeController(ILogger<HomeController> logger, ICardService cardService)
         {
             _logger = logger;
-            this.cardService = cardService;
+            _cardService = cardService;
         }
 
         static List<Card> GetRandomCards(List<Card> cards, int numCards)
@@ -34,7 +34,7 @@ namespace Mentat.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var cards = cardService.GetCards();
+            var cards = _cardService.GetCards();
             var randomCards = GetRandomCards(cards, 5);
             return View(new CardViewModel(randomCards));
         }

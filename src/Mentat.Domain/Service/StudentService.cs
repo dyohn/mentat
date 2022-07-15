@@ -1,49 +1,44 @@
 ﻿using System.Collections.Generic;
 using Mentat.Domain.IService;
 using Mentat.Domain.Models;
+using Mentat.Repository.Services;
 
 namespace Mentat.Domain.Service
 {
     public class StudentService : IStudentService
     {
+        private readonly ICardService _cardService;
+
+        public StudentService(
+            ICardService cardService
+            )
+        {
+            _cardService = cardService;
+        }
+
         public StudentVM GetStudentVM()
         {
-            // todo: actually get the data from the DB, once it is merged
+            var cards = _cardService.GetCards();
             var vm = new StudentVM
             {
-                AvailableCards = new List<FlashCardVM>
-                {
-                    new FlashCardVM
-                    {
-                        CardID = 1,
-                        CardQuestion = "This is a test Question???",
-                        HiddenCardAnswer = "Yep, sure is.",
-                        CardColor = "221,160,221"
-                    },
-                    new FlashCardVM
-                    {
-                        CardID = 2,
-                        CardQuestion = "This is a test Question AGAIN???",
-                        HiddenCardAnswer = "Yep, sure is, again!",
-                        CardColor = "200,190,221"
-                    },
-                    new FlashCardVM
-                    {
-                        CardID = 3,
-                        CardQuestion = "What is your favorite color?",
-                        HiddenCardAnswer = "Purple!",
-                        CardColor = "150,190,221"
-                    },
-                    new FlashCardVM
-                    {
-                        CardID = 4,
-                        CardQuestion = "How many days are there in a leap year?",
-                        HiddenCardAnswer = "366. Come on, this is easy.",
-                        CardColor = "150,120,221"
-                    }
-                },
+                AvailableCards = new List<FlashCardVM>(),
                 SelectedCardIndex = 1
             };
+            
+            foreach (var card in cards)
+            {
+                var flashCard = new FlashCardVM
+                {
+                    CardID = card.Id,
+                    Subject = card.Subject,
+                    CardQuestion = card.Question,
+                    HiddenCardAnswer = card.Answer,
+                    DifficultyLevel = card.DifficultyLevel,
+                    // this will need permissions heavier than this when that part of the project is finished, like card.IsCustom && userID == loggedInUser
+                    CanEditOrDelete = card.IsCustom
+                };
+                vm.AvailableCards.Add(flashCard);
+            }
 
             return vm;
         }

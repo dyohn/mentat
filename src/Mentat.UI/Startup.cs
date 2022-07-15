@@ -37,12 +37,11 @@ namespace Mentat.UI
 
             services.AddSingleton<ICardDatabaseSettings, CardDatabaseSettings>();
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetValue<string>("CardDatabaseSettings:ConnectionString")));
-            services.AddScoped<ICardService, CardService>();
-            
             services.AddControllersWithViews();
 
             // Configure Dependency Injection classes here
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<ICardService, CardService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
