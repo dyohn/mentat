@@ -19,17 +19,7 @@ namespace Mentat.UI.Controllers
         {
             _logger = logger;
             _cardService = cardService;
-        }
-
-        static List<Card> GetRandomCards(List<Card> cards, int numCards)
-        {
-            if (cards.Count < numCards)
-            {
-                return cards;
-            }
-
-            return cards.OrderBy(card => Guid.NewGuid()).Take(numCards).ToList();
-        }
+        }        
 
         [HttpGet]
         public IActionResult Index()
@@ -48,6 +38,11 @@ namespace Mentat.UI.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private static List<Card> GetRandomCards(List<Card> cards, int numCards)
+        {
+            return cards.OrderBy(card => Guid.NewGuid()).Take(numCards).ToList();
         }
     }
 }

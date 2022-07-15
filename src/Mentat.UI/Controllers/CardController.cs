@@ -1,34 +1,37 @@
 ﻿using System;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mentat.Repository.Services;
 using Mentat.UI.ViewModels;
+using Mentat.Repository.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Mentat.UI.Controllers
 {
     public class CardController : Controller
     {
-        private static Random random = new Random();
-        private readonly ICardService cardService;
+        private readonly ICardService _cardService;
 
-        public CardController(ICardService cardService) 
+        private readonly ILogger<CardController> _logger;
+
+        public CardController(ICardService cardService, ILogger<CardController> logger)
         {
-            this.cardService = cardService;
+            _cardService = cardService;
+            _logger = logger;
         }
 
         [HttpGet]  
         // GET: CardController
         public ActionResult Index()
         {
-            return View(new CardViewModel(cardService.GetCards()));
+            return View(new CardViewModel(_cardService.GetCards()));
         }
 
         // GET: CardController/Details/5
         public ActionResult Details(string id)
         {
-            var card = cardService.GetCard(id);
-            if (card == null)
+            var card = _cardService.GetCard(id);
+
+            if (card is null)
             {
                 return NotFound($"Card with ID = {id} not found");
             }
@@ -45,35 +48,29 @@ namespace Mentat.UI.Controllers
         // POST: CardController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([FromForm] Card card)
         {
             try
             {                
-                var id = Guid.NewGuid().ToString();
-                cardService.CreateCard(new Repository.Models.Card
-                {
-                  Id = id,
-                  Notes = collection["notes"],
-                  Subject = collection["subject"],
-                  Question = collection["question"],
-                  Answer = collection["answer"],
-                  DifficultyLevel = collection["difficulty_level"]
-
-                });
+                _cardService.AddCard(card);
                 
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError($"Exception occured while trying to create card", ex.Message);
+
                 return View();
             }
         }
 
         // GET: CardController/Edit/5
+        // Edit step 1
         public ActionResult Edit(string id)
         {
-            var card = cardService.GetCard(id);
-            if (card == null)
+            var card = _cardService.GetCard(id);
+
+            if (card is null)
             {
                 return NotFound($"Card with ID = {id} not found");
             }
@@ -82,38 +79,35 @@ namespace Mentat.UI.Controllers
         }
 
         // POST: CardController/Edit/5
+        // Edit step 2
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string id, IFormCollection collection)
+        public ActionResult Edit(string id, [FromForm] Card card)
         {
             try
             {
-                var existingCard = cardService.GetCard(id);
-                if (existingCard == null)
+                if (_cardService.TryUpdateCard(id, card))
                 {
-                    return NotFound($"Card with ID = {id} not found");
+                    return RedirectToAction(nameof(Index));
                 }
 
-                existingCard.Notes = collection["notes"];
-                existingCard.Subject = collection["subject"];
-                existingCard.Question= collection["question"];
-                existingCard.Answer = collection["answer"];
-                existingCard.DifficultyLevel = collection["difficulty_level"];
-                cardService.UpdateCard(id, existingCard);
-
-                return RedirectToAction(nameof(Index));
+                return NotFound($"Card with ID = {id} not found");
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError($"Exception occured while trying to update card {id}", ex.Message);
+
                 return View();
             }
         }
 
         // GET: CardController/Delete/5
+        // Delete Step 1
         public ActionResult Delete(string id)
         {
-            var card = cardService.GetCard(id);
-            if (card == null)
+            var card = _cardService.GetCard(id);
+
+            if (card is null)
             {
                 return NotFound($"Card with ID = {id} not found");
             }
@@ -122,24 +116,24 @@ namespace Mentat.UI.Controllers
         }
 
         // POST: CardController/Delete/5
+        // Delete step 2
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id, IFormCollection collection)
+        public ActionResult Delete(string id, [FromForm] Card card)
         {
             try
-            {
-                var card = cardService.GetCard(id);
-                if (card == null)
+            {               
+                if (_cardService.TryRemoveCard(id))
                 {
-                    return NotFound($"Card with ID = {id} not found");
+                    return RedirectToAction(nameof(Index));
                 }
 
-                cardService.RemoveCard(id);
-
-                return RedirectToAction(nameof(Index));
+                return NotFound($"Card with ID = {id} not found");
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError($"Exception occured while trying to delete card {id}", ex.Message);
+
                 return View();
             }
         }

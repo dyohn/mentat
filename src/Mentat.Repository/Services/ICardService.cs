@@ -8,10 +8,14 @@ namespace Mentat.Repository.Services
 
         Card GetCard(string id);
 
-        Card CreateCard(Card card);
+        Card AddCard(Card card);
 
         void UpdateCard(string id, Card card);
-        
+
+        public bool TryUpdateCard(string id, Card card);
+
         void RemoveCard(string id);
+
+        public bool TryRemoveCard(string id);
     }
 }
