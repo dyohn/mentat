@@ -21,7 +21,7 @@ namespace Mentat.Repository.Models
         [BsonElement("isCustom")]
         public bool IsCustom { get; set; }
 
-        [BsonElement("difficulty_level")]
+        [BsonElement("difficultyLevel")]
         public string DifficultyLevel { get; set; }
 
         [BsonElement("notes")]

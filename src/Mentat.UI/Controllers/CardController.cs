@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mentat.Repository.Services;
@@ -52,13 +51,12 @@ namespace Mentat.UI.Controllers
                 var id = Guid.NewGuid().ToString();
                 cardService.CreateCard(new Repository.Models.Card
                 {
-                  Id = id,
-                  Notes = collection["notes"],
-                  Subject = collection["subject"],
-                  Question = collection["question"],
-                  Answer = collection["answer"],
-                  DifficultyLevel = collection["difficulty_level"]
-
+                    Id = id,
+                    Notes = collection["notes"],
+                    Subject = collection["subject"],
+                    Question = collection["question"],
+                    Answer = collection["answer"],
+                    DifficultyLevel = collection["difficultyLevel"]
                 });
                 
                 return RedirectToAction(nameof(Index));
@@ -98,7 +96,7 @@ namespace Mentat.UI.Controllers
                 existingCard.Subject = collection["subject"];
                 existingCard.Question= collection["question"];
                 existingCard.Answer = collection["answer"];
-                existingCard.DifficultyLevel = collection["difficulty_level"];
+                existingCard.DifficultyLevel = collection["difficultyLevel"];
                 cardService.UpdateCard(id, existingCard);
 
                 return RedirectToAction(nameof(Index));
