@@ -34,7 +34,7 @@
 }
 
 <div class="row top-buffer col-sm-12">
-    <button type="button" class="bg-black text-on-dark font-weight-bold">Add Flashcard</button>
+    <button type="button" class="bg-black text-on-dark font-weight-bold" onclick="location.href='@Url.Action("AddEditCard", "Card")';">Add Flashcard</button>
 </div>
 <hr class="bold-black top-buffer col-sm-12">
 <div class="row top-buffer col-sm-12">
@@ -57,11 +57,11 @@
                         @Html.DisplayFor(m => m.AvailableCards[i - 1].CardQuestion)
                     </td>
                     <td>
-                        <a href="javascript:;" title="View Details"><i class="fa-solid fa-eye fsu-maroon-color"></i></a>
+                        <a href="javascript:;" title="View Details" ><i class="fa-solid fa-eye fsu-maroon-color" onclick="location.href='@Url.Action("Details", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
                         @if (Model.AvailableCards[i - 1].CanEditOrDelete)
                         {
                             <text> | </text>
-                            <a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen fsu-black-color"></i></a>
+                            <a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen fsu-black-color" onclick="location.href='@Url.Action("AddEditCard", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
                             <text> | </text>
                             <a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can fsu-maroon-color" data-id="@Model.AvailableCards[i - 1].CardID" data-toggle="modal" data-target="#deleteModal"></i></a>
                         }
