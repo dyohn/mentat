@@ -43,7 +43,7 @@ function getCardCount() {
 }
 
 function hideCurrentCard(index) {
-    $("[id$=flashcard_" + index + "]").hide();   
+    $("[id$=flashcard_" + index + "]").hide();
 }
 
 function showCard(indexToShow) {
@@ -70,4 +70,8 @@ function updateSelectedCard(sender) {
         return;
     }
     processCardChange(parseInt($("#CurrentIndex").val()), newIndex);
+}
+
+function refreshFlashcardList() {
+    window.location.reload();
 }

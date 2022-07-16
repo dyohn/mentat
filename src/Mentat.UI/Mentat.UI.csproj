@@ -22,6 +22,7 @@
     <ProjectReference Include="..\Mentat.Domain\Mentat.Domain.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\Mentat.Repository\Mentat.Repository.csproj" />
   </ItemGroup>
 
   <ItemGroup>
