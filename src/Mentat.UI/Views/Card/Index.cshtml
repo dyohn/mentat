@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="AddEditCard">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -55,7 +55,7 @@
                 @Html.DisplayFor(modelItem => card.Notes)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=card.Id }) |
+                @Html.ActionLink("Edit", "AddEditCard", new {  id=card.Id }) |
                 @Html.ActionLink("Details", "Details", new { id=card.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id=card.Id })
             </td>

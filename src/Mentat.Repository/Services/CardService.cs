@@ -14,12 +14,6 @@ namespace Mentat.Repository.Services
             _cards = database.GetCollection<Card>(settings.CardCollectionName);
         }
 
-        public Card CreateCard(Card card)
-        {
-            _cards.InsertOne(card);
-            return card;
-        }
-
         public List<Card> GetCards()
         {
            return _cards.Find(card => true).ToList();
@@ -35,9 +29,23 @@ namespace Mentat.Repository.Services
             _cards.DeleteOne(card => card.Id.Equals(id));
         }
 
-        public void UpdateCard(string id, Card card)
+        public void SaveCard(string id, Card card)
         {
-            _cards.ReplaceOne(card => card.Id.Equals(id), card);
+            if (id != null)
+            {
+                card.Id = id;
+                if (GetCard(id) == null)
+                {
+                    throw new Exception("Card ID invalid.");
+                }
+            }
+            else
+            {
+                card.Id = Guid.NewGuid().ToString();
+            }
+
+            _cards.ReplaceOne(c => c.Id.Equals(card.Id), card, new ReplaceOptions { IsUpsert = true });
+
         }
     }
 }

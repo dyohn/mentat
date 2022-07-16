@@ -1,4 +1,11 @@
-﻿function toggleShowHideOfFlashCard(index) {
+﻿window.onload = function () {
+    $('#deleteModal').on('shown.bs.modal', function (event) {
+        var cardID = $(event.relatedTarget).data("id");
+        $("#confirmDelete").attr("data-id-to-delete", cardID);
+    });
+};
+
+function toggleShowHideOfFlashCard(index) {
     var showHideLink = $("[id$=show-hide_" + index + "]");
     if (showHideLink.text() === "Hide") {
         hideCardAndClearOverlay(showHideLink, index);
@@ -74,4 +81,18 @@ function updateSelectedCard(sender) {
 
 function refreshFlashcardList() {
     window.location.reload();
+}
+
+function deleteFlashcard(sender) {
+    $.post("/Card/DeleteCard",
+        {
+            cardID: $(sender).data("id-to-delete")
+        },
+        function (result) {
+            if (result === "ok") {
+                $('#confirmDelete').modal('hide');
+                refreshFlashcardList();
+            }
+        }
+    ); 
 }

@@ -1,16 +1,18 @@
-﻿@model Mentat.UI.ViewModels.CardViewModel
+﻿@using static Mentat.Domain.Constants
+
+@model Mentat.UI.ViewModels.CardViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    var isAdd = Model.Id == null;
+    var title = isAdd ? "Create" : "Edit";
+    ViewData["Title"] = title;
 }
 
-<h1>Create</h1>
-
-<h4>Card</h4>
+<h1>@title Card</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="SaveCard" asp-route-id="@Model.Id">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Subject" class="control-label"></label>
@@ -34,7 +36,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="DifficultyLevel" class="control-label"></label>
-                <input asp-for="DifficultyLevel" class="form-control" />
+                @Html.DropDownListFor(m => m.DifficultyLevel, ((DifficultyLevel[]) Enum.GetValues(typeof(DifficultyLevel))).ToList()
+                    .Select(d => new SelectListItem { Text = d.ToString(), Value = d.ToString() } ), null, new { style = "width: 250px;" })
                 <span asp-validation-for="DifficultyLevel" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -43,7 +46,7 @@
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
