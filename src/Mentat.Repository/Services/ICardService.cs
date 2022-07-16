@@ -1,5 +1,4 @@
 ﻿using Mentat.Repository.Models;
-using Microsoft.AspNetCore.Http;
 
 namespace Mentat.Repository.Services
 {
