@@ -1,34 +1,78 @@
-﻿@model Mentat.UI.Models.Assignment
+﻿@using Microsoft.EntityFrameworkCore.Infrastructure
+@using System.Reflection
+@model Mentat.UI.Models.Assignment
 
 @{
-    ViewData["Title"] = "Add Assignment";
+    ViewData["Title"] = "AddAssignment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @using (Html.BeginForm("SubmitForm", "Mentor", FormMethod.Post))
 {
     <h2>Add Assignment Form</h2>
+
+    <!-- ID FIELD -->
+    
+    @Html.DisplayName("Id")
     <div>
-        Mentor Name
+        @Html.TextBoxFor(model=>model.Id)
+        @Html.ValidationMessageFor(model => model.Id,
+        "", new { @class = "text-danger" })
     </div>
-    @Html.TextBoxFor(model => model.MentorName)
+    
+    
+    <!-- MENTOR NAME FIELD -->
+    
+    @Html.DisplayName("MentorName")
     <div>
-        Assignment Name
+        @Html.TextBoxFor(model => model.MentorName)
+        @Html.ValidationMessageFor(model => model.MentorName,
+            "", new { @class = "text-danger" })
     </div>
-    @Html.TextBoxFor(model => model.AssignmentName)
+
+    <!-- ASSIGNMENT NAME FIELD -->
+    
+    @Html.DisplayName("AssignmentName")
     <div>
-        Assignment Type
+        @Html.TextBoxFor(model => model.AssignmentName)
+        @Html.ValidationMessageFor(model => model.AssignmentName,
+        "", new { @class = "text-danger" })
     </div>
-    @Html.RadioButtonFor(m => m.AssignmentType, ".c") @:.c
-    @Html.RadioButtonFor(m => m.AssignmentType, ".cpp") @:.cpp
+
+    <!-- ASSIGNMENT FILE TYPE FIELD -->
+    @Html.DisplayName("AssignmentType")
     <div>
-        Sample Executable Name
+        @Html.RadioButtonFor(m => m.AssignmentType, "c")
+        <span>C</span>
     </div>
-    @Html.TextBoxFor(model => model.SampleExecutableName)
     <div>
-        Test File Names
+        @Html.RadioButtonFor(m => m.AssignmentType, "c++")
+        <span>C++</span>
     </div>
-    @Html.TextAreaFor(model => model.TestFileNames)
+    
+
+    <!-- SELECT & UPLOAD SAMPLE FILES -->
+    @Html.DisplayName("SampleExecutableName")
     <div>
-    <input type="submit" value="Submit" />
+        @Html.TextBoxFor(model => model.SampleExecutableName)
+        @Html.ValidationMessageFor(model => model.SampleExecutableName,
+        "", new { @class = "text-danger" })
     </div>
+    
+    <!--SELECT & UPLOAD TEST FILES -->
+    @Html.DisplayName("TestFileNames")
+    <div>
+        @Html.TextBoxFor(model => model.TestFileNames)
+        @Html.ValidationMessageFor(model => model.TestFileNames,
+        "", new { @class = "text-danger" })
+    </div>
+
+    <div>
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
