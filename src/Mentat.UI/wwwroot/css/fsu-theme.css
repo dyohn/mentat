@@ -72,6 +72,10 @@ hr {
     height: 0;
     overflow: visible;
 }
+    hr.bold-black {
+        border: 1px solid black;
+        border-radius: 5px;
+    }
 
 h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
