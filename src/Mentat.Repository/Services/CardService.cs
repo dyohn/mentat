@@ -39,21 +39,13 @@ namespace Mentat.Repository.Services
                     throw new Exception("Card ID invalid.");
                 }
             }
-
-            InsertOrUpdateCard(card);
-        }
-
-        private void InsertOrUpdateCard(Card card)
-        {
-            if (card.Id == null)
-            {
-                card.Id = Guid.NewGuid().ToString();
-                _cards.InsertOne(card);
-            }
             else
             {
-                _cards.ReplaceOne(c => c.Id.Equals(card.Id), card);
+                card.Id = Guid.NewGuid().ToString();
             }
+
+            _cards.ReplaceOne(c => c.Id.Equals(card.Id), card, new ReplaceOptions { IsUpsert = true });
+
         }
     }
 }
