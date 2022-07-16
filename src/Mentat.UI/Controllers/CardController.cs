@@ -1,131 +1,80 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using MongoDB.Driver;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mentat.Repository.Services;
+using Mentat.UI.ViewModels;
+using Mentat.Repository.Models;
 
 namespace Mentat.UI.Controllers
 {
     public class CardController : Controller
     {
+        private readonly ICardService _cardService;
+
+        public CardController(ICardService cardService)
+        {
+            _cardService = cardService;
+        }
+
+        [HttpGet]
         // GET: CardController
         public ActionResult Index()
         {
-            Models.MongoHelper.ConnectToMongoService();
-            Models.MongoHelper.FlashCards =
-                           Models.MongoHelper.database.GetCollection<Models.Card>("FlashCards");
-
-            var filter = Builders<Models.Card>.Filter.Ne("_id", "");
-            var result = Models.MongoHelper.FlashCards.Find(filter).ToList();
-
-            return View(result);
+            return View(new CardViewModel(_cardService.GetCards()));
         }
 
         // GET: CardController/Details/5
         public ActionResult Details(string id)
         {
-            Models.MongoHelper.ConnectToMongoService();
-            Models.MongoHelper.FlashCards =
-                           Models.MongoHelper.database.GetCollection<Models.Card>("FlashCards");
+            var card = _cardService.GetCard(id);
+            if (card == null)
+            {
+                return NotFound($"Card with ID = {id} not found");
+            }
 
-            var filter = Builders<Models.Card>.Filter.Eq("_id", id);
-            var result = Models.MongoHelper.FlashCards.Find(filter).FirstOrDefault();
-
-            return View(result);
+            return View(new CardViewModel(card));
         }
 
-        // GET: CardController/Create
-        public ActionResult Create()
+        public ActionResult AddEditCard(string id = null)
         {
-            return View();
+            if (id == null)
+            {
+                return View(new CardViewModel());
+            }
+
+            var card = _cardService.GetCard(id);
+            if (card == null)
+            {
+                return NotFound($"Card with ID = {id} not found");
+            }
+            return View(new CardViewModel(card));
         }
 
-        // POST: CardController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult SaveCard(string id, [FromForm] Card card)
         {
             try
             {
-                Models.MongoHelper.ConnectToMongoService();
-                Models.MongoHelper.FlashCards =
-                               Models.MongoHelper.database.GetCollection<Models.Card>("FlashCards");
-                
-                object id = GenRandomId(24);
-
-                Models.MongoHelper.FlashCards.InsertOneAsync(new Models.Card
-                {
-                  _id = id,
-                  notes = collection["notes"]
-                });  
-                return RedirectToAction(nameof(Index));
-            }
-            catch(Exception e)
-            {
-                return View();
-            }
-        }
-
-        private static Random random = new Random();
-        private object GenRandomId(int v)
-        {
-            string strarr = "abcdefghijklmnopqrstuvwxyz123456789";
-            return new string(Enumerable.Repeat(strarr, v).Select(s => s[random.Next(s.Length)]).ToArray());
-
-        }
-
-        // GET: CardController/Edit/5
-        public ActionResult Edit(string id)
-        {
-            Models.MongoHelper.ConnectToMongoService();
-            Models.MongoHelper.FlashCards =
-                           Models.MongoHelper.database.GetCollection<Models.Card>("FlashCards");
-
-            var filter = Builders<Models.Card>.Filter.Eq("_id", id);
-            var result = Models.MongoHelper.FlashCards.Find(filter).FirstOrDefault();
-
-            return View(result);
-        }
-
-        // POST: CardController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(string id, IFormCollection collection)
-        {
-            try
-            {
-                Models.MongoHelper.ConnectToMongoService();
-                Models.MongoHelper.FlashCards =
-                               Models.MongoHelper.database.GetCollection<Models.Card>("FlashCards");
-
-                var filter = Builders<Models.Card>.Filter.Eq("_id", id);
-                var update = Builders<Models.Card>.Update
-                    .Set("notes", collection["notes"]);
-
-                var result = Models.MongoHelper.FlashCards.UpdateOneAsync(filter,update);
-
-
+                _cardService.SaveCard(id, card);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                throw new Exception("Card not saved");
             }
         }
 
         // GET: CardController/Delete/5
         public ActionResult Delete(string id)
         {
-            Models.MongoHelper.ConnectToMongoService();
-            Models.MongoHelper.FlashCards =
-                           Models.MongoHelper.database.GetCollection<Models.Card>("FlashCards");
+            var card = _cardService.GetCard(id);
+            if (card == null)
+            {
+                return NotFound($"Card with ID = {id} not found");
+            }
 
-            var filter = Builders<Models.Card>.Filter.Eq("_id", id);
-            var result = Models.MongoHelper.FlashCards.Find(filter).FirstOrDefault();
-
-            return View(result);
+            return View(new CardViewModel(card));
         }
 
         // POST: CardController/Delete/5
@@ -135,15 +84,14 @@ namespace Mentat.UI.Controllers
         {
             try
             {
-                Models.MongoHelper.ConnectToMongoService();
-                Models.MongoHelper.FlashCards =
-                               Models.MongoHelper.database.GetCollection<Models.Card>("FlashCards");
+                var card = _cardService.GetCard(id);
+                if (card == null)
+                {
+                    return NotFound($"Card with ID = {id} not found");
+                }
 
-                var filter = Builders<Models.Card>.Filter.Eq("_id", id);
+                _cardService.RemoveCard(id);
 
-                var result = Models.MongoHelper.FlashCards.DeleteOneAsync(filter);
-
-                
                 return RedirectToAction(nameof(Index));
             }
             catch

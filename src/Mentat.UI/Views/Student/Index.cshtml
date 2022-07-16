@@ -11,6 +11,11 @@
 <span class="dot"></span>
 <div class="row bottom-buffer col-sm-12">
     <div class="col-sm-9"></div>
+    <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+    <a href="javascript:;" onclick="refreshFlashcardList();"><span class="fa fa-refresh fa-2x fsu-maroon-color"></span></a>
+</div>
+<div class="row bottom-buffer col-sm-12">
+    <div class="col-sm-9"></div>
     @Html.TextBoxFor(m => m.SelectedCardIndex, new { style="width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
 </div>
 <div class="row bottom-buffer col-sm-12">
