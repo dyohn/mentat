@@ -9,19 +9,18 @@
 @Html.HiddenFor(m => m.NumberOfFlashCards)
 @Html.HiddenFor(m => m.CurrentIndex)
 <span class="dot"></span>
-<div class="row bottom-buffer col-sm-12">
+<div class="row col-sm-12">
     <div class="col-sm-9"></div>
     <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
     <a href="javascript:;" onclick="refreshFlashcardList();"><span class="fa fa-refresh fa-2x fsu-maroon-color"></span></a>
 </div>
 <div class="row bottom-buffer col-sm-12">
-    <div class="col-sm-9"></div>
-    @Html.TextBoxFor(m => m.SelectedCardIndex, new { style="width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
-</div>
-<div class="row bottom-buffer col-sm-12">
     <div class="col-sm-9">
         <span><img src="/images/fluent_brain-circuit-20-filled.png"></span>
         <span class="align-middle title-text">Study</span>
+    </div>
+    <div class="top-buffer col-sm">
+        @Html.TextBoxFor(m => m.SelectedCardIndex, new { style = "width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
     </div>
 </div>
 
@@ -44,19 +43,23 @@
                 <th></th>
             </tr>
         </thead>
+        <colgroup>
+            <col span="1" style="width: 75%;">
+            <col span="1" style="width: 15%;">
+        </colgroup>
         <tbody>
             @for (var i = 1; i <= Model.NumberOfFlashCards; i++)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(m => m.AvailableCards[i - 1].CardQuestion)
-                    </td>
-                    <td>
-                        <a href="javascript:;" title="View Details"><i class="fa-solid fa-eye" data-toggle="modal" data-target="#detailsModal"></i></a> |
-                        <a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen" data-toggle="modal" data-target="#editModal"></i></a> |
-                        <a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#deleteModal"></i></a>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => m.AvailableCards[i - 1].CardQuestion)
+                </td>
+                <td>
+                    <a href="javascript:;" title="View Details"><i class="fa-solid fa-eye" data-toggle="modal" data-target="#detailsModal"></i></a> |
+                    <a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen" data-toggle="modal" data-target="#editModal"></i></a> |
+                    <a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can" data-toggle="modal" data-target="#deleteModal"></i></a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
