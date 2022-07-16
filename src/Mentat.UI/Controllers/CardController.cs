@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mentat.Repository.Services;
 using Mentat.UI.ViewModels;
+using Mentat.Repository.Models;
 
 namespace Mentat.UI.Controllers
 {
     public class CardController : Controller
     {
-        private static Random random = new Random();
         private readonly ICardService _cardService;
 
         public CardController(ICardService cardService)
@@ -52,11 +52,11 @@ namespace Mentat.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveCard(string id, IFormCollection collection)
+        public ActionResult SaveCard(string id, [FromForm] Card card)
         {
             try
             {
-                _cardService.SaveCard(id, collection);
+                _cardService.SaveCard(id, card);
                 return RedirectToAction(nameof(Index));
             }
             catch

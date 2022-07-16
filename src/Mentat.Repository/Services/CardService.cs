@@ -1,5 +1,4 @@
 ﻿using Mentat.Repository.Models;
-using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 
 namespace Mentat.Repository.Services
@@ -30,23 +29,16 @@ namespace Mentat.Repository.Services
             _cards.DeleteOne(card => card.Id.Equals(id));
         }
 
-        public void SaveCard(string id, IFormCollection collection)
+        public void SaveCard(string id, Card card)
         {
-            var card = new Card();
             if (id != null)
             {
-                card = GetCard(id);
-                if (card == null)
+                card.Id = id;
+                if (GetCard(id) == null)
                 {
                     throw new Exception("Card ID invalid.");
                 }
             }
-
-            card.Notes = collection["notes"];
-            card.Subject = collection["subject"];
-            card.Question = collection["question"];
-            card.Answer = collection["answer"];
-            card.DifficultyLevel = collection["difficultyLevel"];
 
             InsertOrUpdateCard(card);
         }

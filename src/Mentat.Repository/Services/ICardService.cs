@@ -11,6 +11,6 @@ namespace Mentat.Repository.Services
         
         void RemoveCard(string id);
 
-        void SaveCard(string id, IFormCollection collection);
+        void SaveCard(string id, Card card);
     }
 }
