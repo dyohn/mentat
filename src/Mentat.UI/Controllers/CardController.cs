@@ -99,5 +99,12 @@ namespace Mentat.UI.Controllers
                 return View();
             }
         }
+
+        [HttpPost]
+        public ActionResult DeleteCard(string cardID)
+        {
+            _cardService.RemoveCard(cardID);
+            return Content("ok");
+        }
     }
 }
