@@ -3,6 +3,8 @@
         var cardID = $(event.relatedTarget).data("id");
         $("#confirmDelete").attr("data-id-to-delete", cardID);
     });
+
+    $('#SelectedDifficulties').multiselect();
 };
 
 function toggleShowHideOfFlashCard(index) {
@@ -95,4 +97,9 @@ function deleteFlashcard(sender) {
             }
         }
     ); 
+}
+
+function onClickFilterAccordian() {
+    $("#filters").collapse("toggle");
+    $("#caret-right").toggleClass(["fa-caret-down", "fa-caret-right"]);
 }

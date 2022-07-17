@@ -1,4 +1,5 @@
 ﻿@using Mentat.Domain.Models
+@using static Mentat.Domain.Constants
 
 @model StudentVM
 
@@ -23,6 +24,21 @@
 <div class="row bottom-buffer col-sm-12">
     <div class="col-sm-9"></div>
     @Html.TextBoxFor(m => m.SelectedCardIndex, new { style="width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
+</div>
+<div class="row accordion col-sm-12 bottom-buffer">
+    <a class="fsu-black-color" onclick="onClickFilterAccordian();" style="font-size: 20px" aria-expanded="false">
+    <span class="fa fa-caret-right fsu-black-color" id="caret-right"></span> @Model.FilterCount filter(s) applied</a>
+    <div class="row top-buffer col-sm-12 collapse in" id="filters">
+        <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
+        <div style="display:inline-block;">
+            @Html.Label(null, "Difficulty:", new { style="font-size: 15px; font-weight: bold;" })
+            <text>&nbsp;</text>
+            @Html.DropDownListFor(m => m.SelectedDifficulties, ((DifficultyLevel[]) Enum.GetValues(typeof(DifficultyLevel))).ToList()
+                .Select(d => new SelectListItem { Text = d.ToString(), Value = d.ToString() } ), null, new { @multiple = "multiple" })
+            <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+            <button type="button" class="bg-black text-on-dark font-weight-bold">Apply</button>
+        </div>
+    </div>
 </div>
 
 @for (var i = 1; i <= Model.NumberOfFlashCards; i++)
