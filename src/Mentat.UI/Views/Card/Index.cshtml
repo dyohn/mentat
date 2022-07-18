@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Mentat.UI.Models.Card>
+﻿@model Mentat.UI.ViewModels.CardViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -13,21 +13,51 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.notes)
+                @Html.DisplayNameFor(model => model.Subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Question)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Answer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCustom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DifficultyLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var card in Model.Cards) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.notes)
+                @Html.DisplayFor(modelItem => card.Subject)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item._id }) |
-                @Html.ActionLink("Details", "Details", new { id=item._id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item._id })
+                @Html.DisplayFor(modelItem => card.Question)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => card.Answer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => card.IsCustom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => card.DifficultyLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => card.Notes)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=card.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=card.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=card.Id })
             </td>
         </tr>
 }
