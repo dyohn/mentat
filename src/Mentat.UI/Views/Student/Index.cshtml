@@ -36,8 +36,8 @@
             <div style="display:inline-block;">
                 @Html.Label(null, "Difficulty:", new { style="font-size: 15px; font-weight: bold;" })
                 <text>&nbsp;</text>
-                @Html.DropDownListFor(m => m.SelectedDifficulties, ((DifficultyLevel[]) Enum.GetValues(typeof(DifficultyLevel))).ToList()
-                    .Select(d => new SelectListItem { Text = d.ToString(), Value = d.ToString() } ), null, new { @multiple = "multiple" })
+                @Html.ListBoxFor(m => m.SelectedDifficulties, ((DifficultyLevel[]) Enum.GetValues(typeof(DifficultyLevel))).ToList()
+                    .Select(d => new SelectListItem { Text = d.ToString(), Value = d.ToString() } ), new { @multiple = "multiple" })
                 <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
                 <button type="submit" class="bg-black text-on-dark font-weight-bold">Apply</button>
             </div>
