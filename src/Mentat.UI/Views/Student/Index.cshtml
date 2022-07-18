@@ -10,109 +10,107 @@
 @Html.HiddenFor(m => m.NumberOfFlashCards)
 @Html.HiddenFor(m => m.CurrentIndex)
 <span class="dot"></span>
-<div class="row bottom-buffer col-sm-12">
-    <div class="col-sm-9">
+<div class="col-sm-12">
+    <div class="row bottom-buffer col-sm-12">
         <span><img src="/images/fluent_brain-circuit-20-filled.png"></span>
         <span class="align-middle title-text">Study</span>
     </div>
-</div>
-<div class="row bottom-buffer col-sm-12">
-    <div class="col-sm-9"></div>
-    <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
-    <a href="javascript:;" onclick="refreshFlashcardList();"><span class="fa fa-refresh fa-2x fsu-maroon-color"></span></a>
-</div>
-<div class="row bottom-buffer col-sm-12">
-    <div class="col-sm-9"></div>
-    @Html.TextBoxFor(m => m.SelectedCardIndex, new { style="width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
-</div>
+    <div class="row bottom-buffer col-sm-12">
+        <div class="col-sm-9"></div>
+        <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+        <a href="javascript:;" onclick="refreshFlashcardList();"><span class="fa fa-refresh fa-2x fsu-maroon-color"></span></a>
+    </div>
+    <div class="row bottom-buffer col-sm-12">
+        <div class="col-sm-9"></div>
+        @Html.TextBoxFor(m => m.SelectedCardIndex, new { style="width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
+    </div>
 
-@using(Html.BeginForm())
-{
-    <div class="row accordion col-sm-12 bottom-buffer">
-        <a class="fsu-black-color" onclick="onClickFilterAccordian();" style="font-size: 20px" aria-expanded="false">
-        <span class="fa fa-caret-right fsu-black-color" id="caret-right"></span> @Model.FilterCount filter(s) applied</a>
-        <div class="row top-buffer col-sm-12 collapse in" id="filters">
-            <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
-            <div style="display:inline-block;">
-                @Html.Label(null, "Difficulty:", new { style="font-size: 15px; font-weight: bold;" })
-                <text>&nbsp;</text>
-                @Html.ListBoxFor(m => m.SelectedDifficulties, ((DifficultyLevel[]) Enum.GetValues(typeof(DifficultyLevel))).ToList()
-                    .Select(d => new SelectListItem { Text = d.ToString(), Value = d.ToString() } ), new { @multiple = "multiple" })
-                <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
-                <button type="submit" class="bg-black text-on-dark font-weight-bold">Apply</button>
+    @using(Html.BeginForm())
+    {
+        <div class="row accordion col-sm-12 bottom-buffer">
+            <a class="fsu-black-color" onclick="onClickFilterAccordian();" style="font-size: 20px" aria-expanded="false">
+            <span class="fa fa-caret-right fsu-black-color" id="caret-right"></span> @Model.FilterCount filter(s) applied</a>
+            <div class="row top-buffer col-sm-12 collapse in" id="filters">
+                <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
+                <div style="display:inline-block;">
+                    @Html.Label(null, "Difficulty:", new { style="font-size: 15px; font-weight: bold;" })
+                    <text>&nbsp;</text>
+                    @Html.ListBoxFor(m => m.SelectedDifficulties, ((DifficultyLevel[]) Enum.GetValues(typeof(DifficultyLevel))).ToList()
+                        .Select(d => new SelectListItem { Text = d.ToString(), Value = d.ToString() } ), new { @multiple = "multiple" })
+                    <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
+                    <button type="submit" class="bg-black text-on-dark font-weight-bold">Apply</button>
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
 
-@for (var i = 1; i <= Model.NumberOfFlashCards; i++)
-{
-    var display = i == 1 ? "inline" : "none";
-    <div id="flashcard_@i" style="display:@display">
-        <div class="col-sm-12">
+    @for (var i = 1; i <= Model.NumberOfFlashCards; i++)
+    {
+        var display = i == 1 ? "inline" : "none";
+        <div id="flashcard_@i" style="display:@display">
             <div style="width:10px; float:left; height:126px; background-color: @Model.AvailableCards[i - 1].DifficultyLevelColor; border:1px solid gray">&nbsp;</div>
             <div>
                 @Html.Partial("_Flashcard", Model.AvailableCards[i - 1], new ViewDataDictionary(ViewData) { { "index", i } })
             </div>
         </div>
+    }
+
+    <div class="row top-buffer col-sm-12">
+        <button type="button" class="bg-black text-on-dark font-weight-bold" onclick="location.href='@Url.Action("AddEditCard", "Card")';">Add Flashcard</button>
     </div>
-}
-
-<div class="row top-buffer col-sm-12">
-    <button type="button" class="bg-black text-on-dark font-weight-bold" onclick="location.href='@Url.Action("AddEditCard", "Card")';">Add Flashcard</button>
-</div>
-<hr class="bold-black top-buffer col-sm-12">
-<div class="row top-buffer col-sm-12">
-    <table class="table top-buffer">
-        <thead>
-            <tr>
-                <th align="center">List of Flashcards</th>
-                <th></th>
-            </tr>
-        </thead>
-        <colgroup>
-            <col span="1" style="width: 85%;">
-            <col span="1" style="width: 10%;">
-        </colgroup>
-        <tbody>
-            @for (var i = 1; i <= Model.NumberOfFlashCards; i++)
-            {
+    <hr class="bold-black top-buffer col-sm-12">
+    <div class="row top-buffer col-sm-12">
+        <table class="table top-buffer">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(m => m.AvailableCards[i - 1].CardQuestion)
-                    </td>
-                    <td>
-                        <a href="javascript:;" title="View Details" ><i class="fa-solid fa-eye fsu-maroon-color" onclick="location.href='@Url.Action("Details", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
-                        @if (Model.AvailableCards[i - 1].CanEditOrDelete)
-                        {
-                            <text> | </text>
-                            <a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen fsu-black-color" onclick="location.href='@Url.Action("AddEditCard", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
-                            <text> | </text>
-                            <a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can fsu-maroon-color" data-id="@Model.AvailableCards[i - 1].CardID" data-toggle="modal" data-target="#deleteModal"></i></a>
-                        }
-                    </td>
+                    <th align="center">List of Flashcards</th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <colgroup>
+                <col span="1" style="width: 85%;">
+                <col span="1" style="width: 10%;">
+            </colgroup>
+            <tbody>
+                @for (var i = 1; i <= Model.NumberOfFlashCards; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => m.AvailableCards[i - 1].CardQuestion)
+                        </td>
+                        <td>
+                            <a href="javascript:;" title="View Details" ><i class="fa-solid fa-eye fsu-maroon-color" onclick="location.href='@Url.Action("Details", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
+                            @if (Model.AvailableCards[i - 1].CanEditOrDelete)
+                            {
+                                <text> | </text>
+                                <a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen fsu-black-color" onclick="location.href='@Url.Action("AddEditCard", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
+                                <text> | </text>
+                                <a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can fsu-maroon-color" data-id="@Model.AvailableCards[i - 1].CardID" data-toggle="modal" data-target="#deleteModal"></i></a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
-<!-- Delete Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Delete Flashcard</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this flashcard?  
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-secondary" onclick="deleteFlashcard(this)" id="confirmDelete" data-id-to-delete="">Delete</button>
-                <button type="button" class="btn bg-primary text-white" data-dismiss="modal">Cancel</button>
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Flashcard</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this flashcard?  
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" onclick="deleteFlashcard(this)" id="confirmDelete" data-id-to-delete="">Delete</button>
+                    <button type="button" class="btn bg-primary text-white" data-dismiss="modal">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
