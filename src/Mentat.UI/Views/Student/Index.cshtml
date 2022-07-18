@@ -12,17 +12,22 @@
 <span class="dot"></span>
 <div class="col-sm-12">
     <div class="row bottom-buffer col-sm-12">
-        <span><img src="/images/fluent_brain-circuit-20-filled.png"></span>
-        <span class="align-middle title-text">Study</span>
-    </div>
-    <div class="row bottom-buffer col-sm-12">
-        <div class="col-sm-9"></div>
-        <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
-        <a href="javascript:;" onclick="refreshFlashcardList();"><span class="fa fa-refresh fa-2x fsu-maroon-color"></span></a>
-    </div>
-    <div class="row bottom-buffer col-sm-12">
-        <div class="col-sm-9"></div>
-        @Html.TextBoxFor(m => m.SelectedCardIndex, new { style="width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
+        <div class="col-sm-9">
+            <span><img src="/images/fluent_brain-circuit-20-filled.png"></span>    
+            <span class="align-middle title-text">Study</span>
+        </div>
+        <div class="col-sm-3">
+            <div class="row">
+                <div class="col-sm-3">
+                    <a href="javascript:;" onclick="refreshFlashcardList();"><span class="fa fa-refresh fa-2x fsu-maroon-color"></span></a>
+                </div>
+            </div>
+            <div class="row top-buffer">
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.SelectedCardIndex, new { style="width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
+                </div>
+            </div>
+        </div>
     </div>
 
     @using(Html.BeginForm())
