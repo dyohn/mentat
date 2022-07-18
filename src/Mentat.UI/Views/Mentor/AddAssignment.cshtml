@@ -1,6 +1,4 @@
-﻿@using Microsoft.EntityFrameworkCore.Infrastructure
-@using System.Reflection
-@model Mentat.UI.Models.Assignment
+﻿@model Mentat.UI.Models.Assignment
 
 @{
     ViewData["Title"] = "AddAssignment";
@@ -10,19 +8,16 @@
 @using (Html.BeginForm("SubmitForm", "Mentor", FormMethod.Post))
 {
     <h2>Add Assignment Form</h2>
-
-    <!-- ID FIELD -->
     
+    <!-- ID FIELD -->
     @Html.DisplayName("Id")
     <div>
         @Html.TextBoxFor(model=>model.Id)
         @Html.ValidationMessageFor(model => model.Id,
         "", new { @class = "text-danger" })
     </div>
-    
-    
+
     <!-- MENTOR NAME FIELD -->
-    
     @Html.DisplayName("MentorName")
     <div>
         @Html.TextBoxFor(model => model.MentorName)
@@ -31,7 +26,6 @@
     </div>
 
     <!-- ASSIGNMENT NAME FIELD -->
-    
     @Html.DisplayName("AssignmentName")
     <div>
         @Html.TextBoxFor(model => model.AssignmentName)
@@ -42,16 +36,16 @@
     <!-- ASSIGNMENT FILE TYPE FIELD -->
     @Html.DisplayName("AssignmentType")
     <div>
-        @Html.RadioButtonFor(m => m.AssignmentType, "c")
+        @Html.RadioButtonFor(m => m.AssignmentType, "c",
+            new { @checked = "checked" })
         <span>C</span>
     </div>
     <div>
         @Html.RadioButtonFor(m => m.AssignmentType, "c++")
         <span>C++</span>
     </div>
-    
 
-    <!-- SELECT & UPLOAD SAMPLE FILES -->
+    <!-- SELECT & UPLOAD SAMPLE FILE -->
     @Html.DisplayName("SampleExecutableName")
     <div>
         @Html.TextBoxFor(model => model.SampleExecutableName)
@@ -59,18 +53,17 @@
         "", new { @class = "text-danger" })
     </div>
     
-    <!--SELECT & UPLOAD TEST FILES -->
-    @Html.DisplayName("TestFileNames")
+    <!--SELECT & UPLOAD TEST FILE -->
+    @Html.DisplayName("TestFileName")
     <div>
-        @Html.TextBoxFor(model => model.TestFileNames)
-        @Html.ValidationMessageFor(model => model.TestFileNames,
+        @Html.TextBoxFor(model => model.TestFileName)
+        @Html.ValidationMessageFor(model => model.TestFileName,
         "", new { @class = "text-danger" })
     </div>
 
     <div>
         <input type="submit" value="Create" class="btn btn-primary" />
     </div>
-
 }
 
 @section Scripts {
