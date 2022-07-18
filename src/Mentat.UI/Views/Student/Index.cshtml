@@ -49,7 +49,12 @@
 {
     var display = i == 1 ? "inline" : "none";
     <div id="flashcard_@i" style="display:@display">
-        @Html.Partial("_Flashcard", Model.AvailableCards[i - 1], new ViewDataDictionary(ViewData) { { "index", i } })
+        <div class="col-sm-12">
+            <div style="width:10px; float:left; height:126px; background-color: @Model.AvailableCards[i - 1].DifficultyLevelColor; border:1px solid gray">&nbsp;</div>
+            <div>
+                @Html.Partial("_Flashcard", Model.AvailableCards[i - 1], new ViewDataDictionary(ViewData) { { "index", i } })
+            </div>
+        </div>
     </div>
 }
 

@@ -17,6 +17,14 @@ namespace Mentat.Domain.Models
         public string CardID { get; set; }
         public string Subject { get; set; }
         public string DifficultyLevel { get; set; }
+        public string DifficultyLevelColor => DifficultyLevel switch
+        {
+            nameof(Constants.DifficultyLevel.Easy) => "green",
+            nameof(Constants.DifficultyLevel.Medium) => "yellow",
+            nameof(Constants.DifficultyLevel.Hard) => "orange",
+            nameof(Constants.DifficultyLevel.Expert) => "red",
+            _ => "purple",
+        };
         public string CardQuestion { get; set; }
         public string HiddenCardAnswer { get; set; }
         public string CardAnswerOverlay => "";
