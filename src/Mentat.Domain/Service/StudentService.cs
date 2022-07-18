@@ -16,13 +16,15 @@ namespace Mentat.Domain.Service
             _cardService = cardService;
         }
 
-        public StudentVM GetStudentVM()
+        public StudentVM GetStudentVM(List<string> selectedDifficulties)
         {
-            var cards = _cardService.GetCards();
+            var cards = _cardService.GetFilteredCardsList(selectedDifficulties);
             var vm = new StudentVM
             {
                 AvailableCards = new List<FlashCardVM>(),
-                SelectedCardIndex = 1
+                SelectedCardIndex = 1,
+                FilterCount = selectedDifficulties?.Count ?? 0,
+                SelectedDifficulties = selectedDifficulties
             };
             
             foreach (var card in cards)

@@ -34,7 +34,7 @@ namespace Mentat.UI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var cards = _cardService.GetCards();
+            var cards = _cardService.GetAllCards();
             var randomCards = GetRandomCards(cards, 5);
             return View(new CardViewModel(randomCards));
         }

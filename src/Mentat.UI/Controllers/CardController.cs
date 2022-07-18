@@ -20,7 +20,7 @@ namespace Mentat.UI.Controllers
         // GET: CardController
         public ActionResult Index()
         {
-            return View(new CardViewModel(_cardService.GetCards()));
+            return View(new CardViewModel(_cardService.GetAllCards()));
         }
 
         // GET: CardController/Details/5
