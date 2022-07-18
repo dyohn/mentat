@@ -1,14 +1,32 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Mentat.LoginRegister.Data;
+using Mentat.LoginRegister.Areas.Identity.Data;
+using Mentat.LoginRegister.Settings;
+using Mentat.LoginRegister.Areas.Identity;
+using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("AuthDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");
+//var connectionString = builder.Configuration.GetConnectionString("AuthDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");
 
-builder.Services.AddDbContext<AuthDbContext>(options =>
-    options.UseSqlServer(connectionString));;
+//builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connectionString));;
 
-builder.Services.AddDefaultIdentity<Mentat.LoginRegister.Areas.Identity.Data.ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<AuthDbContext>();;
+ConfigurationManager configuration = builder.Configuration;
+IWebHostEnvironment environment = builder.Environment;
+
+var mongoDbSettings = configuration.GetSection(nameof(MongoDbConfig)).Get<MongoDbConfig>();
+
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+{ options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ "; 
+  //options.SignIn.RequireConfirmedAccount = true; 
+}).AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>
+    (
+    mongoDbSettings.ConnectionString, mongoDbSettings.DatabaseName
+    );
+
+
+
+//builder.Services.AddDefaultIdentity<Mentat.LoginRegister.Areas.Identity.Data.ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<DbContext>();;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

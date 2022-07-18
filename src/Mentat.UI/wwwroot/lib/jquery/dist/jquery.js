@@ -3645,7 +3645,8 @@ jQuery.Callbacks = function( options ) {
 };
 
 
-function Identity( v ) {
+function 
+( v ) {
 	return v;
 }
 function Thrower( ex ) {
