@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
+﻿using Mentat.UI.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Mentat.UI.Controllers
 {
@@ -10,20 +10,27 @@ namespace Mentat.UI.Controllers
             return View();
         }
 
-        public IActionResult AddAssignment()
+        public IActionResult AddAssignment(Assignment assignment)
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(Models.Assignment assignment)
+        public ActionResult SubmitForm(Assignment assignment)
         {
-            var mentorName = assignment.MentorName;
-            var assignmentName = assignment.AssignmentName;
-            var assignmentType = assignment.AssignmentType;
-            var sampleExecutableName = assignment.SampleExecutableName;
-            var testFileNames = assignment.TestFileNames;
+            // If form is correct then moves on to the next view 
+            // otherwise view is reloaded and user must retry filling the form
+            if (ModelState.IsValid)
+            {
+                // On Form Validation Success Go To This View
+                return RedirectToAction("Success");
+            }
+            return View("AddAssignment");
+        }
+
+        public ActionResult Success(Assignment assignment)
+        {
             return View();
         }
     }
