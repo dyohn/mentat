@@ -3,16 +3,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Mentat.UI</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>@ViewData["Title"] - Mentat</title>
+    <link rel="stylesheet" href="~/css/fsu-theme.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="~/css/toastr.min.css"/>
+    <link rel="stylesheet" href="~/css/all.min.css"/>
+    <link rel="stylesheet" href="~/css/bootstrap-multiselect.min.css" type="text/css"/>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3 mt-lg-5">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mentat.UI</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mentat</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,13 +24,28 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Mentor" asp-action="Index">Mentor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="Index">Student</a>
                         </li>
                     </ul>
                 </div>
+
+                <div class="navbar-collapse collapse justify-content-end">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <img src="~/images/blank-profile-picture-g235ada478_640.png" width="40" height="40" class="rounded-circle">
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="#">Register</a>
+                          <a class="dropdown-item" href="#">Log In</a>
+                        </div>
+                      </li>   
+                    </ul>
+                </div>
+
             </div>
         </nav>
     </header>
@@ -35,7 +54,7 @@
             @RenderBody()
         </main>
     </div>
-
+    
     <footer class="page-footer">
         <div class="footer-content">
             <div class="row">
@@ -102,20 +121,14 @@
             </div>
          </div>
 
-
-                    
-        <div class="Privacy">
-                    
-                       <div class="Mentat-privacy">
-                           &copy; @DateTime.Now.Year - Mentat.UI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                       </div>
-                </div>
-
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="~/js/bootstrap-multiselect.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
