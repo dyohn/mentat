@@ -4,7 +4,9 @@ namespace Mentat.Repository.Services
 {
     public interface ICardService
     {
-        List<Card> GetCards();
+        List<Card> GetAllCards();
+
+        List<Card> GetFilteredCardsList(List<string> difficultyLevels);
 
         Card GetCard(string id);
         

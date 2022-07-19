@@ -5,6 +5,6 @@ namespace Mentat.Domain.IService
 {
     public interface IStudentService
     {
-        StudentVM GetStudentVM();
+        StudentVM GetStudentVM(List<string> selectedDifficulties);
     }
 }

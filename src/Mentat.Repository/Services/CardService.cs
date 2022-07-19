@@ -14,9 +14,21 @@ namespace Mentat.Repository.Services
             _cards = database.GetCollection<Card>(settings.CardCollectionName);
         }
 
-        public List<Card> GetCards()
+        public List<Card> GetAllCards()
         {
            return _cards.Find(card => true).ToList();
+        }
+
+        public List<Card> GetFilteredCardsList(List<string> difficultyLevels)
+        {
+            if(difficultyLevels == null)
+            {
+                return GetAllCards();
+            }
+
+            return _cards
+                .Find(c => difficultyLevels.Contains(c.DifficultyLevel))
+                .ToList();
         }
 
         public Card GetCard(string id)

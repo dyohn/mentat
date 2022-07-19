@@ -1,4 +1,5 @@
 ﻿using Mentat.Domain.IService;
+using Mentat.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mentat.UI.Controllers
@@ -12,9 +13,9 @@ namespace Mentat.UI.Controllers
             _studentService = studentService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(StudentVM studentVM = null)
         {
-            var vm = _studentService.GetStudentVM();
+            var vm = _studentService.GetStudentVM(studentVM.SelectedDifficulties);
             return View(vm);
         }
     }
