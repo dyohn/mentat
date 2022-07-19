@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mentat.Repository.Models;
+using Mentat.Repository.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Mentat.Domain.Interfaces;
+using Mentat.Domain.IService;
+using Mentat.Domain.Service;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 
 namespace Mentat.UI
 {
@@ -23,7 +31,17 @@ namespace Mentat.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Mapping to CardDatabaseSettings no longer works on NET 6.0; need to update Startup.cs to reflect migration to 6.0
+            // For now, mainly entered CardBaseSettings into the class - when migration complete, abstract with updated Configure
+            services.Configure<CardDatabaseSettings>(Configuration.GetSection(nameof(CardDatabaseSettings)));
+
+            services.AddSingleton<ICardDatabaseSettings, CardDatabaseSettings>();
+            services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetValue<string>("CardDatabaseSettings:ConnectionString")));
             services.AddControllersWithViews();
+
+            // Configure Dependency Injection classes here
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<ICardService, CardService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

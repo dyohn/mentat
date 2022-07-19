@@ -31,5 +31,18 @@ namespace Mentat.Domain
         /// </summary>
         public static readonly string PauseCmd = "read -n 1 -r -s -p 'Press enter to continue...'";
         #endregion
+
+        #region Enums
+        /// <summary>
+        /// Enum for DifficultyLevel
+        /// </summary>
+        public enum DifficultyLevel
+        {
+            Easy,
+            Medium,
+            Hard,
+            Expert
+        }
+        #endregion
     }
 }
