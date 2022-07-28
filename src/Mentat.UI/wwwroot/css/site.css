@@ -111,6 +111,7 @@ body {
   color: white;
   transition: color .4s ease;
 }
+
 .socials {
   list-style: none;
   display: flex;
@@ -119,10 +120,6 @@ body {
   margin: 2rem 0 1rem 0;
 }
 
-.footer-content p {
-  margin: 4rem 0 5rem 0;
-  font-size: 80%;
-}
 .socials a {
   color: rgb(120, 47, 64);
   text-decoration: none;
@@ -134,80 +131,8 @@ body {
 
 .socials a i {
   font-size: 1.2rem;
-}
-
-.socials a:hover i{
-  color: white;
-  transition: color .4s ease;
-}
-
-.footer-content a {
-  color: rgb(120, 47, 64);
-  text-decoration: none;
-  font-weight: 600;
-
-}
-
-.footer-content a:hover {
-  color: white;
-  transition: color .4s ease;
-}
-.socials {
-  list-style: none;
-  display: flex;
-  align-items:center;
-  justify-content: center;
-  margin: 5rem 0 1rem 0;
-}
-
-.socials a {
-  color: rgb(120, 47, 64);
-  text-decoration: none;
-}
-
-.socials li{
-  margin: 0 7px;
-}
-
-.socials a i {
-  font-size: 1.2rem;
-}
-
-.socials a:hover i{
-  color: white;
-  transition: color .4s ease;
-}
-
-.footer-content a {
-  color: rgb(120, 47, 64);
-  text-decoration: none;
-  font-weight: 600;
-
-}
-
-.footer-content a:hover {
-  color: white;
-  transition: color .4s ease;
-}
-.socials {
-  list-style: none;
-  display: flex;
-  align-items:center;
-  justify-content: center;
-  margin: 5rem 0 1rem 0;
-}
-
-.socials a {
-  color: rgb(120, 47, 64);
-  text-decoration: none;
-}
-
-.socials li{
-  margin: 0 7px;
-}
-
-.socials a i {
-  font-size: 1.2rem;
+  width: 30px;
+  padding: 3em 0em;
 }
 
 .socials a:hover i{
@@ -244,13 +169,16 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  text-align: left;
+  text-align:left;
 }
 
 .footer-content2 p {
   margin: 1rem 0 5rem 0;
   font-size: 80%;
   color: #fdfcfc;
+  padding-left: 80px;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .footer-content2 a {
@@ -262,39 +190,6 @@ body {
 .footer-content2 a:hover {
   color: white;
   transition: color .4s ease;
-}
-
-.socials2 {
-   list-style: none;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   margin: 2rem 0 1rem 0;
-}
-
-.socials2 a {
-   color: #ceb888 !important;
-   text-decoration: none;
-}
-
-.socials2 li {
-   margin: 0 7px;
-
-}
-
-.socials2 a i {
-   font-size: 1.3rem;
-   border-radius: 50%;
-   width: 30px;
-   height: 30px;
-   display: inline-block;
-   padding: .3em .3em;
-   background-color: #5f2835;
-}
-
-.socials2 a:hover i {
-   color: white;
-   transition: color .4s ease;
 }
 
 /* FSU Theme Colors */
