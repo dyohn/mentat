@@ -63,12 +63,133 @@ body {
   margin-bottom: 60px;
   height: 100% !important;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+  line-height: 60px;
+}
+
+.page-footer {
+  padding: 2px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 1.777;
+}
+
+.footer-content {
+  height:140px;
+  background: #d5d4d4;
+  height:140px;
+  background: #d5d4d4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
+}
+
+.footer-content p {
+  margin: 4rem 0 5rem 0;
+  font-size: 80%;
+}
+
+.footer-content a {
+  color: rgb(120, 47, 64);
+  text-decoration: none;
+  font-weight: 600;
+
+}
+
+.footer-content a:hover {
+  color: white;
+  transition: color .4s ease;
+}
+
+.socials {
+  list-style: none;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  margin: 2rem 0 1rem 0;
+}
+
+.socials a {
+  color: rgb(120, 47, 64);
+  text-decoration: none;
+}
+
+.socials li{
+  margin: 0 7px;
+}
+
+.socials a i {
+  font-size: 1.2rem;
+  width: 30px;
+  padding: 3em 0em;
+}
+
+.socials a:hover i{
+  color: white;
+  transition: color .4s ease;
+}
+
+.Privacy {
+  height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  background: #782f40;
+  background-size: cover;
+}
+
+.Privacy a {
+  color: #ceb888 !important;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.Mentat-privacy {
+  margin: 1rem 0 5rem 0;
+  font-size: 80%;
+  color: #fdfcfc;
+}
+
+.footer-content2 {
+  background: #782f40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align:left;
+}
+
+.footer-content2 p {
+  margin: 1rem 0 5rem 0;
+  font-size: 80%;
+  color: #fdfcfc;
+  padding-left: 80px;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.footer-content2 a {
+  color: #ceb888 !important;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-content2 a:hover {
+  color: white;
+  transition: color .4s ease;
 }
 
 /* FSU Theme Colors */
