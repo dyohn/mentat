@@ -1,0 +1,17 @@
+@model Mentat.UI.ViewModels.LoginViewModel;
+
+
+<form method="post">
+    <div class="form-group">
+        <label for="UserName">Username:</label>
+        <input type="text" id="UserName" name="UserName" class="form-control" />
+        
+        <label for="Password">Password:</label>
+        <input type="password" id="Password" name="Password" class="form-control" />
+
+        <label>@Html.RadioButton("UserType", 0)Student</label>
+        <label>@Html.RadioButton("UserType", 1)Mentor</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
