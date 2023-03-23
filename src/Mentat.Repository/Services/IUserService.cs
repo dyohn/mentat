@@ -1,6 +1,4 @@
 using Mentat.Repository.Models;
-using Mentat.Repository.Models;
-
 namespace Mentat.Repository.Services
 {
     public interface IUserService
