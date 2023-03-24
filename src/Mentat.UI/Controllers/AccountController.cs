@@ -1,6 +1,8 @@
 ﻿using Mentat.UI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Mentat.Repository.Models;
+using Mentat.Repository.Services;
 
 namespace Mentat.UI.Controllers
 {
@@ -14,10 +16,13 @@ namespace Mentat.UI.Controllers
     {
 
         private readonly ILogger<AccountController> _logger;
+        
+        private readonly IUserService _userService;
 
-        public AccountController(ILogger<AccountController> logger)
+        public AccountController(ILogger<AccountController> logger, IUserService userService)
         {
             _logger = logger;
+            _userService = userService;
         }
 
         [HttpGet]

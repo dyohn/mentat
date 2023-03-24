@@ -6,6 +6,6 @@ namespace Mentat.Repository.Models
 
         string DatabaseName { get; set; }
 
-        string ConnectionString { get ; set;} 
+        string ConnectionString { get; set; } 
     }
 }

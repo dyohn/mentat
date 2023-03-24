@@ -9,6 +9,12 @@ namespace Mentat.Repository.Models
         [BsonElement("_id")]
         public string Id { get; set ;}
 
+        [BsonElement("FirstName")]
+        public string FirstName { get; set; }
+
+        [BsonElement("LastName")]
+        public string LastName { get; set; }
+
         [BsonElement("Username")]
         public string Username { get; set; }
 
@@ -25,6 +31,6 @@ namespace Mentat.Repository.Models
         public string UpdatedAt { get; set; }
 
         [BsonElement("Role")]
-        public string Role { get; set; }
+        public int Role { get; set; }
     }
 }

@@ -43,6 +43,15 @@ namespace Mentat.UI
 
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ICardService, CardService>();
+
+            // Mapping for the UserDatabaseSettings
+            services.Configure<UserDatabaseSettings>(Configuration.GetSection(nameof(UserDatabaseSettings)));
+            // Configure Dependency Injection classes here
+            services.AddSingleton<IUserDatabaseSettings, UserDatabaseSettings>();
+
+            // Using the same Mongo client for both card and user services. Configuration.GetValue<string>("UserDatabaseSettingds:ConnectionString"))) is returning NUll for some reason.
+            services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetValue<string>("UserDatabaseSettings:ConnectionString")));
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
