@@ -1,6 +1,8 @@
 ﻿using System;
 using Mentat.Domain.Interfaces;
 using System.Text;
+using System.IO;
+using MongoDB.Bson.Serialization.Serializers;
 
 namespace Mentat.Domain.Bash
 {
@@ -19,7 +21,7 @@ namespace Mentat.Domain.Bash
             _fileManagerService = managerService;
         }
 
-        public void Build()
+        public FileInfo Build()
         {
             // config has all the details and shouldn't be null
             if (_config is null)
@@ -45,6 +47,25 @@ namespace Mentat.Domain.Bash
             if (!string.IsNullOrEmpty(script))
             {
                 _fileManagerService.SaveScript(Encoding.UTF8.GetBytes(script), fileName);
+            }
+
+            //make sure the file exists and return it or instead return dummy file
+            if (File.Exists(fileName))
+            {
+                return new FileInfo(fileName);
+            }     
+            else
+            {
+                string dummyFile = @"file.txt";
+                var dummyBuilder = new StringBuilder();
+                dummyBuilder.Append(dummyFile).AppendLine();
+
+                using (FileStream fs = File.Create(dummyFile))
+                {
+                    _fileManagerService.SaveScript(Encoding.UTF8.GetBytes("Hello World"), dummyFile);
+                }
+
+                return new FileInfo(dummyFile);
             }
         }
 
