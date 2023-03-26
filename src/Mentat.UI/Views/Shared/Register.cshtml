@@ -1,16 +1,35 @@
 @model Mentat.UI.ViewModels.RegisterViewModel;
 
-
-<form method="post">
-    <div class="form-group">
-        <label for="UserName">Name:</label>
-        <input type="text" id="UserName" name="UserName" class="form-control" />
-        
-         <label for="Password">PW:</label>
-                <input type="password" id="Password" name="Password" class="form-control" />
-     <label>@Html.RadioButton("UserType", 0)Student</label>
-      <label>@Html.RadioButton("UserType", 1)Mentor</label>
+<div class="modal" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">
+                    <b>Register</b>
+                </h5>
+            </div>
+            <form id="registerForm" method="post">
+                <div class="form-group">
+                    <label for="UserName">Username:</label>
+                    <input type="text" id="UserName" name="UserName" class="form-control"/>
+                    <label for="Password">Password:</label>
+                    <input type="password" id="Password" name="Password" class="form-control"/>
+                    <label>@Html.RadioButton("UserType", 0)Student</label>
+                    <label>@Html.RadioButton("UserType", 1)Mentor</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close" onclick="redirectHomepage()">
+                    <span aria-hidden="true">Close</span>
+                </button>
+            </form>
         </div>
+    </div>
+</div>
 
-    <button type="submit" class="btn btn-primary">Register</button>
-</form>
+
+<script>
+  function redirectHomepage() {
+    window.location.href = "/";
+  }
+</script>
