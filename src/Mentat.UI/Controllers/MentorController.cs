@@ -1,4 +1,5 @@
-﻿using Mentat.UI.Models;
+﻿using System.Text;
+using Mentat.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mentat.UI.Controllers
@@ -32,6 +33,16 @@ namespace Mentat.UI.Controllers
         public ActionResult Success(Assignment assignment)
         {
             return View();
+        }
+
+        // ********************************************
+        // *             Download method              *
+        // ********************************************
+        // Download a file to the user's local machine.
+        public IActionResult Download()
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes("Hello, World!");
+            return File(bytes, "text/plain", "file.txt");
         }
     }
 }
