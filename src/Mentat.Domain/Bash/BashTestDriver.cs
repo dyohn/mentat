@@ -73,5 +73,10 @@ namespace Mentat.Domain.Bash
         {
             _config = config;
         }
+
+        public String GetColorString(BashColor color, String msg)
+        {
+            return color.Color + msg + BashColor.End;
+        }
     }
 }
