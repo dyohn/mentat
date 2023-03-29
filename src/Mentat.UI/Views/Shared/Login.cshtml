@@ -18,6 +18,10 @@
                     <input type="password" id="Password" name="Password" class="form-control"/>
                     <label>@Html.RadioButton("UserType", 0)Student</label>
                     <label>@Html.RadioButton("UserType", 1)Mentor</label>
+					<label>
+						<input type="checkbox" id="RememberMe" name="RememberMe" value="true" />
+						Remember Me
+					</label>
                 </div>
                 <button type="submit" class="btn btn-primary">Log In</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close" onclick="redirectHomepage()">

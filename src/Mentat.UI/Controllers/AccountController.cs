@@ -37,9 +37,10 @@ namespace Mentat.UI.Controllers
         public IActionResult Register(RegisterViewModel model)
         {
 
-            _logger.LogInformation("Name: {nm}, \nPW: {pw}, \nType: {type}", model.UserName, model.Password,
-                model.UserType);
-
+            _logger.LogInformation("First Name: {firstName}, \nLast Name: {lastName}, \nName: {nm}, \nPW: {pw}, " +
+                "\nType: {type}, \nRememberMe: {rememberMe}, \nEmail: {email}, \nBirth Date: {birthDate}",
+                            model.FirstName, model.LastName, model.UserName, model.Password, model.UserType, 
+                            model.RememberMe, model.Email, model.BirthDate);
 
             if (model.UserType == 0)
             {
@@ -65,8 +66,8 @@ namespace Mentat.UI.Controllers
         public IActionResult Login(LoginViewModel model)
         {
 
-            _logger.LogInformation("Name: {nm}, \nPW: {pw}, \nType: {type}", model.UserName, model.Password,
-                model.UserType);
+            _logger.LogInformation("Name: {nm}, \nPW: {pw}, \nType: {type}, \nRememberMe: {rememberMe}",
+                model.UserName, model.Password, model.UserType, model.RememberMe);
 
 
             if (model.UserType == 0)

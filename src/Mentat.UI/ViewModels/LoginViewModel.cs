@@ -9,4 +9,5 @@ public class LoginViewModel
 
     public int UserType { get; set; } // 0 for students, 1 for mentors
 
+    public bool RememberMe { get; set; } // true if "Remember Me" checkbox is checked
 }
