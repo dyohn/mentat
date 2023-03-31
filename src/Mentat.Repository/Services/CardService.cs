@@ -18,29 +18,59 @@ namespace Mentat.Repository.Services
 
         public List<Card> GetAllCards()
         {
-           return _cards.Find(card => true).ToList();
+            return GetFilteredCardsList(null);
         }
 
         public List<Card> GetFilteredCardsList(List<string> difficultyLevels)
         {
-            if(difficultyLevels == null)
+            List<Card> cards = new List<Card>();
+            try
             {
-                return GetAllCards();
+                // Get all cards if list of difficulty levels empty.
+                if (difficultyLevels == null)
+                {
+                    cards = _cards.Find(card => true).ToList();
+                }
+                // Else get the cards of specified difficulty.
+                else
+                {
+                    cards = _cards.Find(c => difficultyLevels.Contains(c.DifficultyLevel)).ToList();
+                }
             }
-
-            return _cards
-                .Find(c => difficultyLevels.Contains(c.DifficultyLevel))
-                .ToList();
+            // Add a card marked with error info in case of exception.
+            catch (Exception)
+            {
+                Card c = new Card();
+                c.Answer = $"There was a problem retrieving cards.";
+                cards.Add(c);
+            }
+            return cards;
         }
 
         public Card GetCard(string id)
         {
-            return _cards.Find(card => card.Id.Equals(id)).SingleOrDefault();
+            Card card = new Card();
+            try
+            {
+                card = _cards.Find(card => card.Id.Equals(id)).SingleOrDefault();
+            }
+            catch (Exception)
+            {
+                card.Subject = "There was a problem retrieving the card";
+            }
+            return card;
         }
 
         public void RemoveCard(string id)
         {
-            _cards.DeleteOne(card => card.Id.Equals(id));
+            try
+            {
+                _cards.DeleteOne(card => card.Id.Equals(id));
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         public void SaveCard(string id, Card card)
@@ -58,7 +88,14 @@ namespace Mentat.Repository.Services
                 card.Id = Guid.NewGuid().ToString();
             }
 
-            _cards.ReplaceOne(c => c.Id.Equals(card.Id), card, new ReplaceOptions { IsUpsert = true });
+            try
+            {
+                _cards.ReplaceOne(c => c.Id.Equals(card.Id), card, new ReplaceOptions { IsUpsert = true });
+            }
+            catch (Exception)
+            {
+                return;
+            }
 
         }
     }
