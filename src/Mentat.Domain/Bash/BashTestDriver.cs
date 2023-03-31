@@ -37,6 +37,9 @@ namespace Mentat.Domain.Bash
                 scriptBuilder.Append(testFileName).AppendLine();
             }
 
+            // TODO: This might be wrong. Need to ask Derek if SampleExecutableName is the name of the output file
+            //       OR if SampleExecutableName is the name of the mentors version of the assignment being tested
+            //       that will be used in the diff.
             var fileExtension = _config.Language == "python" ? "py" : "cpp";
 
             var fileName = $"{_config.SampleExecutableName}.{fileExtension}";
