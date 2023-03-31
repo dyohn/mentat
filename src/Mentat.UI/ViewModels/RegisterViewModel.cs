@@ -9,7 +9,7 @@ public class RegisterViewModel
 
     public string LastName { get; set; } // new property for last name
 
-    public string UserName { get; set; }
+    public string Username { get; set; }
     
     public string Password { get; set; }
 

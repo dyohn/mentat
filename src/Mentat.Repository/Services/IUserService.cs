@@ -4,19 +4,21 @@ namespace Mentat.Repository.Services
 {
     public interface IUserService
     {
-        List<Users> GetAllUsers();
+        List<User> GetAllUsers();
 
-        List<Users> GetFilteredUserList(List<int> Role);
+        List<User> GetFilteredUserList(List<int> role);
 
-        Users GetUser( string id);
+        User GetUser( string id);
 
-        Users GetFirstName( string id);
+        User GetFirstName( string id);
 
-        Users GetLastName( string id);
+        User GetLastName( string id);
 
         void RemoveUser (string id);
 
-        void saveUser( string id, Users user);
+        void SaveUser( string id, User user);
+        
+        Task AddUser(User user);
 
     }
 }

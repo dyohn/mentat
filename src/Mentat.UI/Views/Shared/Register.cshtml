@@ -1,4 +1,5 @@
 @model Mentat.UI.ViewModels.RegisterViewModel;
+@Html.ValidationSummary()
 
 <div class="modal" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel"
      aria-hidden="true" data-backdrop="static">
@@ -9,7 +10,8 @@
                     <b>Register</b>
                 </h5>
             </div>
-            <form id="registerForm" method="post">
+            @* <form id="registerForm" method="post"> *@
+            <form asp-controller="Account" asp-action="Register" method="post">
                 <div class="form-group">
 					<label for="FirstName">First Name:</label>
 					<input type="text" id="FirstName" name="FirstName" class="form-control" />
