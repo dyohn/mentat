@@ -188,3 +188,41 @@ body, html {
     -webkit-line-clamp: 2;
     overflow: hidden;
 }
+
+.tag-field {
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    padding: 3px;
+    min-height: 26px;
+}
+
+    .tag-field > input {
+        border: 0px;
+        outline: none;
+        font-size: 20px;
+    }
+
+.tag-item {
+    margin: 2px;
+    padding: 2px 24px 2px 8px;
+    float: left;
+    display: flex;
+    background-color: rgb(204, 204, 204);
+    color: rgb(51, 51, 51);
+    border-radius: 3px;
+    position: relative;
+}
+
+    .tag-item > span {
+        font-family: 'Muli';
+        line-height: 18px;
+    }
+
+    .tag-item > .fa {
+        font-size: 12px;
+        line-height: 18px;
+        margin-left: 8px;
+        position: absolute;
+        right: 8px;
+        top: 2px;
+    }
