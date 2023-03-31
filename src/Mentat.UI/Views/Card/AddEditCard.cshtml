@@ -6,7 +6,11 @@
     var isAdd = Model.Id == null;
     var title = isAdd ? "Create" : "Edit";
     ViewData["Title"] = title;
+    //var tags = new List<String> { "cop 4530", "tag4" };
+    //Model.Tags = tags;
 }
+
+<script src="~/js/Student.js"></script>
 
 <h1>@title Card</h1>
 <hr />
@@ -44,6 +48,13 @@
                 <label asp-for="Notes" class="control-label"></label>
                 <input asp-for="Notes" class="form-control" />
                 <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tags" class="control-label"></label>
+                <div class="tag-field" onclick="Array.from(this.children).find(n=>n.tagName==='INPUT').focus()">
+                    <input asp-for="Tags" type="text" onkeyup="tagFieldKeyup(this)">
+                </div>
+                <span asp-validation-for="Tags" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

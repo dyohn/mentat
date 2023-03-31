@@ -103,3 +103,22 @@ function onClickFilterAccordian() {
     $("#filters").collapse("toggle");
     $("#caret-right").toggleClass(["fa-caret-down", "fa-caret-right"]);
 }
+
+function tagFieldKeyup(e) {
+    // If the user enters a comma, then embed a new element in the input field
+    // containing the existing text that represents the tag.
+    if (event.keyCode === 188) {
+        e.parentNode.insertBefore(createTagItem(e.value), e);
+        e.value = "";
+    }
+    function createTagItem(text) {
+        const item = document.createElement("div");
+        item.setAttribute("class", "tag-item");
+        // strip off the text after and including the last comma (tags can't contain commas, so there should only be one anyway)
+        text = text.substr(0, text.lastIndexOf(','));
+        const span = `<span>${text}</span>`;
+        const close = `<div class="fa fa-close" onclick="this.parentNode.remove()"></div>`;
+        item.innerHTML = span + close;
+        return item;
+    }
+}
