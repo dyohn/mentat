@@ -48,7 +48,7 @@
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Tags" class="control-label"></label>
+                <label class="control-label"></label>
                 <div class="tag-field" onclick="Array.from(this.children).find(n=>n.tagName==='INPUT').focus()">
                     @{
                         if (Model.Tags != null)
@@ -56,7 +56,7 @@
                             foreach (string tag in Model.Tags)
                             {
                                 @:<div class="tag-item">
-                                    <span asp-for="Tags">@tag</span>
+                                    <span class="tag-value">@tag</span>
                                     <div class="fa fa-close" onclick="this.parentNode.remove()"></div>
                                 @:</div>
                             }
@@ -67,8 +67,9 @@
                 </div>
                 <span asp-validation-for="Tags" class="text-danger"></span>
             </div>
+            <input type="hidden" name="tagList" id="tagList" value="" asp-for="Tags"/>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" onclick="prepareTagList();" />
             </div>
         </form>
     </div>
