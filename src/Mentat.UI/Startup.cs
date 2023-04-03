@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Mentat.Repository.Models;
 using Mentat.Repository.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Mentat.Domain.Interfaces;
 using Mentat.Domain.IService;
 using Mentat.Domain.Service;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using Mentat.UI.Areas.Identity.Data;
+using IdentityMongo.Settings;
+using Microsoft.AspNetCore.Identity;
 
 namespace Mentat.UI
 {
@@ -44,14 +40,25 @@ namespace Mentat.UI
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ICardService, CardService>();
 
+            // load in mongodb settings
+            var mongoDbSettings = Configuration.GetSection(nameof(MongoDbConfig)).Get<MongoDbConfig>();
+
+            // add an identity module using user and role models, add the mongodb stores, and add the default token providers alongside UI
+            services.AddIdentity<MentatUser, MentatUserRole>()
+            .AddMongoDbStores<MentatUser, MentatUserRole, Guid>(mongoDbSettings.ConnectionString, mongoDbSettings.Name)
+            .AddDefaultTokenProviders()
+            .AddDefaultUI();
+
+            services.AddRazorPages();
+
             // Mapping for the UserDatabaseSettings
-            services.Configure<UserDatabaseSettings>(Configuration.GetSection(nameof(UserDatabaseSettings)));
+            // services.Configure<UserDatabaseSettings>(Configuration.GetSection(nameof(UserDatabaseSettings)));
             // Configure Dependency Injection classes here
-            services.AddSingleton<IUserDatabaseSettings, UserDatabaseSettings>();
+            // services.AddSingleton<IUserDatabaseSettings, UserDatabaseSettings>();
 
             // Using the same Mongo client for both card and user services. Configuration.GetValue<string>("UserDatabaseSettingds:ConnectionString"))) is returning NUll for some reason.
-            services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetValue<string>("UserDatabaseSettings:ConnectionString")));
-            services.AddScoped<IUserService, UserService>();
+            // services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetValue<string>("UserDatabaseSettings:ConnectionString")));
+            // services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,12 +80,15 @@ namespace Mentat.UI
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapRazorPages();
             });
         }
     }
