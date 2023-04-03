@@ -45,6 +45,19 @@
 		<span>C++</span>
 	</div>
 
+    <!-- COLORIZE DIFF REPORT FIELD -->
+    @Html.DisplayName("AddColor")
+    <div>
+        @Html.CheckBoxFor(m => m.ColorText)
+        <span>Color Text</span>
+        <span style = "margin-left: 20px;"></span>
+        @Html.CheckBoxFor(m => m.HighlightText)
+        <span>Highlight Text</span>
+        <span style="margin-left: 20px;"></span>
+        @Html.CheckBoxFor(m => m.ApplyTextModifiers)
+        <span>Apply Text Modifiers</span>
+    </div>
+
 	<!-- SELECT & UPLOAD SAMPLE FILE -->
 	@Html.DisplayName("SampleExecutableName")
 	<div>
