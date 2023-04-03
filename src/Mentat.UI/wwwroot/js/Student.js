@@ -116,9 +116,18 @@ function tagFieldKeyup(e) {
         item.setAttribute("class", "tag-item");
         // strip off the text after and including the last comma (tags can't contain commas, so there should only be one anyway)
         text = text.substr(0, text.lastIndexOf(','));
-        const span = `<span>${text}</span>`;
+        const span = `<span class="tag-value">${text}</span>`;
         const close = `<div class="fa fa-close" onclick="this.parentNode.remove()"></div>`;
         item.innerHTML = span + close;
         return item;
     }
+}
+
+function prepareTagList() {
+    let stringArray = [];
+    document.querySelectorAll('span.tag-value').forEach(function (element) {
+        stringArray.push(element.textContent.trim());
+    });
+    let stringList = stringArray.join(',');
+    document.getElementById('tagList').value = stringList;
 }

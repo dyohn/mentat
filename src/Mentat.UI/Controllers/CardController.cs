@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Mentat.Repository.Services;
 using Mentat.UI.ViewModels;
 using Mentat.Repository.Models;
+using System.Collections.Generic;
 
 namespace Mentat.UI.Controllers
 {
@@ -52,10 +53,12 @@ namespace Mentat.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveCard(string id, [FromForm] Card card)
+        public ActionResult SaveCard(string id, [FromForm] Card card, [FromForm] string tagList)
         {
             try
             {
+                string[] stringArray = tagList.Split(',');
+                card.Tags = new List<String>(stringArray);
                 _cardService.SaveCard(id, card);
                 return RedirectToAction(nameof(Index));
             }
