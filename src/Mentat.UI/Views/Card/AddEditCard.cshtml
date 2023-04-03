@@ -6,8 +6,6 @@
     var isAdd = Model.Id == null;
     var title = isAdd ? "Create" : "Edit";
     ViewData["Title"] = title;
-    //var tags = new List<String> { "cop 4530", "tag4" };
-    //Model.Tags = tags;
 }
 
 <script src="~/js/Student.js"></script>
@@ -52,7 +50,20 @@
             <div class="form-group">
                 <label asp-for="Tags" class="control-label"></label>
                 <div class="tag-field" onclick="Array.from(this.children).find(n=>n.tagName==='INPUT').focus()">
-                    <input asp-for="Tags" type="text" onkeyup="tagFieldKeyup(this)">
+                    @{
+                        if (Model.Tags != null)
+                        {
+                            foreach (string tag in Model.Tags)
+                            {
+                                @:<div class="tag-item">
+                                    <span asp-for="Tags">@tag</span>
+                                    <div class="fa fa-close" onclick="this.parentNode.remove()"></div>
+                                @:</div>
+                            }
+                        }
+
+                    }
+                    <input type="text" onkeyup="tagFieldKeyup(this)">
                 </div>
                 <span asp-validation-for="Tags" class="text-danger"></span>
             </div>
