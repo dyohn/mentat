@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 using Mentat.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,8 +42,15 @@ namespace Mentat.UI.Controllers
         // Download a file to the user's local machine.
         public IActionResult Download()
         {
-            byte[] bytes = Encoding.UTF8.GetBytes("Hello, World!");
-            return File(bytes, "text/plain", "file.txt");
+            string content = "Hello, World!";
+            string fileName = "file.txt";
+
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes(content));
+
+            return new FileStreamResult(stream, "text/plain")
+            {
+                FileDownloadName = fileName
+            };
         }
     }
 }
