@@ -66,7 +66,6 @@
     "", new { @class = "text-danger" })
     </div>
 
-    
 	<!--SELECT & UPLOAD TEST FILE -->
 	@Html.DisplayName("TestFileName")
 	<div>
@@ -75,10 +74,6 @@
 		@Html.ValidationMessageFor(model => model.TestFileName, "", new { @class = "text-danger" })
 	</div>
 	<div id="testFilesList"></div>
-
-	<!-- <div>
-		<input type="button" value="Create" onclick="location.href='@Url.Action("download")'" />
-	</div> -->
 
     <div>
 	    <input type="button" value="Create" id="createButton" onclick="location.href='@Url.Action("download")'" />
@@ -94,50 +89,39 @@
 
 	<script>
 		$(document).ready(function () {
+
 			var testFiles = []; //initialize empty array for file names
 
-			// Disable "Create" button initially
-			$("#createButton").attr("disabled", true);
+            // Disable "Create" button initially
+            $("#createButton").attr("disabled", true);
 
-			// Check if both fields have values, and if their extensions are allowed
-			function checkBothFields() {
+            // Check if both fields have values
+            function checkBothFields() {
                 var sampleFileName = $("#sampleExecutableName").val();
                 var testFileName = $("#txtTestFile").val();
-                var selectedAssignmentType = $("input[type=radio][name=AssignmentType]:checked").val().replace('+', '%2B');
-                selectedAssignmentType = decodeURIComponent(selectedAssignmentType);
+                var selectedAssignmentType = $("input[type=radio][name=AssignmentType]:checked").val();
 
                 if (sampleFileName.length > 0 && testFileName.length > 0) {
-                    var sampleFileExtension = sampleFileName.split('.').pop().toLowerCase();
-                    var testFileExtension = testFileName.split('.').pop().toLowerCase();
-
-                    if (selectedAssignmentType.toLowerCase() === "c" && sampleFileExtension === "c" && testFileExtension === "c") {
-                        $("#createButton").attr("disabled", false);
-                    } else if (selectedAssignmentType.toLowerCase() === "c++" && sampleFileExtension === "cpp" && testFileExtension === "cpp") {
-                        $("#createButton").attr("disabled", false);
-                    } else {
-                        $("#createButton").attr("disabled", true);
-                    }
+                    $("#createButton").attr("disabled", false);
                 } else {
                     $("#createButton").attr("disabled", true);
                 }
             }
 
+            // Enable/disable "Create" button based on Sample File Name field
+            $("#sampleExecutableName").on("input", function() {
+                checkBothFields();
+            });
 
+            // Enable/disable "Create" button based on Test File Name field
+            $("#txtTestFile").on("input", function() {
+                checkBothFields();
+            });
 
-			// Enable/disable "Create" button based on Sample File Name field
-			$("#sampleExecutableName").on("input", function() {
-				checkBothFields();
-			});
-
-			// Enable/disable "Create" button based on Test File Name field
-			$("#txtTestFile").on("input", function() {
-				checkBothFields();
-			});
-
-			// Enable/disable "Create" button based on Assignment Type change
-			$("input[type=radio][name=AssignmentType]").on("change", function() {
-				checkBothFields();
-			});
+            // Enable/disable "Create" button based on Assignment Type change
+            $("input[type=radio][name=AssignmentType]").on("change", function() {
+                checkBothFields();
+            });
 
 			$("#btnAddTestFile").click(function () {
 				var fileName = $("#txtTestFile").val().trim(); //fetch the file name from the text field
