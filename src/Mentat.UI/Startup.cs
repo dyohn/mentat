@@ -35,7 +35,7 @@ namespace Mentat.UI
 
             // Configure Dependency Injection classes here
             services.AddSingleton<ICardDatabaseSettings, CardDatabaseSettings>();
-            services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetValue<string>("CardDatabaseSettings:ConnectionString")));
+            services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetValue<string>("CardDatabaseOptions:ConnectionString")));
 
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ICardService, CardService>();
