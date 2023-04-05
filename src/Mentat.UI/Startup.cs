@@ -33,6 +33,8 @@ namespace Mentat.UI
             // For now, mainly entered CardBaseSettings into the class - when migration complete, abstract with updated Configure
             services.Configure<CardDatabaseSettings>(Configuration.GetSection(nameof(CardDatabaseSettings)));
 
+            services.Configure<CardDatabaseOptions>(Configuration.GetSection(nameof(CardDatabaseOptions)));
+
             // Configure Dependency Injection classes here
             services.AddSingleton<ICardDatabaseSettings, CardDatabaseSettings>();
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetValue<string>("CardDatabaseOptions:ConnectionString")));
