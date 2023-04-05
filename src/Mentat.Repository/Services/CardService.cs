@@ -1,4 +1,6 @@
 ﻿using Mentat.Repository.Models;
+using Mentat.Repository.Options;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace Mentat.Repository.Services
@@ -7,11 +9,11 @@ namespace Mentat.Repository.Services
     {
         private readonly IMongoCollection<Card> _cards;
 
-        public CardService(ICardDatabaseSettings settings, IMongoClient mongoClient)
+        public CardService(IOptionsMonitor<CardDatabaseOptions> options, IMongoClient mongoClient)
         {
-            var database = mongoClient.GetDatabase(settings.DatabaseName);
+            IMongoDatabase database = mongoClient.GetDatabase(options.CurrentValue.DatabaseName);
 
-            _cards = database.GetCollection<Card>(settings.CardCollectionName);
+            _cards = database.GetCollection<Card>(options.CurrentValue.CardCollectionName);
         }
 
         public List<Card> GetAllCards()

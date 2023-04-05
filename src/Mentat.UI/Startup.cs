@@ -1,5 +1,8 @@
 ﻿using System;
-using Mentat.Repository.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Mentat.Repository.Options;
 using Mentat.Repository.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,14 +32,11 @@ namespace Mentat.UI
         {
             services.AddControllersWithViews();
 
-            // Mapping to CardDatabaseSettings no longer works on NET 6.0; need to update Startup.cs to reflect migration to 6.0
-            // For now, mainly entered CardBaseSettings into the class - when migration complete, abstract with updated Configure
-            services.Configure<CardDatabaseSettings>(Configuration.GetSection(nameof(CardDatabaseSettings)));
-
+            // CardDatabaseOptions section of appsecrets.json mapped to CardDatabaseOptions class object.
             services.Configure<CardDatabaseOptions>(Configuration.GetSection(nameof(CardDatabaseOptions)));
 
             // Configure Dependency Injection classes here
-            services.AddSingleton<ICardDatabaseSettings, CardDatabaseSettings>();
+            services.AddSingleton<CardDatabaseOptions>();
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetValue<string>("CardDatabaseOptions:ConnectionString")));
 
             services.AddScoped<IStudentService, StudentService>();
