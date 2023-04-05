@@ -34,30 +34,29 @@
 	</div>
 
 	<!-- ASSIGNMENT FILE TYPE FIELD -->
-	
-
-    <label>Assignment Type</label>
-    <div>
-        <label>
-            <input type="radio" name="AssignmentType" value="c" data-value="c" /> C
-        </label>
-    </div>
-    <div>
-        <label>
-            <input type="radio" name="AssignmentType" value="c++" data-value="c++" /> C++
-        </label>
-    </div>
-
-
-
-
-	<!-- SELECT & UPLOAD SAMPLE FILE 
-	@Html.DisplayName("SampleExecutableName")
+	@Html.DisplayName("AssignmentType")
 	<div>
-		@Html.TextBoxFor(model => model.SampleExecutableName)
-		@Html.ValidationMessageFor(model => model.SampleExecutableName,
-	"", new { @class = "text-danger" })
-	</div> -->
+		@Html.RadioButtonFor(m => m.AssignmentType, "c",
+	new { @checked = "checked" })
+		<span>C</span>
+	</div>
+	<div>
+		@Html.RadioButtonFor(m => m.AssignmentType, "cpp")
+		<span>C++</span>
+	</div>
+
+    <!-- COLORIZE DIFF REPORT FIELD -->
+    @Html.DisplayName("AddColor")
+    <div>
+        @Html.CheckBoxFor(m => m.ColorText)
+        <span>Color Text</span>
+        <span style = "margin-left: 20px;"></span>
+        @Html.CheckBoxFor(m => m.HighlightText)
+        <span>Highlight Text</span>
+        <span style="margin-left: 20px;"></span>
+        @Html.CheckBoxFor(m => m.ApplyTextModifiers)
+        <span>Apply Text Modifiers</span>
+    </div>
 
     <!-- SELECT & UPLOAD SAMPLE FILE -->
     @Html.DisplayName("SampleExecutableName")
