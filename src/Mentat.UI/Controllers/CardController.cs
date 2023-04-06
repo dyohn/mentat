@@ -57,8 +57,12 @@ namespace Mentat.UI.Controllers
         {
             try
             {
-                string[] stringArray = tagList.Split(',');
-                card.Tags = new List<String>(stringArray);
+                if (tagList != null)
+                {
+                    string[] stringArray = tagList.Split(',');
+                    card.Tags = new List<String>(stringArray);
+                } 
+                
                 _cardService.SaveCard(id, card);
                 return RedirectToAction(nameof(Index));
             }
