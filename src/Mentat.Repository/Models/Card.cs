@@ -28,6 +28,7 @@ namespace Mentat.Repository.Models
         public string Notes { get; set; }
 
         [BsonElement("tags")]
+        [BsonIgnoreIfNull]
         public List<string> Tags { get; set; }
     }
 }
