@@ -54,7 +54,7 @@
                             {
                                 @:</div><div>
                             }
-                            <button type="button" class="btn btn-primary tag-button" data-tag=@tag>@tag</button>
+                            <button type="button" class="btn btn-primary tag-button" data-tag=@tag.Replace(' ', '_')>@tag</button>
                             counter++;
                         }
                     </div>
@@ -68,7 +68,7 @@
                     var buttons = document.getElementsByClassName("tag-button");
                     for (var i = 0; i < buttons.length; i++) {
                       buttons[i].addEventListener("click", function() {
-                          var tag = this.getAttribute("data-tag");
+                          var tag = this.getAttribute("data-tag").replace(/ /g, "_");
                           if (selectedTags.includes(tag)) {
                               selectedTags.splice(selectedTags.indexOf(tag), 1); // remove the tag from the list of selected tags
                               this.classList.remove("selected"); // remove the "selected" class from the button
@@ -134,7 +134,8 @@
                 var classes = "";
                 foreach (var tag in Model.AvailableCards[i - 1].Tags ?? Enumerable.Empty<string>())
                 {
-                    classes += @tag + ' ';
+                    if (@tag == null) { continue; }
+                    classes += @tag.Replace(" ", "_") + ' ';
                 }
                 var display = i == 1 ? "inline" : "none";
             <div id="flashcard_@i" style="display:@display" class="@classes">
@@ -163,12 +164,13 @@
             </colgroup>
             <tbody>
                 @for (var i = 1; i <= Model.NumberOfFlashCards; i++)
-                {
-                    var classes = "";
-                    foreach (var tag in Model.AvailableCards[i - 1].Tags ?? Enumerable.Empty<string>())
                     {
-                        classes += @tag + ' ';
-                    }
+                        var classes = "";
+                        foreach (var tag in Model.AvailableCards[i - 1].Tags ?? Enumerable.Empty<string>())
+                        {
+                            if (@tag == null) { continue; }
+                            classes += @tag.Replace(" ", "_") + ' ';
+                        }
                     <tr class="@classes">
                         <td>
                             @Html.DisplayFor(m => m.AvailableCards[i - 1].CardQuestion)

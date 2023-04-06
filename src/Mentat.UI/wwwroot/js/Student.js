@@ -25,12 +25,12 @@ function hideCardAndClearOverlay(showHideLink, index) {
 }
 
 function goToPrevious(index) {
-    var indexToShow;
+    var indexToShow = index;
     var cardCount = getCardCount();
     for (let i = index - 1; i != index; i--) {
         if (document.querySelector('#flashcard_' + i) == null) {
             if (i < 2) {
-                i = cardCount;
+                i = cardCount + 1; // set i to the end of the list (add 1 since i will be decremented at the beginning of the loop)
             }
         }
         else {
@@ -39,21 +39,17 @@ function goToPrevious(index) {
         }
     }
 
-    //var cardCount = getCardCount();
-    //var indexToShow = index === 1
-    //    ? cardCount
-    //    : index - 1;
     processCardChange(index, indexToShow);
     updateSelectedCardIndex(indexToShow);
 }
 
 function goToNext(index) {
-    var indexToShow;
+    var indexToShow = index;
     var cardCount = getCardCount();
     for (let i = index + 1; i != index; i++) {
         if (document.querySelector('#flashcard_' + i) == null) {
-            if (i == cardCount) {
-                i = 0;
+            if (i >= cardCount) {
+                i = 0; // set i to beginning of list (list begins at 1, but i will be incremented to 1 at the beginning of the loop)
             }
         }
         else {
@@ -62,9 +58,6 @@ function goToNext(index) {
         }
     }
     
-    //var indexToShow = index === cardCount
-    //    ? 1
-    //    : index + 1;
     processCardChange(index, indexToShow);
     updateSelectedCardIndex(indexToShow);
 }
@@ -203,5 +196,6 @@ function rebuildCarousel(selectedTags) {
         carouselContainer.appendChild(newCarouselItems[i]);
     }
 
-    goToFirst();
+    // having rebuilt the carousel, load the first card that still exists
+    goToFirst(); 
 }
