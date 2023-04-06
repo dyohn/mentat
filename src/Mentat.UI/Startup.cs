@@ -67,6 +67,13 @@ namespace Mentat.UI
 
             app.UseEndpoints(endpoints =>
             {
+
+                endpoints.MapControllerRoute(
+                    name: "mentor",
+                    pattern: "MentorController/SubmitForm",
+                    defaults: new { controller = "Mentor", action = "SubmitForm" }
+                    );
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
