@@ -45,13 +45,26 @@
 		<span>C++</span>
 	</div>
 
-	<!-- SELECT & UPLOAD SAMPLE FILE -->
-	@Html.DisplayName("SampleExecutableName")
-	<div>
-		@Html.TextBoxFor(model => model.SampleExecutableName)
-		@Html.ValidationMessageFor(model => model.SampleExecutableName,
-	"", new { @class = "text-danger" })
-	</div>
+    <!-- COLORIZE DIFF REPORT FIELD -->
+    @Html.DisplayName("AddColor")
+    <div>
+        @Html.CheckBoxFor(m => m.ColorText)
+        <span>Color Text</span>
+        <span style = "margin-left: 20px;"></span>
+        @Html.CheckBoxFor(m => m.HighlightText)
+        <span>Highlight Text</span>
+        <span style="margin-left: 20px;"></span>
+        @Html.CheckBoxFor(m => m.ApplyTextModifiers)
+        <span>Apply Text Modifiers</span>
+    </div>
+
+    <!-- SELECT & UPLOAD SAMPLE FILE -->
+    @Html.DisplayName("SampleExecutableName")
+    <div>
+	    @Html.TextBoxFor(model => model.SampleExecutableName, new { id = "sampleExecutableName" })
+	    @Html.ValidationMessageFor(model => model.SampleExecutableName,
+    "", new { @class = "text-danger" })
+    </div>
 
 	<!--SELECT & UPLOAD TEST FILE -->
 	@Html.DisplayName("TestFileName")
@@ -63,7 +76,7 @@
 	<div id="testFilesList"></div>
 
 	<div>
-        <input id="submitButton" type="submit" value="Create" class="btn btn-primary" />
+		<input type="submit" value="Create" class="btn btn-primary" />
 	</div>
 
 
@@ -91,23 +104,50 @@
         }
 
 		$(document).ready(function () {
+
 			var testFiles = []; //initialize empty array for file names
+
+            // Disable "Create" button initially
+            $("#createButton").attr("disabled", true);
+
+            // Check if both fields have values
+            function checkBothFields() {
+                var sampleFileName = $("#sampleExecutableName").val();
+                var selectedAssignmentType = $("input[type=radio][name=AssignmentType]:checked").val();
+
+                if (sampleFileName.length > 0 && testFiles.length > 0) {
+                    $("#createButton").attr("disabled", false);
+                } else {
+                    $("#createButton").attr("disabled", true);
+                }
+            }
+
+            // Enable/disable "Create" button based on Sample File Name field
+            $("#sampleExecutableName").on("input", function() {
+                checkBothFields();
+            });
+
+            // Enable/disable "Create" button based on Assignment Type change
+            $("input[type=radio][name=AssignmentType]").on("change", function() {
+                checkBothFields();
+            });
 
 			$("#btnAddTestFile").click(function () {
 				var fileName = $("#txtTestFile").val().trim(); //fetch the file name from the text field
 				var fileExtension = fileName.split('.').pop(); //extract the file extension
 				var allowedExtensions = ['c', 'cpp']; //allowed file extensions
 
-                if (fileName && allowedExtensions.includes(fileExtension)) { //if the file name is not empty and the extension is allowed
-                    testFiles.push(fileName); //add file name to the array
-                    $("#txtTestFile").val(""); //clear textbox for next entry
-                    displayTestFiles(); //update list
-                    
-                   
-                } else {
-                    alert("Your file extension must match the type you selected. [Eg: file.c or file.cpp]"); //error message
-                }
-            });
+				breakme: if (fileName) { //if the file name is not empty
+					console.log($("input[type=radio][value=c]").is(":checked"));
+					console.log($("input[type=radio][value=cpp]").is(":checked"));
+					testFiles.push(fileName); //add file name to the array
+					$("#txtTestFile").val(""); //clear textbox for next entry
+                    checkBothFields(); //Enable create button button
+					displayTestFiles(); //update list
+				} else {
+					alert("You must input a test file."); //error message
+				}
+			});
 
 			function displayTestFiles() {
 				var listHtml = "";
@@ -118,6 +158,7 @@
 				$(".removeFileButton").click(function () {
 					var index = $(this).data("index");
 					testFiles.splice(index, 1); //remove the file name from the array
+                    checkBothFields(); //Do we need to disable the button again?
 					displayTestFiles();
 				});
                 

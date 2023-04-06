@@ -90,6 +90,15 @@ namespace Mentat.UI.Models
         [Display(Name = "Assignment Type")]
         public string AssignmentType { get; set; }
 
+        [Display(Name = "Color Text")]
+        public bool ColorText { get; set; }
+
+        [Display(Name = "Highlight Text")]
+        public bool HighlightText { get; set; }
+
+        [Display(Name = "Apply Text Modifiers")]
+        public bool ApplyTextModifiers { get; set; }
+
         [Required]
         [Display(Name = "Sample File Name")]
         [StringLength(255, ErrorMessage = "Sample file name may not exceed 255 characters")]

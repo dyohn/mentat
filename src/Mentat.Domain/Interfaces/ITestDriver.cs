@@ -3,6 +3,7 @@
 // 6/5/2022
 
 using System;
+using System.IO;
 
 namespace Mentat.Domain.Interfaces
 {
@@ -34,6 +35,6 @@ namespace Mentat.Domain.Interfaces
         /// <summary>
         /// Build and set the grading Script property.
         /// </summary>
-        public void Build();
+        public FileInfo Build();
     }
 }

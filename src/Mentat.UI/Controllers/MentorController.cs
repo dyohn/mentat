@@ -1,4 +1,6 @@
-﻿using Mentat.Domain.Bash;
+﻿using System.IO;
+using System.Text;
+using Mentat.Domain.Bash;
 using System.Collections.Generic;
 using Mentat.UI.Models;
 using Mentat.UI.Services;
@@ -51,6 +53,23 @@ namespace Mentat.UI.Controllers
         public ActionResult Success(Assignment assignment)
         {
             return View();
+        }
+
+        // ********************************************
+        // *             Download method              *
+        // ********************************************
+        // Download a file to the user's local machine.
+        public IActionResult Download()
+        {
+            string content = "Hello, World!";
+            string fileName = "file.txt";
+
+            var stream = new MemoryStream(Encoding.UTF8.GetBytes(content));
+
+            return new FileStreamResult(stream, "text/plain")
+            {
+                FileDownloadName = fileName
+            };
         }
     }
 }
