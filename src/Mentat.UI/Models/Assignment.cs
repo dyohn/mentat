@@ -93,10 +93,10 @@ namespace Mentat.UI.Models
         [Display(Name = "Color Text")]
         public bool ColorText { get; set; }
 
-        [Display(Name = "Color Text")]
+        [Display(Name = "Highlight Text")]
         public bool HighlightText { get; set; }
 
-        [Display(Name = "Color Text")]
+        [Display(Name = "Apply Text Modifiers")]
         public bool ApplyTextModifiers { get; set; }
 
         [Required]
