@@ -7,6 +7,8 @@
     $('#SelectedDifficulties').multiselect();
 };
 
+var originalCarouselItems = Array.from(document.querySelectorAll('[id^="flashcard_"]'));
+
 function toggleShowHideOfFlashCard(index) {
     var showHideLink = $("[id$=show-hide_" + index + "]");
     if (showHideLink.text() === "Hide") {
@@ -23,20 +25,61 @@ function hideCardAndClearOverlay(showHideLink, index) {
 }
 
 function goToPrevious(index) {
+    var indexToShow;
     var cardCount = getCardCount();
-    var indexToShow = index === 1
-        ? cardCount
-        : index - 1;
+    for (let i = index - 1; i != index; i--) {
+        if (document.querySelector('#flashcard_' + i) == null) {
+            if (i < 2) {
+                i = cardCount;
+            }
+        }
+        else {
+            indexToShow = i;
+            break;
+        }
+    }
+
+    //var cardCount = getCardCount();
+    //var indexToShow = index === 1
+    //    ? cardCount
+    //    : index - 1;
     processCardChange(index, indexToShow);
     updateSelectedCardIndex(indexToShow);
 }
 
 function goToNext(index) {
+    var indexToShow;
     var cardCount = getCardCount();
-    var indexToShow = index === cardCount
-        ? 1
-        : index + 1;
+    for (let i = index + 1; i != index; i++) {
+        if (document.querySelector('#flashcard_' + i) == null) {
+            if (i == cardCount) {
+                i = 0;
+            }
+        }
+        else {
+            indexToShow = i;
+            break;
+        }
+    }
+    
+    //var indexToShow = index === cardCount
+    //    ? 1
+    //    : index + 1;
     processCardChange(index, indexToShow);
+    updateSelectedCardIndex(indexToShow);
+}
+
+function goToFirst() {
+    var indexToShow;
+    var cardCount = getCardCount();
+    for (let i = 1; i <= cardCount; i++) {
+        if (document.querySelector('#flashcard_' + i) != null) {
+            indexToShow = i;
+            break;
+        }
+    }
+
+    processCardChange($("#CurrentIndex").val(), indexToShow);
     updateSelectedCardIndex(indexToShow);
 }
 
@@ -130,4 +173,35 @@ function prepareTagList() {
     });
     let stringList = stringArray.join(',');
     document.getElementById('tagList').value = stringList;
+}
+
+function rebuildCarousel(selectedTags) {
+    var newCarouselItems = [];
+    var carouselContainer = document.querySelector('.carousel-container');
+    if (selectedTags.length == 0) {
+        for (let i = 0; i < originalCarouselItems.length; i++) {
+            newCarouselItems.push(originalCarouselItems[i]);
+        }
+    }
+    else {
+        for (let i = 0; i < originalCarouselItems.length; i++) {
+            var classes = originalCarouselItems[i].getAttribute('class');
+
+            for (var j = 0; j < selectedTags.length; j++) {
+                var tag = selectedTags[j];
+                var regex = new RegExp("\\b" + tag + "\\b");
+
+                if (regex.test(classes)) {
+                    newCarouselItems.push(originalCarouselItems[i]);
+                    break;
+                }
+            }
+        }
+    }
+    carouselContainer.innerHTML = '';
+    for (let i = 0; i < newCarouselItems.length; i++) {
+        carouselContainer.appendChild(newCarouselItems[i]);
+    }
+
+    goToFirst();
 }

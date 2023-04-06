@@ -31,11 +31,91 @@
     </div>
 
     @using(Html.BeginForm())
-    {
+        {
         <div class="row accordion col-sm-12 bottom-buffer">
             <a class="fsu-black-color" onclick="onClickFilterAccordian();" style="font-size: 20px" aria-expanded="false">
             <span class="fa fa-caret-right fsu-black-color" id="caret-right"></span> @Model.FilterCount filter(s) applied</a>
             <div class="row top-buffer col-sm-12 collapse in" id="filters">
+
+                <div id="tag-buttons">
+                    @{
+                        var tags = Model.AllUniqueTags;
+                        int counter = 0;
+                    }
+
+                    <div>
+                        @foreach (var tag in tags)
+                        {
+                            if (tag == null || tag.Length == 0)
+                            {
+                                continue;
+                            }
+                            if (counter % 4 == 0)
+                            {
+                                @:</div><div>
+                            }
+                            <button type="button" class="btn btn-primary tag-button" data-tag=@tag>@tag</button>
+                            counter++;
+                        }
+                    </div>
+                </div>
+                <script>
+
+                    var container = document.getElementById("tag-buttons");
+
+                    var selectedTags = [];
+                    // add a click event listener to the tag buttons
+                    var buttons = document.getElementsByClassName("tag-button");
+                    for (var i = 0; i < buttons.length; i++) {
+                      buttons[i].addEventListener("click", function() {
+                          var tag = this.getAttribute("data-tag");
+                          if (selectedTags.includes(tag)) {
+                              selectedTags.splice(selectedTags.indexOf(tag), 1); // remove the tag from the list of selected tags
+                              this.classList.remove("selected"); // remove the "selected" class from the button
+                          } else {
+                              selectedTags.push(tag); // add the tag to the list of selected tags
+                              this.classList.add("selected"); // add the "selected" class to the button
+                          }
+
+                          var tableRows = document.querySelectorAll('#flashcard-list tbody tr');
+                          //var carouselEntries = document.querySelectorAll('#carousel-items div');
+                          var carouselEntries = document.querySelectorAll('[id^="flashcard_"]');
+                          if (selectedTags.length == 0) {
+                              for (var i = 0; i < tableRows.length; i++) {
+                                  tableRows[i].classList.remove('hidden');
+                              }
+                              for (var i = 0; i < carouselEntries.length; i++) {
+                                  carouselEntries[i].classList.remove('hidden');
+                              }
+                          }
+                          else {
+                              for (var i = 0; i < tableRows.length; i++) {
+                                  for (var j = 0; j < selectedTags.length; j++) {
+                                      if (tableRows[i].classList.contains(selectedTags[j])) {
+                                          tableRows[i].classList.remove('hidden');
+                                          break;
+                                      } else {
+                                          tableRows[i].classList.add('hidden');
+                                      }
+                                  }
+                              }
+
+                              for (var i = 0; i < carouselEntries.length; i++) {
+                                  for (var j = 0; j < selectedTags.length; j++) {
+                                      if (carouselEntries[i].classList.contains(selectedTags[j])) {
+                                          carouselEntries[i].classList.remove('hidden');
+                                          break;
+                                      } else {
+                                          carouselEntries[i].classList.add('hidden');
+                                      }
+                                  }
+                              }
+                          }
+                          rebuildCarousel(selectedTags);
+                      });
+                    }
+                </script>
+
                 <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
                 <div style="display:inline-block;">
                     @Html.Label(null, "Difficulty:", new { style="font-size: 15px; font-weight: bold;" })
@@ -48,24 +128,29 @@
             </div>
         </div>
     }
-
-    @for (var i = 1; i <= Model.NumberOfFlashCards; i++)
-    {
-        var display = i == 1 ? "inline" : "none";
-        <div id="flashcard_@i" style="display:@display">
-            <div style="width:10px; float:left; height:126px; background-color: @Model.AvailableCards[i - 1].DifficultyLevelColor; border:1px solid gray">&nbsp;</div>
-            <div>
-                @Html.Partial("_Flashcard", Model.AvailableCards[i - 1], new ViewDataDictionary(ViewData) { { "index", i } })
+    <div id="carousel-items" class="carousel-container">
+        @for (var i = 1; i <= Model.NumberOfFlashCards; i++)
+            {
+                var classes = "";
+                foreach (var tag in Model.AvailableCards[i - 1].Tags ?? Enumerable.Empty<string>())
+                {
+                    classes += @tag + ' ';
+                }
+                var display = i == 1 ? "inline" : "none";
+            <div id="flashcard_@i" style="display:@display" class="@classes">
+                <div style="width:10px; float:left; height:126px; background-color: @Model.AvailableCards[i - 1].DifficultyLevelColor; border:1px solid gray">&nbsp;</div>
+                <div>
+                    @Html.Partial("_Flashcard", Model.AvailableCards[i - 1], new ViewDataDictionary(ViewData) { { "index", i } })
+                </div>
             </div>
-        </div>
-    }
-
+        }
+    </div>
     <div class="row top-buffer col-sm-12">
         <button type="button" class="bg-black text-on-dark font-weight-bold" onclick="location.href='@Url.Action("AddEditCard", "Card")';">Add Flashcard</button>
     </div>
     <hr class="bold-black top-buffer col-sm-12">
     <div class="row top-buffer col-sm-12">
-        <table class="table top-buffer">
+        <table class="table top-buffer" id="flashcard-list">
             <thead>
                 <tr>
                     <th align="center">List of Flashcards</th>
@@ -79,7 +164,12 @@
             <tbody>
                 @for (var i = 1; i <= Model.NumberOfFlashCards; i++)
                 {
-                    <tr>
+                    var classes = "";
+                    foreach (var tag in Model.AvailableCards[i - 1].Tags ?? Enumerable.Empty<string>())
+                    {
+                        classes += @tag + ' ';
+                    }
+                    <tr class="@classes">
                         <td>
                             @Html.DisplayFor(m => m.AvailableCards[i - 1].CardQuestion)
                         </td>

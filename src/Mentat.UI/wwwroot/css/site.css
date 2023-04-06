@@ -293,3 +293,34 @@ body, html {
         right: 8px;
         top: 2px;
     }
+
+.tag-button {
+    background-color: #e6e6e6;
+    border: none;
+    border-radius: 4px;
+    color: #333;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    padding: 4px 8px;
+}
+
+    .tag-button.selected {
+        background-color: #333;
+        color: #fff;
+    }
+
+    .tag-button:hover {
+        background-color: #ccc;
+        color: #333;
+    }
+
+    .tag-button.selected:hover {
+        background-color: #333;
+        color: #fff;
+    }
+
+.hidden {
+    display: none;
+}
+

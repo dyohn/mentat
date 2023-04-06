@@ -47,6 +47,23 @@ namespace Mentat.Repository.Services
             return cards;
         }
 
+        public List<string> GetAllTags()
+        {
+            var filter = Builders<Card>.Filter.Empty;
+
+            var documents = _cards.Find(filter).ToList();
+
+
+            HashSet<string> uniqueTags = new HashSet<string>();
+            foreach (var doc in documents)
+            {
+                if (doc.Tags != null)
+                    uniqueTags.UnionWith(doc.Tags);
+            }
+            return uniqueTags.ToList();
+
+        }
+
         public Card GetCard(string id)
         {
             Card card = new Card();
