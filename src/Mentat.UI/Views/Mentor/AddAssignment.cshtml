@@ -61,7 +61,7 @@
     @Html.DisplayName("TestFileName")
     <div>
         @Html.TextBoxFor(model => model.TestFileName, new { id = "txtTestFile" })
-        <button id="btnAddTestFile">Add Test File</button>
+        <button type="button" button id="btnAddTestFile" CausesValidation="False">Add Test File</button>
         @Html.ValidationMessageFor(model => model.TestFileName, "", new { @class = "text-danger" })
     </div>
 

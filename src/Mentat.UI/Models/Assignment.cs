@@ -51,9 +51,7 @@ namespace Mentat.UI.Models
         [RegularExpression(".*\\S.*", ErrorMessage = "Sample executable cannot be blank")]
         public string SampleExecutableName { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [Display(Name = "Test File Name")]
-        [RegularExpression(".*\\S.*", ErrorMessage = "Test file field cannot be blank")]
         public string TestFileName { get; set; }
     }
 }
