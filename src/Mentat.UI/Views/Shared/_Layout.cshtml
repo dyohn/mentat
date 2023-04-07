@@ -38,9 +38,7 @@
                           <img src="~/images/blank-profile-picture-g235ada478_640.png" width="40" height="40" class="rounded-circle">
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                         <!-- <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
-                          <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Login">Log In</a>-->
-                          <partial name="_LoginPartial" />
+                            <partial name="_LoginPartial" />
                         </div>
                       </li>   
                     </ul>
@@ -64,7 +62,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/toastr.min.js"></script>
-    <script src="~/js/authn-modals.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script type="text/javascript" src="~/js/bootstrap-multiselect.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)

@@ -189,27 +189,3 @@ body, html {
     overflow: hidden;
 }
 
-.modal-content {
-    background-color: #f7edd7;
-    margin: auto;
-    padding: 15px;
-    border: 2px solid  #782F40;
-}
-
-.modal {
-    position: fixed;
-    text-align: center;
-    padding: 0;
-    background-color: rgba(206, 184, 136, 0.31);
-    /*background-attachment: fixed;*/
-}
-
-.modal-dialog {
-    position: fixed;
-    margin: auto;
-    width: 30%;
-    height: 25%;
-    right: 30px;
-    top: 65px;
-    text-align: left;
-}
