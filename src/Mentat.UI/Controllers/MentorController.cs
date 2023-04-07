@@ -64,8 +64,6 @@ namespace Mentat.UI.Controllers
         // Download a file to the user's local machine.
         public ActionResult Download()
         {
-            //string content = "Hello, World!";
-            //string fileName = "file.txt";
             string path = Convert.ToString(TempData["fileInfo"]);
             string content = System.IO.File.ReadAllText(path);
 
