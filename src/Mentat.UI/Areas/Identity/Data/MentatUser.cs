@@ -15,6 +15,6 @@ namespace Mentat.UI.Areas.Identity.Data
         public string Password { get; set; }
         
         [Required]
-        public int UserType { get; set; }
+        public string UserType { get; set; }
     }
 }

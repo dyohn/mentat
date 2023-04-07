@@ -44,8 +44,8 @@ namespace Mentat.UI.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+            [Display(Name = "Email or Username")]
+            public string EmailOrUsername { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
@@ -80,28 +80,38 @@ namespace Mentat.UI.Areas.Identity.Pages.Account
         
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
+                // Try to find user by email address:
+                var user = await _userManager.FindByEmailAsync(Input.EmailOrUsername);
+                if (user == null)
                 {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    // User not found by email; try to find user by username:
+                    user = await _userManager.FindByNameAsync(Input.EmailOrUsername);
                 }
-                if (result.RequiresTwoFactor)
+
+                // User found; attempt to sign in with their email/username and password:
+                if (user != null)
                 {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    // This doesn't count login failures towards account lockout
+                    // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                    var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User logged in.");
+                        return RedirectToAction("Index", user.UserType);
+                    }
+                    if (result.RequiresTwoFactor)
+                    {
+                        return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    }
+                    if (result.IsLockedOut)
+                    {
+                        _logger.LogWarning("User account locked out.");
+                        return RedirectToPage("./Lockout");
+                    }
                 }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
-                }
+
+                // If user not found or sign-in attempt failed, show error message:
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
 
             // If we got this far, something failed, redisplay form

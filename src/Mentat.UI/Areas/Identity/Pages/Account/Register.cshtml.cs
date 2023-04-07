@@ -62,7 +62,7 @@ namespace Mentat.UI.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            [Required] public int UserType { get; set; }
+            [Required] public string UserType { get; set; }
 
             [Required]public string UserName { get; set; }
         }
@@ -107,17 +107,7 @@ namespace Mentat.UI.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        if (user.UserType == 0)
-                        {
-                            return RedirectToAction("Index", "Student");
-                        }
-
-                        else if (user.UserType == 1)
-                        {
-                            return RedirectToAction("Index", "Mentor");
-                        }
-
-                        return LocalRedirect(returnUrl);
+                        return RedirectToAction("Index", user.UserType);
                     }
                 }
 
