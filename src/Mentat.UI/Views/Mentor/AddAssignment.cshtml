@@ -137,11 +137,13 @@
                     return false;
                 }
                 else {
-                    window.location.href = '@Url.Action("download")';
+                    //window.location.href = '@Url.Action("download")';
                     // Submit the form
                     setTimeout(function () {
                         $('#myForm').submit();
+                        window.location.href = '@Url.Action("Success")';
                     }, 300);
+                    //window.location.href = '@Url.Action("Success")';
                 }
             });
 
