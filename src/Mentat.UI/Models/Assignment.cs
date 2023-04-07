@@ -99,6 +99,8 @@ namespace Mentat.UI.Models
         [Display(Name = "Apply Text Modifiers")]
         public bool ApplyTextModifiers { get; set; }
 
+        public string TestFiles { get; set; }
+
         [Required]
         [Display(Name = "Sample File Name")]
         [StringLength(255, ErrorMessage = "Sample file name may not exceed 255 characters")]

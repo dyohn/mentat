@@ -6,6 +6,7 @@ using Mentat.UI.Models;
 using Mentat.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace Mentat.UI.Controllers
 {
@@ -23,12 +24,14 @@ namespace Mentat.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(Assignment assignment, List<string> testFileNames)
+        public ActionResult SubmitForm(Assignment assignment)
         {
-            List<string> list = testFileNames;
             string sampleExecutableName = assignment.SampleExecutableName;
             string assignmentType = assignment.AssignmentType;
+            string concatenatedTestFileNames = assignment.TestFiles;
+            List<string> testFileNames = concatenatedTestFileNames.Split(',').ToList();
             int id = assignment.Id;
+            string language = assignment.AssignmentType.ToString();
             // If form is correct then moves on to the next view 
             // otherwise view is reloaded and user must retry filling the form
             if (ModelState.IsValid)
@@ -39,16 +42,6 @@ namespace Mentat.UI.Controllers
             return View("AddAssignment");
         }
 
-        /*[HttpPost]
-        public IActionResult ConfigureTestFiles(List<string> testFileNames)
-        {
-            // Create a new BashTestConfig object and configure it with the received test file names
-            var config = new BashTestConfig("bash", testFileNames, "sample_executable_name", 1, "diff_command");
-
-            //TODO: create bash driver object ....something else  ..... call build.
-
-            return Ok();
-        }*/
 
         public ActionResult Success(Assignment assignment)
         {
