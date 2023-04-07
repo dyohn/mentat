@@ -64,11 +64,11 @@
         <button id="btnAddTestFile">Add Test File</button>
         @Html.ValidationMessageFor(model => model.TestFileName, "", new { @class = "text-danger" })
     </div>
-    
+
     @Html.HiddenFor(model => model.TestFiles, new { id = "hiddenTestFiles" })
     <div id="testFilesList"></div>
     <div>
-        <input type="button" value="Create" id="createButton" class="btn btn-primary"  />
+        <input type="button" value="Create" id="createButton" class="btn btn-primary" />
     </div>
 }
 @section Scripts {
@@ -149,13 +149,3 @@
         });
     </script>
 }
-
-
-
-
-
-
-
-
-
-
