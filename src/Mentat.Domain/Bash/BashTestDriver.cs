@@ -42,27 +42,93 @@ namespace Mentat.Domain.Bash
                 throw new NullReferenceException();
             }
             var scriptBuilder = new StringBuilder();
-            scriptBuilder.Append("#!/usr/bin/env bash\n\nCURRENT_DIR=$( cd -- \"$( dirname -- \"${BASH_SOURCE[0]}\" )\" &> /dev/null && pwd )\n\n");
-            scriptBuilder.Append("MENTOR_DIR=${CURRENT_DIR} + \"/mentor\"\nTEST_DIR=${CURRENT_DIR} + \"/tests\"\nREPORT_DIR=${CURRENT_DIR} + \"/reports\"\n");
-            scriptBuilder.Append("SUBMIT=${CURRENT_DIR} + \"/submit\"\nBUILD=${CURRENT_DIR} + \"/build\"\nPROCESSED=${CURRENT_DIR} + \"/processed\"\nHEADER=${CURRENT_DIR} + \"/header\"\n");
-            scriptBuilder.Append("#Test the mentors build\ncd ${TEST_DIR}\ncp mentor.x ${MENTOR_DIR}/*\n");
+            BashColor color;
+            if (_config.ColorText)
+            {
+                color = new BashColor(BashColor.TextColor.Green, null, null);
+            } else
+            {
+                color = new BashColor(null, null, null);
+            }
+            scriptBuilder.Append("#!/usr/bin/env bash\n\n" +
+                "CURRENT_DIR=$( cd -- \"$( dirname -- \"${BASH_SOURCE[0]}\" )\" &> /dev/null && pwd )\n\n" +
+                "MENTOR_DIR=${CURRENT_DIR} + /mentor\n" +
+                "TEST_DIR=${CURRENT_DIR} + /tests\n" +
+                "REPORT_DIR=${CURRENT_DIR} + /reports\n" +
+                "DIFF_DIR=${REPORT_DIR}/diffs\n" +
+                "SUBMIT_DIR=${CURRENT_DIR} + /submit\n" +
+                "BUILD_DIR=${CURRENT_DIR} + /build\n" +
+                "PROCESSED_DIR=${CURRENT_DIR} + /processed\n" +
+                "HEADER=${CURRENT_DIR} + /header\n" +
+                "SPACER=\"--------------------------------------------------------------------------\n" + 
+                    "-************************************************************************-\n" + 
+                    "--------------------------------------------------------------------------\"\n\n" +
+                "#Test the mentors build\n" +
+                "echo \"" + GetColorString(color, "Beginning running test against mentors sample: " + _config.SampleExecutableName) + "\"\n" +
+                "cd ${TEST_DIR}\n" +
+                "MENTOR =`echo \"" + _config.SampleExecutableName + "\" | cut -d'.' -f1`\n" +
+                "cp " + _config.SampleExecutableName + " assignment\n");
             foreach (var testFileName in _config.TestFileNames)
             {
-                scriptBuilder.Append(testFileName + " > ./${MENTOR_DIR}/mentor.out\n");
+                scriptBuilder.Append("echo \"" + GetColorString(color, "Running the test: " + testFileName ) + "\"\n" +
+                    testFileName + " >> ./${MENTOR_DIR}/${MENTOR}.txt\n" +
+                    "echo ${SPACER} >> ./${MENTOR_DIR}/${MENTOR}.txt\n");
             }
-            scriptBuilder.Append("cd ${SUBMIT_DIR}\nfor SOURCECODE in *; do\n\tSTUDENT=\'echo \"${SOURCECODE}\" | cut -d\'.\' -fl\'\n\techo\n\techo -e \"Grading ${STUDENT}");
-            scriptBuilder.Append("EXECUTABLE=${STUDENT}.x\nREPORT=${STUDENT}.x\ncp ${HEADER} ${REPORT_DIR}/${REPORT}");
+            scriptBuilder.Append("mv assignment ${MENTOR_DIR}/" + _config.SampleExecutableName + "\n\n" +
+                "echo \"" + GetColorString(color, "Mentor testing complete.") + "\"\n" +
+                "echo \"" + GetColorString(color, "Beginning student testing.") + "\"\n" +
+                "# Compile and move into test dir, setting up reports along the way.\n" +
+                "cd ${SUBMIT_DIR}\n" +
+                "for SOURCECODE in *; do\n\t" +
+                "STUDENT=\'echo \"${SOURCECODE}\" | cut -d\'.\' -fl\'\n\t" +
+                "echo\n\t" +
+                "echo \"" + GetColorString(color, "Compiling ${STUDENT}'s assignmnet...") + "\"\n\t" +
+                "EXECUTABLE=${STUDENT}.x\n\t" +
+                "REPORT=${STUDENT}.txt\n\t" +
+                "cp ${HEADER} ${REPORT_DIR}/${REPORT}\n\t" + 
+                "read -n 1 -r -s -p \'Press enter to continue...\'\n\t"+
+                "echo\n\t");
+            if (_config.Language == "c")
+            {
+                scriptBuilder.Append("gcc -std=c99 -o ${EXECUTABLE} ${SOURCECODE}\n\t");
+            } else if(_config.Language == "c++")
+            {
+                scriptBuilder.Append("g++ -c -std=c++11 ${SOURCECODE}\n\t" +
+                    "g++ -o ${EXECUTABLE} -std=c++11 ${STUDENT}.o\n\t");
+            }
+            scriptBuilder.Append("mv ${EXECUTABLE} ${TEST_DIR}/assignment\n\t" +
+                "cd ${TEST_DIR}\n\t");
+
+            foreach (var testFileName in _config.TestFileNames)
+            {
+                scriptBuilder.Append("echo \"" + GetColorString(color, "Running the test: " + testFileName) + "\"\n\t" +
+                    "timeout " + _config.TimeoutInSeconds.ToString() + " " + testFileName + " >> ${REPORT_DIR}/${REPORT}\n\t" +
+                    "echo ${SPACER} >> ${REPORT_DIR}/${REPORT}\n\t");
+            }
+            scriptBuilder.Append("echo \"" + GetColorString(color, "Student testing complete.") + "\"\n\t" +
+                "echo \"" + GetColorString(color, "Beginning clean up.") + "\"\n\t" +
+                "\n\t# Clean up\n\t" +
+                "echo \"" + GetColorString(color, "Moving assignment to ${BUILD_DIR}/${EXECUTABLE}...") + "\"\n\t" +
+                "mv assignment ${BUILD_DIR}/${EXECUTABLE}\n\t" +
+                "echo \"" + GetColorString(color, "Moving #{SUBMIT_DIR}/${SOURCECODE} ${PROCESSED_DIR}/${SOURCECODE}...") + "\"\n\t" + 
+                "mv ${SUBMIT_DIR}/${SOURCECODE} ${PROCESSED_DIR}/${SOURCECODE}\n\t" +
+                "diff -u ${MENTOR_DIR}/${MENTOR}.txt ${REPORT_DIR}/${REPORT} > ${DIFF_DIR}/${STUDENT}_diff.txt\n\t" +
+                "cd ${SUBMIT_DIR}\n\t" +
+                "echo\n\t" +
+                "echo \"" + GetColorString(color, "Completing grading ${STUDENT}...") + "\"\n\t" +
+                "echo\n" +
+                "done");
 
             var script = scriptBuilder.ToString();
             if (!string.IsNullOrEmpty(script))
             {
-                _fileManagerService.SaveScript(Encoding.UTF8.GetBytes(script), "SomeFileName.sh");
+                _fileManagerService.SaveScript(Encoding.UTF8.GetBytes(script), "Mentat.sh");
             }
 
             //make sure the file exists and return it or instead return dummy file
-            if (File.Exists("SomeFileName.sh"))
+            if (File.Exists("Mentat.sh"))
             {
-                return new FileInfo("SomeFileName.sh");
+                return new FileInfo("Mentat.sh");
             }
             else
             {
@@ -114,7 +180,7 @@ namespace Mentat.Domain.Bash
             if (File.Exists(fileName))
             {
                 return new FileInfo(fileName);
-            }     
+            }
             else
             {
                 string dummyFile = @"file.txt";

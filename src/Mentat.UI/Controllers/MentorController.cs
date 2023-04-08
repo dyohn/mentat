@@ -47,6 +47,7 @@ namespace Mentat.UI.Controllers
                 FileInfo fileInfo = bashDriver.Build();
                 // On Form Validation Success Go To This View
                 TempData["fileInfo"] = fileInfo.FullName;
+                TempData["fileName"] = fileInfo.Name;
                 return RedirectToAction("download");
             }
             return View("AddAssignment");
@@ -65,13 +66,14 @@ namespace Mentat.UI.Controllers
         public ActionResult Download()
         {
             string path = Convert.ToString(TempData["fileInfo"]);
+            string name = Convert.ToString(TempData["fileName"]);
             string content = System.IO.File.ReadAllText(path);
 
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(content));
 
             return new FileStreamResult(stream, "text/plain")
             {
-                FileDownloadName = path
+                FileDownloadName = name
             };
         }
     }

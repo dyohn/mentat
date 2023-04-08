@@ -84,7 +84,7 @@
             function checkBothFields() {
                 var sampleFileName = $("#sampleExecutableName").val();
                 var selectedAssignmentType = $("input[type=radio][name=AssignmentType]:checked").val();
-                if (sampleFileName.length > 0 && testFiles.length > 0) {
+                if (sampleFileName.length > 0 && testFiles.length > 0 && selectedAssignmentType != undefined) {
                     $("#createButton").attr("disabled", false);
                 } else {
                     $("#createButton").attr("disabled", true);
