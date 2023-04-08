@@ -122,13 +122,13 @@ body, html {
 }
 
 .dot {
-    height: 1750px;
-    width: 1750px;
+    height: 125%;
+    width: 90%;
     background-color: #CEB888;
     border-radius: 50%;
     position: absolute;
-    top: -1000px;
-    left: -250px;
+    top: -50%;
+    left: -10%;
 }
 
 .navbar {

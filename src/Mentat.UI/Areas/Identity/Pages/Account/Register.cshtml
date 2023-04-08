@@ -4,11 +4,23 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+.header {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+}
+</style>
+
+<div class="dot"></div>
+<div class="header">
+  <img src="/images/fluent_brain-circuit-20-filled.png" alt="Logo">
+</div>
 
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+			<h1>@ViewData["Title"]</h1>
             <h2>Create a new account.</h2>
             <hr/>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
