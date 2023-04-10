@@ -80,7 +80,7 @@ namespace Mentat.Domain.Bash
                 "# Compile and move into test dir, setting up reports along the way.\n" +
                 "cd ${SUBMIT_DIR}\n" +
                 "for SOURCECODE in *; do\n\t" +
-                "STUDENT=\'echo \"${SOURCECODE}\" | cut -d\'.\' -fl\'\n\t" +
+                "STUDENT=\'echo \"${SOURCECODE}\" | cut -d\'.\' -f1\'\n\t" +
                 "echo\n\t" +
                 "echo \"" + GetColorString(color, "Compiling ${STUDENT}'s assignmnet...") + "\"\n\t" +
                 "EXECUTABLE=${STUDENT}.x\n\t" +
@@ -112,7 +112,7 @@ namespace Mentat.Domain.Bash
                 "mv assignment ${BUILD_DIR}/${EXECUTABLE}\n\t" +
                 "echo \"" + GetColorString(color, "Moving #{SUBMIT_DIR}/${SOURCECODE} ${PROCESSED_DIR}/${SOURCECODE}...") + "\"\n\t" + 
                 "mv ${SUBMIT_DIR}/${SOURCECODE} ${PROCESSED_DIR}/${SOURCECODE}\n\t" +
-                "diff -u ${MENTOR_DIR}/${MENTOR}.txt ${REPORT_DIR}/${REPORT} > ${DIFF_DIR}/${STUDENT}_diff.txt\n\t" +
+                _config.DiffCommand + " -u ${MENTOR_DIR}/${MENTOR}.txt ${REPORT_DIR}/${REPORT} > ${DIFF_DIR}/${STUDENT}_diff.txt\n\t" +
                 "cd ${SUBMIT_DIR}\n\t" +
                 "echo\n\t" +
                 "echo \"" + GetColorString(color, "Completing grading ${STUDENT}...") + "\"\n\t" +
