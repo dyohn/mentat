@@ -37,6 +37,7 @@ namespace Mentat.Domain.Bash
 
 
             // config has all the details and shouldn't be null
+            bool validationFailed = false;
             if (_config is null)
             {
                 throw new NullReferenceException();
@@ -95,34 +96,40 @@ namespace Mentat.Domain.Bash
             {
                 scriptBuilder.Append("g++ -c -std=c++11 ${SOURCECODE}\n\t" +
                     "g++ -o ${EXECUTABLE} -std=c++11 ${STUDENT}.o\n\t");
-            }
-            scriptBuilder.Append("mv ${EXECUTABLE} ${TEST_DIR}/assignment\n\t" +
-                "cd ${TEST_DIR}\n\t");
-
-            foreach (var testFileName in _config.TestFileNames)
+            } else
             {
-                scriptBuilder.Append("echo \"" + GetColorString(color, "Running the test: " + testFileName) + "\"\n\t" +
-                    "timeout " + _config.TimeoutInSeconds.ToString() + " " + testFileName + " >> ${REPORT_DIR}/${REPORT}\n\t" +
-                    "echo ${SPACER} >> ${REPORT_DIR}/${REPORT}\n\t");
+                validationFailed = true;
             }
-            scriptBuilder.Append("echo \"" + GetColorString(color, "Student testing complete.") + "\"\n\t" +
-                "echo \"" + GetColorString(color, "Beginning clean up.") + "\"\n\t" +
-                "\n\t# Clean up\n\t" +
-                "echo \"" + GetColorString(color, "Moving assignment to ${BUILD_DIR}/${EXECUTABLE}...") + "\"\n\t" +
-                "mv assignment ${BUILD_DIR}/${EXECUTABLE}\n\t" +
-                "echo \"" + GetColorString(color, "Moving #{SUBMIT_DIR}/${SOURCECODE} ${PROCESSED_DIR}/${SOURCECODE}...") + "\"\n\t" + 
-                "mv ${SUBMIT_DIR}/${SOURCECODE} ${PROCESSED_DIR}/${SOURCECODE}\n\t" +
-                _config.DiffCommand + " -u ${MENTOR_DIR}/${MENTOR}.txt ${REPORT_DIR}/${REPORT} > ${DIFF_DIR}/${STUDENT}_diff.txt\n\t" +
-                "cd ${SUBMIT_DIR}\n\t" +
-                "echo\n\t" +
-                "echo \"" + GetColorString(color, "Completing grading ${STUDENT}...") + "\"\n\t" +
-                "echo\n" +
-                "done");
-
-            var script = scriptBuilder.ToString();
-            if (!string.IsNullOrEmpty(script))
+            if (!validationFailed)
             {
-                _fileManagerService.SaveScript(Encoding.UTF8.GetBytes(script), "Mentat.sh");
+                scriptBuilder.Append("mv ${EXECUTABLE} ${TEST_DIR}/assignment\n\t" +
+                    "cd ${TEST_DIR}\n\t");
+
+                foreach (var testFileName in _config.TestFileNames)
+                {
+                    scriptBuilder.Append("echo \"" + GetColorString(color, "Running the test: " + testFileName) + "\"\n\t" +
+                        "timeout " + _config.TimeoutInSeconds.ToString() + " " + testFileName + " >> ${REPORT_DIR}/${REPORT}\n\t" +
+                        "echo ${SPACER} >> ${REPORT_DIR}/${REPORT}\n\t");
+                }
+                scriptBuilder.Append("echo \"" + GetColorString(color, "Student testing complete.") + "\"\n\t" +
+                    "echo \"" + GetColorString(color, "Beginning clean up.") + "\"\n\t" +
+                    "\n\t# Clean up\n\t" +
+                    "echo \"" + GetColorString(color, "Moving assignment to ${BUILD_DIR}/${EXECUTABLE}...") + "\"\n\t" +
+                    "mv assignment ${BUILD_DIR}/${EXECUTABLE}\n\t" +
+                    "echo \"" + GetColorString(color, "Moving #{SUBMIT_DIR}/${SOURCECODE} ${PROCESSED_DIR}/${SOURCECODE}...") + "\"\n\t" +
+                    "mv ${SUBMIT_DIR}/${SOURCECODE} ${PROCESSED_DIR}/${SOURCECODE}\n\t" +
+                    _config.DiffCommand + " -u ${MENTOR_DIR}/${MENTOR}.txt ${REPORT_DIR}/${REPORT} > ${DIFF_DIR}/${STUDENT}_diff.txt\n\t" +
+                    "cd ${SUBMIT_DIR}\n\t" +
+                    "echo\n\t" +
+                    "echo \"" + GetColorString(color, "Completing grading ${STUDENT}...") + "\"\n\t" +
+                    "echo\n" +
+                    "done");
+
+                var script = scriptBuilder.ToString();
+                if (!string.IsNullOrEmpty(script))
+                {
+                    _fileManagerService.SaveScript(Encoding.UTF8.GetBytes(script), "Mentat.sh");
+                }
             }
 
             //make sure the file exists and return it or instead return dummy file
