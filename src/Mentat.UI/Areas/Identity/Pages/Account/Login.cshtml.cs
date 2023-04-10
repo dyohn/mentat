@@ -97,6 +97,7 @@ namespace Mentat.UI.Areas.Identity.Pages.Account
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User logged in.");
+                        await _signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Index", user.UserType);
                     }
                     if (result.RequiresTwoFactor)

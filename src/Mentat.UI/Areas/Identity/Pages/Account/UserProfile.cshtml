@@ -1,0 +1,66 @@
+@page
+@model UserProfileModel
+
+@{
+    ViewData["Title"] = "User Profile";
+}
+<div class="header">
+  <img src="/images/fluent_brain-circuit-20-filled.png" alt="Logo">
+</div>
+
+<h1>@ViewData["Title"]</h1>
+<div class="user-profile">
+    <section>
+        <h2>Welcome @(Model.Username)!</h2>
+        <hr /> 
+        <div class="user-details">
+            <h3>User Details</h3>
+            <form id="account" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-floating">
+                    <label asp-for="Input.UserName" class="form-label"></label> 
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                    <input asp-for="Input.UserName" class="form-control" aria-required="true" />
+
+                    <label asp-for="Input.Email" class="form-label"></label> 
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    <input asp-for="Input.Email" class="form-control" aria-required="true" />
+                    
+                    <label asp-for="Input.Password" class="form-label"></label> 
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <input asp-for="Input.Password" class="form-control" aria-required="false" />
+                    
+                    
+                    @if (!string.IsNullOrEmpty(Model.Input.NewPassword))
+                    {
+                        <label asp-for="Input.NewPassword" class="form-label"></label> 
+                        <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
+                        <input asp-for="Input.NewPassword" class="form-control" aria-required="true" />
+
+                        <label asp-for="Input.ConfirmPassword" class="form-label"></label> 
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        <input asp-for="Input.ConfirmPassword" class="form-control" aria-required="true" />
+                    }
+                    else
+                    {
+                        <label asp-for="Input.NewPassword" class="form-label"></label> 
+                        <input asp-for="Input.NewPassword" class="form-control" aria-required="false" />
+
+                        <label asp-for="Input.ConfirmPassword" class="form-label"></label> 
+                        <input asp-for="Input.ConfirmPassword" class="form-control" aria-required="false" />
+                    }
+                    
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-lg btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}
+
