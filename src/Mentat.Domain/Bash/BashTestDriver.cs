@@ -9,48 +9,53 @@ using System.Security;
 
 namespace Mentat.Domain.Bash
 {
+    /// <summary>
+    /// Class for generating a Bash Script Driver for mentors to grade assignments.
+    /// </summary>
     public class BashTestDriver : IBashTestDriver
     {
+        /// <value>Holds the string containing the language of the assignment.</value>
         public string Language { get; private set; }
-
+        /// <value>Holds the string containing the script.</value>
         public string Script { get; private set; }
-
+        /// <value>Holds the configurations to be used during Bash script generation.</value>
         private ITestConfig _config;
-
+        /// <value>Holds the service used to save a script.</value>
         private readonly IFileManagerService _fileManagerService;
 
+        /// <summary>
+        /// Constructor of type BashTestDriver. Initializes a FileManagerService.
+        /// </summary>
+        /// <param name="managerService">FileManagerService used to save scripts.</param>
         public BashTestDriver(IFileManagerService managerService)
         {
             _fileManagerService = managerService;
         }
 
-        public FileInfo ExampleBuild()
+        /// <summary>
+        /// Generates a Bash Test Driver using the user sumbitted info.
+        /// </summary>
+        public FileInfo Build()
         {
-            // _config.Language is used to determine the compiler
-            // _config.TestFileNames has all of the names of the test to run. Each will be ran and output appended to a file. Ex. "myTest.sh >> out.txt"
-            // _config.SampleExecutableName contains the name of the mentor/professors version of the assignment. Used as a baseline.
-            // _config.DiffCommand variable that will contain "diff" in our case. This is an interface variable that can be set to other languages version. Were only handling bash so we use diff.
-            // _config.TimeoutInSeconds how long to wait for an assignment to finish. We don't want our machine to be stuck for an hour because of bad code. Ex: "timeout 1 ./myTest.sh  >> out.txt"
-            // _config.ColorText is the boolean to determine if we want to change the color of the bash scripts text.
-            // _config.HighlightText is the boolean for highlighting text.
-            // _config.ApplyTextModifers is the boolean for applying modifiers such as bold, italics, etc.
-
-
-            // config has all the details and shouldn't be null
+            /// <value>Flag for if invalid information is found.</value>
             bool validationFailed = false;
             if (_config is null)
             {
                 throw new NullReferenceException();
             }
+            /// <value>Holds the generated script.</value>
             var scriptBuilder = new StringBuilder();
+            /// <value>Holds color settings.</value>
             BashColor color;
             if (_config.ColorText)
             {
                 color = new BashColor(BashColor.TextColor.Green, null, null);
-            } else
+            }
+            else
             {
                 color = new BashColor(null, null, null);
             }
+            // Begin generating script.
             scriptBuilder.Append("#!/usr/bin/env bash\n\n" +
                 "CURRENT_DIR=$( cd -- \"$( dirname -- \"${BASH_SOURCE[0]}\" )\" &> /dev/null && pwd )\n\n" +
                 "MENTOR_DIR=${CURRENT_DIR} + /mentor\n" +
@@ -61,17 +66,18 @@ namespace Mentat.Domain.Bash
                 "BUILD_DIR=${CURRENT_DIR} + /build\n" +
                 "PROCESSED_DIR=${CURRENT_DIR} + /processed\n" +
                 "HEADER=${CURRENT_DIR} + /header\n" +
-                "SPACER=\"--------------------------------------------------------------------------\n" + 
-                    "-************************************************************************-\n" + 
+                "SPACER=\"--------------------------------------------------------------------------\n" +
+                    "-************************************************************************-\n" +
                     "--------------------------------------------------------------------------\"\n\n" +
                 "#Test the mentors build\n" +
                 "echo \"" + GetColorString(color, "Beginning running test against mentors sample: " + _config.SampleExecutableName) + "\"\n" +
                 "cd ${TEST_DIR}\n" +
                 "MENTOR =`echo \"" + _config.SampleExecutableName + "\" | cut -d'.' -f1`\n" +
                 "cp " + _config.SampleExecutableName + " assignment\n");
+            // Loop over and insert test for each test file name for the mentor.
             foreach (var testFileName in _config.TestFileNames)
             {
-                scriptBuilder.Append("echo \"" + GetColorString(color, "Running the test: " + testFileName ) + "\"\n" +
+                scriptBuilder.Append("echo \"" + GetColorString(color, "Running the test: " + testFileName) + "\"\n" +
                     testFileName + " >> ./${MENTOR_DIR}/${MENTOR}.txt\n" +
                     "echo ${SPACER} >> ./${MENTOR_DIR}/${MENTOR}.txt\n");
             }
@@ -86,17 +92,20 @@ namespace Mentat.Domain.Bash
                 "echo \"" + GetColorString(color, "Compiling ${STUDENT}'s assignmnet...") + "\"\n\t" +
                 "EXECUTABLE=${STUDENT}.x\n\t" +
                 "REPORT=${STUDENT}.txt\n\t" +
-                "cp ${HEADER} ${REPORT_DIR}/${REPORT}\n\t" + 
-                "read -n 1 -r -s -p \'Press enter to continue...\'\n\t"+
+                "cp ${HEADER} ${REPORT_DIR}/${REPORT}\n\t" +
+                "read -n 1 -r -s -p \'Press enter to continue...\'\n\t" +
                 "echo\n\t");
+            // Configure compiler settings.
             if (_config.Language == "c")
             {
                 scriptBuilder.Append("gcc -std=c99 -o ${EXECUTABLE} ${SOURCECODE}\n\t");
-            } else if(_config.Language == "c++")
+            }
+            else if (_config.Language == "c++")
             {
                 scriptBuilder.Append("g++ -c -std=c++11 ${SOURCECODE}\n\t" +
                     "g++ -o ${EXECUTABLE} -std=c++11 ${STUDENT}.o\n\t");
-            } else
+            }
+            else
             {
                 validationFailed = true;
             }
@@ -104,7 +113,7 @@ namespace Mentat.Domain.Bash
             {
                 scriptBuilder.Append("mv ${EXECUTABLE} ${TEST_DIR}/assignment\n\t" +
                     "cd ${TEST_DIR}\n\t");
-
+                // Loop and insert test for student code for each test file name.
                 foreach (var testFileName in _config.TestFileNames)
                 {
                     scriptBuilder.Append("echo \"" + GetColorString(color, "Running the test: " + testFileName) + "\"\n\t" +
@@ -125,6 +134,7 @@ namespace Mentat.Domain.Bash
                     "echo\n" +
                     "done");
 
+                // Save the resulting script.
                 var script = scriptBuilder.ToString();
                 if (!string.IsNullOrEmpty(script))
                 {
@@ -132,7 +142,7 @@ namespace Mentat.Domain.Bash
                 }
             }
 
-            //make sure the file exists and return it or instead return dummy file
+            // Make sure the file exists and return it or instead return dummy file.
             if (File.Exists("Mentat.sh"))
             {
                 return new FileInfo("Mentat.sh");
@@ -152,62 +162,20 @@ namespace Mentat.Domain.Bash
             }
         }
 
-        public FileInfo Build()
-        {
-            // config has all the details and shouldn't be null
-            if (_config is null)
-            {
-                throw new NullReferenceException();
-            }
-            // build a script with the configuration stuff
-            // this is just a mock
-            var scriptBuilder = new StringBuilder();
-
-            foreach (var testFileName in _config.TestFileNames)
-            {
-                scriptBuilder.Append(testFileName).AppendLine();
-            }
-
-            // TODO: This might be wrong. Need to ask Derek if SampleExecutableName is the name of the output file
-            //       OR if SampleExecutableName is the name of the mentors version of the assignment being tested
-            //       that will be used in the diff.
-            var fileExtension = _config.Language == "python" ? "py" : "cpp";
-
-            var fileName = $"{_config.SampleExecutableName}.{fileExtension}";
-
-            // save the script or whatever
-            var script = scriptBuilder.ToString();
-
-            if (!string.IsNullOrEmpty(script))
-            {
-                _fileManagerService.SaveScript(Encoding.UTF8.GetBytes(script), fileName);
-            }
-
-            //make sure the file exists and return it or instead return dummy file
-            if (File.Exists(fileName))
-            {
-                return new FileInfo(fileName);
-            }
-            else
-            {
-                string dummyFile = @"file.txt";
-                var dummyBuilder = new StringBuilder();
-                dummyBuilder.Append(dummyFile).AppendLine();
-
-                using (FileStream fs = File.Create(dummyFile))
-                {
-                    _fileManagerService.SaveScript(Encoding.UTF8.GetBytes("Hello World"), dummyFile);
-                }
-
-                return new FileInfo(dummyFile);
-            }
-        }
-
+        /// <summary>
+        /// Sets the configuration settings of the BuildTestDriver object.
+        /// </summary>
+        /// <param name="config">Contains the configuration settings.</param>
         public void Configure(ITestConfig config)
         {
             _config = config;
         }
 
+        /// <summary>
+        /// Decorates a string with a Bash color.
+        /// </summary>
+        /// <param name="color">Holds the color to be used.</param>
+        /// <param name="msg">Holds the message to be decorated.</param>
         public String GetColorString(BashColor color, String msg)
         {
             return color.Color + msg + BashColor.End;
