@@ -2,58 +2,63 @@
 @model UserProfileModel
 
 @{
-    ViewData["Title"] = "User Profile";
+    ViewData["Title"] = "Edit User Profile";
 }
 <div class="header">
-  <img src="/images/fluent_brain-circuit-20-filled.png" alt="Logo">
+    <img src="/images/fluent_brain-circuit-20-filled.png" alt="Logo">
 </div>
 
 <h1>@ViewData["Title"]</h1>
 <div class="user-profile">
     <section>
-        <h2>Welcome @(Model.Input.UserName)!</h2>
-        <hr /> 
+        <hr/>
         <div class="user-details">
-            <h3>User Details</h3>
+            <h3>User details for @(Model.Input.UserName):</h3>
             <form id="account" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating">
-                    <label asp-for="Input.UserName" class="form-label"></label> 
+                    <label asp-for="Input.UserName" class="form-label">UserName:</label>
                     <span asp-validation-for="Input.UserName" class="text-danger"></span>
-                    <input asp-for="Input.UserName" class="form-control" aria-required="true" />
+                    <input asp-for="Input.UserName" class="form-control" aria-required="true"/>
 
-                    <label asp-for="Input.Email" class="form-label"></label> 
+                    <label asp-for="Input.Email" class="form-label">Email address:</label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
-                    <input asp-for="Input.Email" class="form-control" aria-required="true" />
-                    
-                    <label asp-for="Input.Password" class="form-label"></label> 
+                    <input asp-for="Input.Email" class="form-control" aria-required="true"/>
+
+                    <label asp-for="Input.Password" class="form-label">Confirm current password:</label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    <input asp-for="Input.Password" class="form-control" aria-required="false" />
-                    
-                    
-                    @if (!string.IsNullOrEmpty(Model.Input.NewPassword))
-                    {
-                        <label asp-for="Input.NewPassword" class="form-label"></label> 
-                        <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
-                        <input asp-for="Input.NewPassword" class="form-control" aria-required="true" />
+                    <br/>
+                    <div class="input-group">
+                        <input asp-for="Input.Password" class="form-control" aria-required="true"/>
+                        <button type="button" class="view-password-toggle" id="show-password">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
 
-                        <label asp-for="Input.ConfirmPassword" class="form-label"></label> 
-                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                        <input asp-for="Input.ConfirmPassword" class="form-control" aria-required="true" />
-                    }
-                    else
-                    {
-                        <label asp-for="Input.NewPassword" class="form-label"></label> 
-                        <input asp-for="Input.NewPassword" class="form-control" aria-required="false" />
+                    <label asp-for="Input.NewPassword" class="form-label"></label>
+                    <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
+                    <br/>
+                    <div class="input-group">
+                        <input asp-for="Input.NewPassword" class="form-control" aria-required="false"/>
+                        <button type="button" class="view-password-toggle" id="show-new-password">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
 
-                        <label asp-for="Input.ConfirmPassword" class="form-label"></label> 
-                        <input asp-for="Input.ConfirmPassword" class="form-control" aria-required="false" />
-                    }
-                    
+                    <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    <br/>
+                    <div class="input-group">
+                        <input asp-for="Input.ConfirmPassword" class="form-control" aria-required="false"/>
+                        <button type="button" class="view-password-toggle" id="show-confirm-password">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary">Cancel</button>
+                    <button type="button" class="btn btn-secondary" onclick="history.back()">Cancel</button>
+
                 </div>
             </form>
         </div>
@@ -62,5 +67,23 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>
-}
 
+    <script>
+       let showButtons = document.querySelectorAll(".view-password-toggle");
+       
+       showButtons.forEach(function(btn) {
+           const passwordInput = btn.previousElementSibling;
+         
+           btn.addEventListener("click", function() {
+               if (passwordInput.type === "password") {
+                   passwordInput.type = "text";
+                   btn.innerHTML = '<i class="bi bi-eye-slash"></i>';
+               } else {
+                   passwordInput.type = "password";
+                   btn.innerHTML = '<i class="bi bi-eye"></i>';
+               }
+           });
+       });
+
+    </script>
+}
