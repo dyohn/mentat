@@ -4,33 +4,33 @@
 @model StudentVM
 
 @{
-    ViewData["Title"] = "Student";
+	ViewData["Title"] = "Student";
 }
 
 @Html.HiddenFor(m => m.NumberOfFlashCards)
 @Html.HiddenFor(m => m.CurrentIndex)
 <span class="dot"></span>
 <div class="col-sm-12">
-    <div class="row bottom-buffer col-sm-12">
-        <div class="col-sm-9">
-            <span><img src="/images/fluent_brain-circuit-20-filled.png"></span>    
-            <span class="align-middle title-text">Study</span>
-        </div>
-        <div class="col-sm-3">
-            <div class="row">
-                <div class="col-sm-3">
-                    <a href="javascript:;" onclick="refreshFlashcardList();"><span class="fa fa-refresh fa-2x fsu-maroon-color"></span></a>
-                </div>
-            </div>
-            <div class="row top-buffer">
-                <div class="col-sm-6">
-                    @Html.TextBoxFor(m => m.SelectedCardIndex, new { style="width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="row bottom-buffer col-sm-12">
+		<div class="col-sm-9">
+			<span><img src="/images/fluent_brain-circuit-20-filled.png"></span>
+			<span class="align-middle title-text">Study</span>
+		</div>
+		<div class="col-sm-3">
+			<div class="row">
+				<div class="col-sm-3">
+					<a href="javascript:;" onclick="refreshFlashcardList();"><span class="fa fa-refresh fa-2x fsu-maroon-color"></span></a>
+				</div>
+			</div>
+			<div class="row top-buffer">
+				<div class="col-sm-6">
+					@Html.TextBoxFor(m => m.SelectedCardIndex, new { style="width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
+				</div>
+			</div>
+		</div>
+	</div>
 
-    @using(Html.BeginForm())
+	@using(Html.BeginForm())
         {
         <div class="row accordion col-sm-12 bottom-buffer">
             <a class="fsu-black-color" onclick="onClickFilterAccordian();" style="font-size: 20px" aria-expanded="false">
@@ -60,9 +60,7 @@
                     </div>
                 </div>
                 <script>
-
                     var container = document.getElementById("tag-buttons");
-
                     var selectedTags = [];
                     // add a click event listener to the tag buttons
                     var buttons = document.getElementsByClassName("tag-button");
@@ -76,7 +74,6 @@
                               selectedTags.push(tag); // add the tag to the list of selected tags
                               this.classList.add("selected"); // add the "selected" class to the button
                           }
-
                           var tableRows = document.querySelectorAll('#flashcard-list tbody tr');
                           //var carouselEntries = document.querySelectorAll('#carousel-items div');
                           var carouselEntries = document.querySelectorAll('[id^="flashcard_"]');
@@ -99,7 +96,6 @@
                                       }
                                   }
                               }
-
                               for (var i = 0; i < carouselEntries.length; i++) {
                                   for (var j = 0; j < selectedTags.length; j++) {
                                       if (carouselEntries[i].classList.contains(selectedTags[j])) {
@@ -146,71 +142,157 @@
             </div>
         }
     </div>
-    <div class="row top-buffer col-sm-12">
-        <button type="button" class="bg-black text-on-dark font-weight-bold" onclick="location.href='@Url.Action("AddEditCard", "Card")';">Add Flashcard</button>
-    </div>
-    <hr class="bold-black top-buffer col-sm-12">
-    <div class="row top-buffer col-sm-12">
-        <table class="table top-buffer" id="flashcard-list">
-            <thead>
-                <tr>
-                    <th align="center">List of Flashcards</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <colgroup>
-                <col span="1" style="width: 85%;">
-                <col span="1" style="width: 10%;">
-            </colgroup>
-            <tbody>
-                @for (var i = 1; i <= Model.NumberOfFlashCards; i++)
-                    {
-                        var classes = "";
-                        foreach (var tag in Model.AvailableCards[i - 1].Tags ?? Enumerable.Empty<string>())
-                        {
-                            if (@tag == null) { continue; }
-                            classes += @tag.Replace(" ", "_") + ' ';
-                        }
-                    <tr class="@classes">
-                        <td>
-                            @Html.DisplayFor(m => m.AvailableCards[i - 1].CardQuestion)
-                        </td>
-                        <td>
-                            <a href="javascript:;" title="View Details" ><i class="fa-solid fa-eye fsu-maroon-color" onclick="location.href='@Url.Action("Details", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
-                            @if (Model.AvailableCards[i - 1].CanEditOrDelete)
-                            {
-                                <text> | </text>
-                                <a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen fsu-black-color" onclick="location.href='@Url.Action("AddEditCard", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
-                                <text> | </text>
-                                <a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can fsu-maroon-color" data-id="@Model.AvailableCards[i - 1].CardID" data-toggle="modal" data-target="#deleteModal"></i></a>
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
 
-    <!-- Delete Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Delete Flashcard</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete this flashcard?  
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-secondary" onclick="deleteFlashcard(this)" id="confirmDelete" data-id-to-delete="">Delete</button>
-                    <button type="button" class="btn bg-primary text-white" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="row top-buffer col-sm-12">
+		<button type="button" class="bg-black text-on-dark font-weight-bold" onclick="location.href='@Url.Action("AddEditCard", "Card")';">Add Flashcard</button>
+	</div>
+	<hr class="bold-black top-buffer col-sm-12">
+	<div class="row top-buffer col-sm-12">
+		<table id="cardlist" class="table top-buffer">
+			<thead>
+				<tr>
+					<th align="center">List of Flashcards</th>
+					<!--Add search bar-->
+					<th><input id="searchbar" type="text" placeholder="Search.."></th>
+				</tr>
+			</thead>
+			<colgroup>
+				<col span="1" style="width: 85%;">
+				<col span="1" style="width: 10%;">
+			</colgroup>
+			<tbody id="cardbody">
+				<!--Card List Logic-->
+
+			</tbody>
+		</table>
+	</div>
+	<script>
+		//grab cards
+		var cardtable = [];
+		var cardcount = 0;
+		var matchlist = [];
+		@foreach (var c in Model.AvailableCards)
+		{
+			@:cardtable.push({ cardID: "@c.CardID", question: "@c.CardQuestion", answer: "@c.HiddenCardAnswer", editable: "@c.CanEditOrDelete", tags: [] });
+			if(c.Tags is not null)
+			{
+				@:var tag = [];
+				foreach (var d in c.Tags)
+				{
+					var s = d;
+					@:var str = "@s";
+					@:console.log(str);
+					@:tag.push(str);
+					@:console.log("push worked");
+				}
+				@:cardtable[cardtable.length - 1]['tags'] = tag;
+			}
+			@:matchlist.push(cardcount);
+			@:cardcount++;
+		}
+			console.log(cardtable);
+		displaycards();
+		function displaycards() {
+			const table = document.getElementById("cardlist");
+			const body = document.getElementById("cardbody");
+			body.innerHTML = "";
+			if (matchlist.length > 0)
+				for (var i = 0; i < matchlist.length; i++) {
+
+					let row = body.insertRow();
+					let a = row.insertCell(0);
+					try {
+						a.innerHTML = cardtable[matchlist[i]]['question'];
+					} catch (error) {
+						var rowCount = table.rows.length;
+						table.deleteRow(rowCount - 1);
+						continue;
+					}
+					let b = row.insertCell(1);
+					b.innerHTML = '<a href="javascript:;" title="View Details" ><i class="fa-solid fa-eye fsu-maroon-color" onclick="window.location.href=\'/Card/Details/' + cardtable[matchlist[i]]['cardID'] + '\';"></i></a>';
+					if (cardtable[matchlist[i]]['editable'] === "True")
+						b.innerHTML += 
+								`<text> | </text>
+								<a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen fsu-black-color" onclick="window.location.href='/Card/AddEditCard/` + cardtable[matchlist[i]]['cardID'] + `';"></i></a>
+								<text> | </text>
+								<a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can fsu-maroon-color" data-id=` + cardtable[matchlist[i]]['cardID'] + ` data-toggle="modal" data-target="#deleteModal"></i></a>
+								`;
+					console.log(b.innerHTML);
+				}
+			else {
+				let row = body.insertRow();
+				let a = row.insertCell(0);
+				a.innerHTML = "<text>No Results</text>";
+			}
+		}
+
+		function search(text) {
+			matchlist = [];
+			const words = text.toLowerCase().split(' ');
+			//console.log(words)
+			for (var i = 0; i < cardcount; i++) {
+				var contains = true;
+				//console.log(cardtable[i]['question']);
+				let ques = cardtable[i]['question'].toLowerCase().replace(/[.,:;?!]/g, "").split(' ');
+				//console.log(ques);
+				for (var j = 0; j < words.length; j++) {
+					//console.log(words[j])
+					//console.log("tags for card " + i + ": " + cardtable[i]['tags']);
+					if(words[j].at(0) === '#'){
+						//console.log("# check");
+						if(!(cardtable[i]['tags'].includes(words[j].substring(1,words[j].length)))){
+							contains = false;
+						}
+					}
+					else if (ques.indexOf(words[j]) === -1) {
+						contains = false;
+					}
+				}
+				if (contains) {
+					console.log(i);
+					matchlist.push(i);
+				}
+			}
+			console.log(text);
+		}
+
+		var input = document.getElementById("searchbar");
+		input.addEventListener("keypress", function (event) {
+			if (event.key === "Enter") {
+				if (input.value === "") {
+					for (var j = 0; j < cardcount; j++) {
+						matchlist.push(j);
+					}
+				}
+				else {
+					search(input.value);
+				}
+				displaycards();
+			}
+		});
+
+	</script>
+
+	<!-- Delete Modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteModalLabel">Delete Flashcard</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					Are you sure you want to delete this flashcard?
+				</div>
+				<div class="modal-footer justify-content-center">
+					<button type="button" class="btn btn-secondary" onclick="deleteFlashcard(this)" id="confirmDelete" data-id-to-delete="">Delete</button>
+					<button type="button" class="btn bg-primary text-white" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script src="~/js/Student.js"></script>
