@@ -2,63 +2,73 @@
 @model UserProfileModel
 
 @{
-    ViewData["Title"] = "Edit User Profile";
+    //ViewData["Title"] = "Editing User Profile";
 }
 <div class="header">
-    <img src="/images/fluent_brain-circuit-20-filled.png" alt="Logo">
+    <img src="/images/fluent_brain-circuit-20-filled.png" width="80px" height="80px" style="margin-top:-20px" alt="Logo">
+    <h3 style="display:inline">Editing @(Model.Input.UserName)'s Profile</h3>
 </div>
 
-<h1>@ViewData["Title"]</h1>
+<!--<h1>@ViewData["Title"]</h1>-->
 <div class="user-profile">
     <section>
         <hr/>
         <div class="user-details">
-            <h3>User details for @(Model.Input.UserName):</h3>
             <form id="account" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating">
-                    <label asp-for="Input.UserName" class="form-label">UserName:</label>
+                    <label asp-for="Input.UserName" class="form-label" style="margin-left:33%"></label>
                     <span asp-validation-for="Input.UserName" class="text-danger"></span>
-                    <input asp-for="Input.UserName" class="form-control" aria-required="true"/>
+                    <input asp-for="Input.UserName" class="form-control" aria-required="true" style="width:350px;margin-left:33%"/>
 
-                    <label asp-for="Input.Email" class="form-label">Email address:</label>
+                    <br>
+                    <label asp-for="Input.Email" class="form-label" style="width:350px;margin-left:33%"></label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
-                    <input asp-for="Input.Email" class="form-control" aria-required="true"/>
+                    <input asp-for="Input.Email" class="form-control" aria-required="true" style="width:350px;margin-left:33%"/>
 
-                    <label asp-for="Input.Password" class="form-label">Confirm current password:</label>
+                    <br>
+                    <label asp-for="Input.Password" class="form-label" style="width:350px;margin-left:33%"></label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    <br/>
                     <div class="input-group">
-                        <input asp-for="Input.Password" class="form-control" aria-required="true"/>
-                        <button type="button" class="view-password-toggle" id="show-password">
+                        <input asp-for="Input.Password" class="form-control" aria-required="true" style="width:350px;margin-left:33%"/>
+
+                        &nbsp <!--insert space-->
+
+                        <button type="button" class="view-password-toggle" id="show-password" style="margin-right:32%">
                             <i class="bi bi-eye"></i>
                         </button>
                     </div>
 
-                    <label asp-for="Input.NewPassword" class="form-label"></label>
+                    <br>
+                    <label asp-for="Input.NewPassword" class="form-label" style="width:350px;margin-left:33%"></label>
                     <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
-                    <br/>
                     <div class="input-group">
-                        <input asp-for="Input.NewPassword" class="form-control" aria-required="false"/>
-                        <button type="button" class="view-password-toggle" id="show-new-password">
+                        <input asp-for="Input.NewPassword" class="form-control" aria-required="false" style="width:350px;margin-left:33%"/>
+
+                        &nbsp <!--insert space-->
+
+                        <button type="button" class="view-password-toggle" id="show-new-password" style="margin-right:32%">
                             <i class="bi bi-eye"></i>
                         </button>
                     </div>
 
-                    <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                    <br>
+                    <label asp-for="Input.ConfirmPassword" class="form-label" style="width:350px;margin-left:33%"></label>
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                    <br/>
                     <div class="input-group">
-                        <input asp-for="Input.ConfirmPassword" class="form-control" aria-required="false"/>
-                        <button type="button" class="view-password-toggle" id="show-confirm-password">
+                        <input asp-for="Input.ConfirmPassword" class="form-control" aria-required="false" style="width:350px;margin-left:33%"/>
+
+                        &nbsp <!--insert space-->
+
+                        <button type="button" class="view-password-toggle" id="show-confirm-password" style="margin-right:32%">
                             <i class="bi bi-eye"></i>
                         </button>
                     </div>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" onclick="history.back()">Cancel</button>
 
+                    <br><br>
+
+                    <button style="width:140px;height:40px;margin-left:35%" type="submit" class="btn btn-primary rounded-pill">Save</button>
+                    <button style="width:140px;height:40px;margin-left:2%" type="button" class="btn btn-secondary rounded-pill" onclick="history.back()">Return</button>
                 </div>
             </form>
         </div>

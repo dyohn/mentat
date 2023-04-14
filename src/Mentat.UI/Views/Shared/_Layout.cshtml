@@ -1,5 +1,12 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
+@using Microsoft.AspNetCore.Identity
+@using Mentat.UI.Areas.Identity.Data
+
+@inject SignInManager<MentatUser> SignInManager
+@inject UserManager<MentatUser> UserManager
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,14 +41,26 @@
 
                 <div class="navbar-collapse collapse justify-content-end">
                     <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <img src="~/images/blank-profile-picture-g235ada478_640.png" width="40" height="40" class="rounded-circle">
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <partial name="_LoginPartial" />
-                        </div>
-                      </li>   
+
+                        <div class="row">
+                            <div class="col-4">
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                   <a style="position:relative;left:5px;top:8px" id="UserProfile" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/UserProfile" title="View Profile">@UserManager.GetUserName(User)</a>
+                                }
+                            </div>
+
+                            <div class="col-4">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <img src="~/images/blank-profile-picture-g235ada478_640.png" width="40" height="40" class="rounded-circle">
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <partial name="_LoginPartial" />
+                                    </div>
+                                </li>
+                            </div>
+                        </div>  
                     </ul>
                 </div>
 
