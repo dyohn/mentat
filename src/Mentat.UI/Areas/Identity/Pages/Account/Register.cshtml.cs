@@ -49,7 +49,12 @@ namespace Mentat.UI.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
-
+            
+            [Required]
+            [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Username {0} is invalid, can only contain letters or digits.")]
+            [Display(Name = "Username:")]
+            public string UserName { get; set; }
+            
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
                 MinimumLength = 6)]
@@ -64,7 +69,6 @@ namespace Mentat.UI.Areas.Identity.Pages.Account
 
             [Required] public string UserType { get; set; }
 
-            [Required]public string UserName { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)

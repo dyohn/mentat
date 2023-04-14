@@ -29,12 +29,9 @@
                     <br>
                     <label asp-for="Input.Password" class="form-label" style="width:350px;margin-left:33%"></label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    <div class="input-group">
-                        <input asp-for="Input.Password" class="form-control" aria-required="true" style="width:350px;margin-left:33%"/>
-
-                        &nbsp <!--insert space-->
-
-                        <button type="button" class="view-password-toggle" id="show-password" style="margin-right:32%">
+                    <div class="input-group-password" style="width:350px;margin-left:33%">
+                        <input asp-for="Input.Password" class="form-control-password" aria-required="true" style="width: calc(100% - 42px);"/>
+                        <button type="button" class="view-password-toggle" id="show-password" style="width: 42px">
                             <i class="bi bi-eye"></i>
                         </button>
                     </div>
@@ -42,12 +39,9 @@
                     <br>
                     <label asp-for="Input.NewPassword" class="form-label" style="width:350px;margin-left:33%"></label>
                     <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
-                    <div class="input-group">
-                        <input asp-for="Input.NewPassword" class="form-control" aria-required="false" style="width:350px;margin-left:33%"/>
-
-                        &nbsp <!--insert space-->
-
-                        <button type="button" class="view-password-toggle" id="show-new-password" style="margin-right:32%">
+                    <div class="input-group-password" style="width:350px;margin-left:33%">
+                        <input asp-for="Input.NewPassword" class="form-control-password" aria-required="true" style="width: calc(100% - 42px);"/>
+                        <button type="button" class="view-password-toggle" id="show-new-password" style="width: 42px">
                             <i class="bi bi-eye"></i>
                         </button>
                     </div>
@@ -55,16 +49,12 @@
                     <br>
                     <label asp-for="Input.ConfirmPassword" class="form-label" style="width:350px;margin-left:33%"></label>
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                    <div class="input-group">
-                        <input asp-for="Input.ConfirmPassword" class="form-control" aria-required="false" style="width:350px;margin-left:33%"/>
-
-                        &nbsp <!--insert space-->
-
-                        <button type="button" class="view-password-toggle" id="show-confirm-password" style="margin-right:32%">
+                    <div class="input-group-password" style="width:350px;margin-left:33%">
+                        <input asp-for="Input.ConfirmPassword" class="form-control-password" aria-required="true" style="width: calc(100% - 42px);"/>
+                        <button type="button" class="view-password-toggle" id="show-confirm-password" style="width: 42px">
                             <i class="bi bi-eye"></i>
                         </button>
                     </div>
-
                     <br><br>
 
                     <button style="width:140px;height:40px;margin-left:35%" type="submit" class="btn btn-primary rounded-pill">Save</button>

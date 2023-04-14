@@ -33,9 +33,12 @@ namespace Mentat.UI.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+           
             [Required]
+            [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Username {0} is invalid, can only contain letters or digits.")]
             [Display(Name = "User ID:")]
             public string UserName { get; set; }
+
 
             [Required]
             [EmailAddress]

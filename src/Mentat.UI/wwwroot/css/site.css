@@ -191,3 +191,63 @@ body, html {
     -webkit-line-clamp: 2;
     overflow: hidden;
 }
+
+.input-group-password {
+    display: flex;
+    align-items: center;
+}
+
+.form-control-password {
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem 0 0 .25rem;
+    border-right: none;
+}
+
+.view-password-toggle {
+    height: calc(1.5em + .75rem + 2px);
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0 .25rem .25rem 0;
+    border-left: none;
+}
+
+.form-control-password:focus,
+.input-group-password:focus-within .view-password-toggle {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+}
+
+.view-password-toggle:focus,
+.input-group-password:focus-within .form-control-password {
+    height: calc(1.5em + .75rem + 2px);
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+}
+
+.default-user-pic {
+    color: #CEB888;
+    background: #782F40;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+}
