@@ -57,10 +57,12 @@ namespace Mentat.UI.Controllers
         {
             try
             {
+                // If tags were provided, they are submitted as a comma-separated string
+                // Convert to a List<String>, and save them as all uppercase.
                 if (tagList != null)
                 {
                     string[] stringArray = tagList.Split(',');
-                    card.Tags = new List<String>(stringArray);
+                    card.Tags = new List<String>(stringArray).ConvertAll(d => d.ToUpper());
                 } 
                 
                 _cardService.SaveCard(id, card);

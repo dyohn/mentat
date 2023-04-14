@@ -52,9 +52,9 @@
         <dd class="col-sm-10">
             @if (Model.Tags != null)
             {
-                String.Join(", ", Model.Tags);
+                @String.Join(", ", Model.Tags)
             }
-        </dd>
+            </dd>
     </dl>
 </div>
 <div>

@@ -55,6 +55,7 @@
                         {
                             foreach (string tag in Model.Tags)
                             {
+                                if (tag.Length < 1) continue; // no reason to try and display a blank tag
                                 @:<div class="tag-item">
                                     <span class="tag-value">@tag</span>
                                     <div class="fa fa-close" onclick="this.parentNode.remove()"></div>

@@ -148,29 +148,55 @@
 	</div>
 	<hr class="bold-black top-buffer col-sm-12">
 	<div class="row top-buffer col-sm-12">
-		<table id="cardlist" class="table top-buffer">
+		<table id="flashcard-list" class="table top-buffer">
 			<thead>
-				<tr>
-					<th align="center">List of Flashcards</th>
-					<!--Add search bar-->
+                <tr>
+                    <th align="center">List of Flashcards</th>
+                    <!--Add search bar-->
 					<th><input id="searchbar" type="text" placeholder="Search.."></th>
-				</tr>
+                </tr>
 			</thead>
 			<colgroup>
 				<col span="1" style="width: 85%;">
 				<col span="1" style="width: 10%;">
 			</colgroup>
-			<tbody id="cardbody">
-				<!--Card List Logic-->
-
-			</tbody>
-		</table>
-	</div>
-	<script>
+            <tbody id="cardbody">
+                @for (var i = 1; i <= Model.NumberOfFlashCards; i++)
+                    {
+                        var classes = "";
+                        foreach (var tag in Model.AvailableCards[i - 1].Tags ?? Enumerable.Empty<string>())
+						{
+							if (tag == null)
+							{
+								continue;
+							}
+							classes += tag.Replace(" ", "_") + ' ';
+						}
+						<tr class="@classes">
+							<td>
+								@Html.DisplayFor(m => m.AvailableCards[i - 1].CardQuestion)
+							</td>
+                            <td>
+                                <a href="javascript:;" title="View Details"><i class="fa-solid fa-eye fsu-maroon-color" onclick="location.href='@Url.Action("Details", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
+                                @if (Model.AvailableCards[i - 1].CanEditOrDelete)
+                                {
+                                    <text> | </text>
+                                    <a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen fsu-black-color" onclick="location.href='@Url.Action("AddEditCard", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
+                                    <text> | </text>
+                                    <a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can fsu-maroon-color" data-id="@Model.AvailableCards[i - 1].CardID" data-togle="modal" data-target="#deleteModal"></i></a>
+                                }
+                            </td>
+						</tr>
+                    }
+				</tbody>
+			</table>
+		</div>
+    <script>
 		//grab cards
 		var cardtable = [];
 		var cardcount = 0;
 		var matchlist = [];
+		const input = document.getElementById('searchbar');
 		@foreach (var c in Model.AvailableCards)
 		{
 			@:cardtable.push({ cardID: "@c.CardID", question: "@c.CardQuestion", answer: "@c.HiddenCardAnswer", editable: "@c.CanEditOrDelete", tags: [] });
@@ -191,37 +217,18 @@
 			@:cardcount++;
 		}
 			console.log(cardtable);
-		displaycards();
+
 		function displaycards() {
-			const table = document.getElementById("cardlist");
 			const body = document.getElementById("cardbody");
-			body.innerHTML = "";
+            const tableRows = document.querySelectorAll('#flashcard-list tbody tr');
 			if (matchlist.length > 0)
 				for (var i = 0; i < matchlist.length; i++) {
-
-					let row = body.insertRow();
-					let a = row.insertCell(0);
-					try {
-						a.innerHTML = cardtable[matchlist[i]]['question'];
-					} catch (error) {
-						var rowCount = table.rows.length;
-						table.deleteRow(rowCount - 1);
-						continue;
-					}
-					let b = row.insertCell(1);
-					b.innerHTML = '<a href="javascript:;" title="View Details" ><i class="fa-solid fa-eye fsu-maroon-color" onclick="window.location.href=\'/Card/Details/' + cardtable[matchlist[i]]['cardID'] + '\';"></i></a>';
-					if (cardtable[matchlist[i]]['editable'] === "True")
-						b.innerHTML += 
-								`<text> | </text>
-								<a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen fsu-black-color" onclick="window.location.href='/Card/AddEditCard/` + cardtable[matchlist[i]]['cardID'] + `';"></i></a>
-								<text> | </text>
-								<a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can fsu-maroon-color" data-id=` + cardtable[matchlist[i]]['cardID'] + ` data-toggle="modal" data-target="#deleteModal"></i></a>
-								`;
-					console.log(b.innerHTML);
+                    tableRows[matchlist[i]].classList.remove('hidden');
 				}
 			else {
 				let row = body.insertRow();
 				let a = row.insertCell(0);
+				a.setAttribute("id", "no-results");
 				a.innerHTML = "<text>No Results</text>";
 			}
 		}
@@ -229,8 +236,10 @@
 		function search(text) {
 			matchlist = [];
 			const words = text.toLowerCase().split(' ');
+            const tableRows = document.querySelectorAll('#flashcard-list tbody tr');
 			//console.log(words)
 			for (var i = 0; i < cardcount; i++) {
+                tableRows[i].classList.add('hidden');
 				var contains = true;
 				//console.log(cardtable[i]['question']);
 				let ques = cardtable[i]['question'].toLowerCase().replace(/[.,:;?!]/g, "").split(' ');
@@ -256,9 +265,11 @@
 			console.log(text);
 		}
 
-		var input = document.getElementById("searchbar");
 		input.addEventListener("keypress", function (event) {
 			if (event.key === "Enter") {
+				var e = document.getElementById('no-results');
+				if (e !== null)
+					e.remove();
 				if (input.value === "") {
 					for (var j = 0; j < cardcount; j++) {
 						matchlist.push(j);
@@ -271,7 +282,7 @@
 			}
 		});
 
-	</script>
+    </script>
 
 	<!-- Delete Modal -->
 	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
