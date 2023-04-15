@@ -16,20 +16,27 @@
                 <div class="form-floating">
                     <label asp-for="Input.EmailOrUsername" class="form-label"></label>
                     <span asp-validation-for="Input.EmailOrUsername" class="text-danger"></span>
-                    <input asp-for="Input.EmailOrUsername" class="form-control" autocomplete="username" aria-required="true"/>
-                    <label asp-for="Input.Password" class="form-label"></label>
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true"/>
+                    <input asp-for="Input.EmailOrUsername" class="form-control" autocomplete="username" style="width:350px"/>
 
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe" class="form-label">
-                            <input class="form-check-input" asp-for="Input.RememberMe"/>
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
+                    <br>
+                    <label asp-for="Input.Password" class="form-label" style="width:350px"></label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <div class="input-group-password" style="width:350px">
+                        <input asp-for="Input.Password" class="form-control-password" aria-required="true" style="width: calc(100% - 42px);"/>
+                        <button type="button" class="view-password-toggle" id="show-password" style="width: 42px">
+                            <i class="bi bi-eye"></i>
+                        </button>
                     </div>
+                    <br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" asp-for="Input.RememberMe"/>
+                        <label asp-for="Input.RememberMe" class="form-check-label">@Html.DisplayNameFor(m => m.Input.RememberMe)</label>
+                    </div>
+                    <br><br>
                 </div>
                 <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                    <button type="submit" style="width:350px;height:40px" class="btn btn-primary rounded-pill">Log in</button>
+                    <br><br>
                 </div>
                 <div>
                     <p>
@@ -54,8 +61,11 @@
                 {
                     <div>
                         <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
+                            There are no external authentication services configured. See this
+                            <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                article
+                                about setting up this ASP.NET application to support logging in via external services
+                            </a>.
                         </p>
                     </div>
                 }
@@ -79,4 +89,19 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>
+
+    <script>
+       const showButton = document.querySelector(".view-password-toggle");
+       const passwordInput = showButton.previousElementSibling;
+       
+       showButton.addEventListener("click", function() {
+           if (passwordInput.type === "password") {
+               passwordInput.type = "text";
+               showButton.innerHTML = '<i class="bi bi-eye-slash"></i>';
+           } else {
+               passwordInput.type = "password";
+               showButton.innerHTML = '<i class="bi bi-eye"></i>';
+           }
+       });
+    </script>
 }
