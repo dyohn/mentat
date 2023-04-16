@@ -100,7 +100,7 @@ namespace Mentat.Domain.Bash
             {
                 scriptBuilder.Append("gcc -std=c99 -o ${EXECUTABLE} ${SOURCECODE}\n\t");
             }
-            else if (_config.Language == "c++")
+            else if (_config.Language == "cpp")
             {
                 scriptBuilder.Append("g++ -c -std=c++11 ${SOURCECODE}\n\t" +
                     "g++ -o ${EXECUTABLE} -std=c++11 ${STUDENT}.o\n\t");
