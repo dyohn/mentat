@@ -42,44 +42,40 @@
 
             <!-- Profile Bubble (Top Right) -->
             <div class="navbar-collapse collapse justify-content-end">
-                <ul class="navbar-nav">
-                    <div class="col-4">
-                        <li class="nav-item">
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                                <a style="position:relative;left:5px;top:12px" id="UserProfile" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/UserProfile" title="View Profile">@UserManager.GetUserName(User)</a>
-                            }
-                        </li>
+                <ul class="navbar-nav flex-container">
+                    <li class="nav-item">
+                         @if (SignInManager.IsSignedIn(User))
+                         {
+                             <a style="position:relative;left:5px;top:12px" id="UserProfile" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/UserProfile" title="View Profile">@UserManager.GetUserName(User)</a>
+                         }
+                    </li>
+                    <li class="nav-item dropdown">
+                         @if (SignInManager.IsSignedIn(User))
+                         {
+                             var imgSrc = "~/images/blank-profile-picture-g235ada478_640.png";
+                             var user = await UserManager.GetUserAsync(User);
+                             if (user.UserType == "Mentor")
+                             {
+                                 imgSrc = "~/images/cil_apple.png";
+                             }
+                             else if (user.UserType == "Student")
+                             {
+                                 imgSrc = "~/images/ph_student-fill.png";
+                             }
+                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 <img src="@Url.Content(imgSrc)" width="40" height="40" class="default-user-pic">
+                             </a>
+                         }
+                         else
+                         {
+                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="@Url.Content("~/images/blank-profile-picture-g235ada478_640.png")" width="40" height="40" class="rounded-circle profile-image">
+                             </a>
+                         }
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                         <partial name="_LoginPartial"/>
                     </div>
-                    <div class="col-4">
-                        <li class="nav-item dropdown">
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                                var imgSrc = "~/images/blank-profile-picture-g235ada478_640.png";
-                                var user = await UserManager.GetUserAsync(User);
-                                if (user.UserType == "Mentor")
-                                {
-                                    imgSrc = "~/images/cil_apple.png";
-                                }
-                                else if (user.UserType == "Student")
-                                {
-                                    imgSrc = "~/images/ph_student-fill.png";
-                                }
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="@Url.Content(imgSrc)" width="40" height="40" class="default-user-pic">
-                                </a>
-                            }
-                            else
-                            {
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="@Url.Content("~/images/blank-profile-picture-g235ada478_640.png")" width="40" height="40" class="rounded-circle profile-image">
-                                </a>
-                            }
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <partial name="_LoginPartial"/>
-                            </div>
                         </li>
-                    </div>
                 </ul>
             </div>
 
