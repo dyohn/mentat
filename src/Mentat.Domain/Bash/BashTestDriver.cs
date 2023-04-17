@@ -58,42 +58,39 @@ namespace Mentat.Domain.Bash
             // Begin generating script.
             scriptBuilder.Append("#!/usr/bin/env bash\n\n" +
                 "CURRENT_DIR=$( cd -- \"$( dirname -- \"${BASH_SOURCE[0]}\" )\" &> /dev/null && pwd )\n\n" +
-                "MENTOR_DIR=${CURRENT_DIR} + /mentor\n" +
-                "TEST_DIR=${CURRENT_DIR} + /tests\n" +
-                "REPORT_DIR=${CURRENT_DIR} + /reports\n" +
-                "DIFF_DIR=${REPORT_DIR}/diffs\n" +
-                "SUBMIT_DIR=${CURRENT_DIR} + /submit\n" +
-                "BUILD_DIR=${CURRENT_DIR} + /build\n" +
-                "PROCESSED_DIR=${CURRENT_DIR} + /processed\n" +
-                "HEADER=${CURRENT_DIR} + /header\n" +
+                "MENTOR_DIR=${CURRENT_DIR}/mentor\n" +
+                "TEST_DIR=${CURRENT_DIR}/tests\n" +
+                "REPORT_DIR=${CURRENT_DIR}/reports\n" +
+                "DIFF_DIR=${CURRENT_DIR}/diffs\n" +
+                "SUBMIT_DIR=${CURRENT_DIR}/submit\n" +
+                "BUILD_DIR=${CURRENT_DIR}/build\n" +
+                "PROCESSED_DIR=${CURRENT_DIR}/processed\n" +
                 "SPACER=\"--------------------------------------------------------------------------\n" +
                     "-************************************************************************-\n" +
                     "--------------------------------------------------------------------------\"\n\n" +
                 "#Test the mentors build\n" +
-                "echo \"" + GetColorString(color, "Beginning running test against mentors sample: " + _config.SampleExecutableName) + "\"\n" +
+                "echo -e \"" + GetColorString(color, "Beginning running test against mentors sample: " + _config.SampleExecutableName) + "\"\n" +
                 "cd ${TEST_DIR}\n" +
-                "MENTOR =`echo \"" + _config.SampleExecutableName + "\" | cut -d'.' -f1`\n" +
-                "cp " + _config.SampleExecutableName + " assignment\n");
+                "MENTOR=$(echo \"" + _config.SampleExecutableName + "\" | cut -d '.' -f 1)\n" +
+                "cp ${MENTOR_DIR}/" + _config.SampleExecutableName + " ${TEST_DIR}/assignment\n");
             // Loop over and insert test for each test file name for the mentor.
             foreach (var testFileName in _config.TestFileNames)
             {
-                scriptBuilder.Append("echo \"" + GetColorString(color, "Running the test: " + testFileName) + "\"\n" +
-                    testFileName + " >> ./${MENTOR_DIR}/${MENTOR}.txt\n" +
-                    "echo ${SPACER} >> ./${MENTOR_DIR}/${MENTOR}.txt\n");
+                scriptBuilder.Append("echo -e \"" + GetColorString(color, "Running the test: " + testFileName) + "\"\n" +
+                    testFileName + " >> ${MENTOR_DIR}/${MENTOR}.txt\n" +
+                    "echo ${SPACER} >> ${MENTOR_DIR}/${MENTOR}.txt\n");
             }
             scriptBuilder.Append("mv assignment ${MENTOR_DIR}/" + _config.SampleExecutableName + "\n\n" +
-                "echo \"" + GetColorString(color, "Mentor testing complete.") + "\"\n" +
-                "echo \"" + GetColorString(color, "Beginning student testing.") + "\"\n" +
+                "echo -e \"" + GetColorString(color, "Mentor testing complete.") + "\"\n" +
+                "echo\n" +
+                "echo -e \"" + GetColorString(color, "Beginning student testing.") + "\"\n" +
                 "# Compile and move into test dir, setting up reports along the way.\n" +
                 "cd ${SUBMIT_DIR}\n" +
                 "for SOURCECODE in *; do\n\t" +
-                "STUDENT=\'echo \"${SOURCECODE}\" | cut -d\'.\' -f1\'\n\t" +
-                "echo\n\t" +
-                "echo \"" + GetColorString(color, "Compiling ${STUDENT}'s assignmnet...") + "\"\n\t" +
+                "STUDENT=$(echo \"${SOURCECODE}\" | cut -d \'.\' -f 1)\n\t" +
+                "echo -e \"" + GetColorString(color, "Compiling ${STUDENT}'s assignmnet...") + "\"\n\t" +
                 "EXECUTABLE=${STUDENT}.x\n\t" +
                 "REPORT=${STUDENT}.txt\n\t" +
-                "cp ${HEADER} ${REPORT_DIR}/${REPORT}\n\t" +
-                "read -n 1 -r -s -p \'Press enter to continue...\'\n\t" +
                 "echo\n\t");
             // Configure compiler settings.
             if (_config.Language == "c")
@@ -116,21 +113,27 @@ namespace Mentat.Domain.Bash
                 // Loop and insert test for student code for each test file name.
                 foreach (var testFileName in _config.TestFileNames)
                 {
-                    scriptBuilder.Append("echo \"" + GetColorString(color, "Running the test: " + testFileName) + "\"\n\t" +
+                    scriptBuilder.Append("echo -e \"" + GetColorString(color, "Running the test: " + testFileName) + "\"\n\t" +
                         "timeout " + _config.TimeoutInSeconds.ToString() + " " + testFileName + " >> ${REPORT_DIR}/${REPORT}\n\t" +
                         "echo ${SPACER} >> ${REPORT_DIR}/${REPORT}\n\t");
                 }
-                scriptBuilder.Append("echo \"" + GetColorString(color, "Student testing complete.") + "\"\n\t" +
-                    "echo \"" + GetColorString(color, "Beginning clean up.") + "\"\n\t" +
+                scriptBuilder.Append("echo -e \"" + GetColorString(color, "Student testing complete.") + "\"\n\t" +
+                    "echo\n\t" +
+                    "echo -e \"" + GetColorString(color, "Beginning clean up.") + "\"\n\t" +
                     "\n\t# Clean up\n\t" +
-                    "echo \"" + GetColorString(color, "Moving assignment to ${BUILD_DIR}/${EXECUTABLE}...") + "\"\n\t" +
-                    "mv assignment ${BUILD_DIR}/${EXECUTABLE}\n\t" +
-                    "echo \"" + GetColorString(color, "Moving #{SUBMIT_DIR}/${SOURCECODE} ${PROCESSED_DIR}/${SOURCECODE}...") + "\"\n\t" +
+                    "echo -e \"" + GetColorString(color, "Moving compiled assignment to ${BUILD_DIR}/${EXECUTABLE}...") + "\"\n\t" +
+                    "mv assignment ${BUILD_DIR}/${EXECUTABLE}\n\t");
+                    if (_config.Language == "cpp")
+                    {
+                        scriptBuilder.Append("echo -e \"" + GetColorString(color, "Deleting object file ${STUDENT}.o...") + "\"\n\t" +
+                        "rm ${SUBMIT_DIR}/${STUDENT}.o\n\t");
+                    }
+                    scriptBuilder.Append("echo -e \"" + GetColorString(color, "Moving source code ${SOURCECODE} to ${PROCESSED_DIR}/${SOURCECODE}...") + "\"\n\t" +
                     "mv ${SUBMIT_DIR}/${SOURCECODE} ${PROCESSED_DIR}/${SOURCECODE}\n\t" +
                     _config.DiffCommand + " -u ${MENTOR_DIR}/${MENTOR}.txt ${REPORT_DIR}/${REPORT} > ${DIFF_DIR}/${STUDENT}_diff.txt\n\t" +
                     "cd ${SUBMIT_DIR}\n\t" +
                     "echo\n\t" +
-                    "echo \"" + GetColorString(color, "Completing grading ${STUDENT}...") + "\"\n\t" +
+                    "echo -e \"" + GetColorString(color, "Completed grading ${STUDENT}...") + "\"\n\t" +
                     "echo\n" +
                     "done");
 
