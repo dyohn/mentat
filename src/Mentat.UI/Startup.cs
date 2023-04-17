@@ -13,7 +13,6 @@ using Mentat.Domain.IService;
 using Mentat.Domain.Service;
 using MongoDB.Driver;
 using Mentat.UI.Areas.Identity.Data;
-using IdentityMongo.Settings;
 using Microsoft.AspNetCore.Identity;
 
 namespace Mentat.UI
@@ -42,12 +41,13 @@ namespace Mentat.UI
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ICardService, CardService>();
 
-            // load in mongodb settings
-            var mongoDbSettings = Configuration.GetSection(nameof(MongoDbConfig)).Get<MongoDbConfig>();
-
             // add an identity module using user and role models, add the mongodb stores, and add the default token providers alongside UI
             services.AddIdentity<MentatUser, MentatUserRole>()
-            .AddMongoDbStores<MentatUser, MentatUserRole, Guid>(mongoDbSettings.ConnectionString, mongoDbSettings.Name)
+            .AddMongoDbStores<MentatUser, MentatUserRole, Guid>
+                (
+                    Configuration.GetValue<string>("IdentityDatabaseOptions:ConnectionString"),
+                    Configuration.GetValue<string>("IdentityDatabaseOptions:DatabaseName")
+                )
             .AddDefaultTokenProviders()
             .AddDefaultUI();
 
