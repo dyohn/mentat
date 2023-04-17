@@ -31,8 +31,11 @@ namespace Mentat.UI
         {
             services.AddControllersWithViews();
 
-            // CardDatabaseOptions section of appsecrets.json mapped to CardDatabaseOptions class object.
+            // CardDatabaseOptions section of appsecrets.json mapped to CardDatabaseOptions class.
             services.Configure<CardDatabaseOptions>(Configuration.GetSection(nameof(CardDatabaseOptions)));
+
+            // IdentityDatabaseOptions section of appsecrets.json mapped to IdentityDatabaseOptions class.
+            services.Configure<IdentityDatabaseOptions>(Configuration.GetSection(nameof(IdentityDatabaseOptions)));
 
             // Configure Dependency Injection classes here
             services.AddSingleton<CardDatabaseOptions>();
