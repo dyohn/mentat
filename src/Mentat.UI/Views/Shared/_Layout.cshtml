@@ -40,41 +40,17 @@
                 </ul>
             </div>
 
-            <!--    This version places longer usernames behind the profile image:
+            <!-- Profile Bubble (Top Right) -->
             <div class="navbar-collapse collapse justify-content-end">
                 <ul class="navbar-nav">
-
-                    <div class="row">
-                        <div class="col-4">
+                    <div class="col-4">
+                        <li class="nav-item">
                             @if (SignInManager.IsSignedIn(User))
                             {
-                                <a style="position:relative;left:5px;top:8px" id="UserProfile" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/UserProfile" title="View Profile">@UserManager.GetUserName(User)</a>
+                                <a style="position:relative;left:5px;top:12px" id="UserProfile" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/UserProfile" title="View Profile">@UserManager.GetUserName(User)</a>
                             }
-                        </div>
-
-                        <div class="col-4">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="~/images/blank-profile-picture-g235ada478_640.png" width="40" height="40" class="rounded-circle">
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <partial name="_LoginPartial"/>
-                                </div>
-                            </li>
-                        </div>
+                        </li>
                     </div>
-                </ul>
-            </div>
-        -->
-
-            <div class="navbar-collapse collapse justify-content-end">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <a id="UserProfile" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/UserProfile" title="View Profile">@UserManager.GetUserName(User)</a>
-                        }
-                    </li>
                     <div class="col-4">
                         <li class="nav-item dropdown">
                             @if (SignInManager.IsSignedIn(User))
@@ -90,7 +66,7 @@
                                     imgSrc = "~/images/ph_student-fill.png";
                                 }
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="@Url.Content(imgSrc)" class="default-user-pic">
+                                    <img src="@Url.Content(imgSrc)" width="40" height="40" class="default-user-pic">
                                 </a>
                             }
                             else
