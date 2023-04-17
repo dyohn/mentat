@@ -65,9 +65,9 @@ namespace Mentat.Domain.Bash
                 "SUBMIT_DIR=${CURRENT_DIR}/submit\n" +
                 "BUILD_DIR=${CURRENT_DIR}/build\n" +
                 "PROCESSED_DIR=${CURRENT_DIR}/processed\n" +
-                "SPACER=\"--------------------------------------------------------------------------\n" +
-                    "-************************************************************************-\n" +
-                    "--------------------------------------------------------------------------\"\n\n" +
+                "SPACER=\\\\n--------------------------------------------------------------------------\\\\n\\" +
+                    "-************************************************************************-\\\\n\\" +
+                    "--------------------------------------------------------------------------\n\n" +
                 "#Test the mentors build\n" +
                 "echo -e \"" + GetColorString(color, "Beginning running test against mentors sample: " + _config.SampleExecutableName) + "\"\n" +
                 "cd ${TEST_DIR}\n" +
@@ -78,7 +78,7 @@ namespace Mentat.Domain.Bash
             {
                 scriptBuilder.Append("echo -e \"" + GetColorString(color, "Running the test: " + testFileName) + "\"\n" +
                     testFileName + " >> ${MENTOR_DIR}/${MENTOR}.txt\n" +
-                    "echo ${SPACER} >> ${MENTOR_DIR}/${MENTOR}.txt\n");
+                    "echo -e ${SPACER} >> ${MENTOR_DIR}/${MENTOR}.txt\n");
             }
             scriptBuilder.Append("mv assignment ${MENTOR_DIR}/" + _config.SampleExecutableName + "\n\n" +
                 "echo -e \"" + GetColorString(color, "Mentor testing complete.") + "\"\n" +
@@ -115,7 +115,7 @@ namespace Mentat.Domain.Bash
                 {
                     scriptBuilder.Append("echo -e \"" + GetColorString(color, "Running the test: " + testFileName) + "\"\n\t" +
                         "timeout " + _config.TimeoutInSeconds.ToString() + " " + testFileName + " >> ${REPORT_DIR}/${REPORT}\n\t" +
-                        "echo ${SPACER} >> ${REPORT_DIR}/${REPORT}\n\t");
+                        "echo -e ${SPACER} >> ${REPORT_DIR}/${REPORT}\n\t");
                 }
                 scriptBuilder.Append("echo -e \"" + GetColorString(color, "Student testing complete.") + "\"\n\t" +
                     "echo\n\t" +
