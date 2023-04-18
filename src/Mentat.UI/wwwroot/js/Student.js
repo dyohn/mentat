@@ -7,7 +7,7 @@
     $('#SelectedDifficulties').multiselect();
 };
 
-var originalCarouselItems = Array.from(document.querySelectorAll('[id^="flashcard_"]'));
+const originalCarouselItems = Array.from(document.querySelectorAll('[id^="flashcard_"]'));
 
 function toggleShowHideOfFlashCard(index) {
     var showHideLink = $("[id$=show-hide_" + index + "]");
@@ -80,7 +80,7 @@ function processCardChange(index, indexToShow) {
     hideCurrentCard(index);
     showCard(indexToShow);
     hideAnswerOfCardNoLongerVisible(index);
-    $("#CurrentIndex").val(indexToShow);
+    $("#CurrentIndex").val(indexToShow);   
 }
 
 function getCardCount() {
@@ -173,10 +173,11 @@ function rebuildCarousel(selectedTags) {
     var carouselContainer = document.querySelector('.carousel-container');
     if (selectedTags.length == 0) {
         for (let i = 0; i < originalCarouselItems.length; i++) {
+            originalCarouselItems[i].setAttribute("style", "display:none");
             newCarouselItems.push(originalCarouselItems[i]);
         }
     }
-    else {
+    else {   
         for (let i = 0; i < originalCarouselItems.length; i++) {
             var classes = originalCarouselItems[i].getAttribute('class');
 

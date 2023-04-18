@@ -61,54 +61,44 @@
                 </div>
                 <script>
                     var container = document.getElementById("tag-buttons");
-                    var selectedTags = [];
+					var selectedTags = [];
+					var filteredCards = [];
                     // add a click event listener to the tag buttons
                     var buttons = document.getElementsByClassName("tag-button");
                     for (var i = 0; i < buttons.length; i++) {
-                      buttons[i].addEventListener("click", function() {
-                          var tag = this.getAttribute("data-tag").replace(/ /g, "_");
-                          if (selectedTags.includes(tag)) {
-                              selectedTags.splice(selectedTags.indexOf(tag), 1); // remove the tag from the list of selected tags
-                              this.classList.remove("selected"); // remove the "selected" class from the button
-                          } else {
+						buttons[i].addEventListener("click", function () {
+							resetFlashCards();
+							var tag = this.getAttribute("data-tag").replace(/ /g, "_");
+							if (selectedTags.includes(tag)) {
+								selectedTags.splice(selectedTags.indexOf(tag), 1); // remove the tag from the list of selected tags
+								this.classList.remove("selected"); // remove the "selected" class from the button
+							} else {
                               selectedTags.push(tag); // add the tag to the list of selected tags
                               this.classList.add("selected"); // add the "selected" class to the button
-                          }
-                          var tableRows = document.querySelectorAll('#flashcard-list tbody tr');
-                          //var carouselEntries = document.querySelectorAll('#carousel-items div');
-                          var carouselEntries = document.querySelectorAll('[id^="flashcard_"]');
-                          if (selectedTags.length == 0) {
-                              for (var i = 0; i < tableRows.length; i++) {
-                                  tableRows[i].classList.remove('hidden');
-                              }
-                              for (var i = 0; i < carouselEntries.length; i++) {
-                                  carouselEntries[i].classList.remove('hidden');
-                              }
-                          }
-                          else {
-                              for (var i = 0; i < tableRows.length; i++) {
-                                  for (var j = 0; j < selectedTags.length; j++) {
-                                      if (tableRows[i].classList.contains(selectedTags[j])) {
-                                          tableRows[i].classList.remove('hidden');
-                                          break;
-                                      } else {
-                                          tableRows[i].classList.add('hidden');
-                                      }
-                                  }
-                              }
-                              for (var i = 0; i < carouselEntries.length; i++) {
-                                  for (var j = 0; j < selectedTags.length; j++) {
-                                      if (carouselEntries[i].classList.contains(selectedTags[j])) {
-                                          carouselEntries[i].classList.remove('hidden');
-                                          break;
-                                      } else {
-                                          carouselEntries[i].classList.add('hidden');
-                                      }
-                                  }
-                              }
-                          }
-                          rebuildCarousel(selectedTags);
-                      });
+							}
+							var tableRows = document.querySelectorAll('#flashcard-list tbody tr');
+							if (selectedTags.length == 0) {
+								filteredCards = [];
+								for (var i = 0; i < tableRows.length; i++) {
+									tableRows[i].classList.remove('hidden');
+								}
+							}
+							else {
+								for (var i = 0; i < tableRows.length; i++) {
+									for (var j = 0; j < selectedTags.length; j++) {
+										if (tableRows[i].classList.contains(selectedTags[j])) {
+											tableRows[i].classList.remove('hidden');
+											filteredCards.splice(i);
+											break;
+										} else {
+											tableRows[i].classList.add('hidden');
+											filteredCards.push(i);
+										}
+									}
+								}
+							}
+							rebuildCarousel(selectedTags);
+						});
                     }
                 </script>
 
@@ -153,7 +143,12 @@
                 <tr>
                     <th align="center">List of Flashcards</th>
                     <!--Add search bar-->
-					<th><input id="searchbar" type="text" placeholder="Search.."></th>
+					<th class="input-table-head">
+                        <div class="input-wrapper">
+                            <input id="searchbar" type="text" placeholder="Search..">
+                            <button id="reset-button" class="bg-black text-on-dark font-weight-bold" type="button" onclick="resetFlashCards()">Show All</button>
+						</div>
+					</th>
                 </tr>
 			</thead>
 			<colgroup>
@@ -242,27 +237,42 @@
                 tableRows[i].classList.add('hidden');
 				var contains = true;
 				//console.log(cardtable[i]['question']);
-				let ques = cardtable[i]['question'].toLowerCase().replace(/[.,:;?!]/g, "").split(' ');
+				let ques = cardtable[i]['question'].toLowerCase();
 				//console.log(ques);
 				for (var j = 0; j < words.length; j++) {
 					//console.log(words[j])
 					//console.log("tags for card " + i + ": " + cardtable[i]['tags']);
 					if(words[j].at(0) === '#'){
-						//console.log("# check");
-						if(!(cardtable[i]['tags'].includes(words[j].substring(1,words[j].length)))){
-							contains = false;
+						contains = false;
+						for (var k = 0; k < cardtable[i]['tags'].length; k++) {
+							if (cardtable[i]['tags'][k].toLowerCase().includes(words[j].substring(1, words[j].length))) {
+								contains = true;
+								break;
+							}
 						}
 					}
-					else if (ques.indexOf(words[j]) === -1) {
+					else if (!ques.includes(words[j].toLowerCase())) {
 						contains = false;
 					}
 				}
-				if (contains) {
+				if (contains && !filteredCards.includes(i)) {
 					console.log(i);
 					matchlist.push(i);
 				}
 			}
 			console.log(text);
+		}
+
+		function resetFlashCards() {
+			input.value = "";
+            var e = document.getElementById('no-results');
+            if (e !== null)
+                e.remove();
+			for (var j = 0; j < cardcount; j++) {
+                if (filteredCards.includes(j)) continue;
+                matchlist.push(j);
+			}
+			displaycards();
 		}
 
 		input.addEventListener("keypress", function (event) {
@@ -272,6 +282,7 @@
 					e.remove();
 				if (input.value === "") {
 					for (var j = 0; j < cardcount; j++) {
+						if (filteredCards.includes(j)) continue;
 						matchlist.push(j);
 					}
 				}

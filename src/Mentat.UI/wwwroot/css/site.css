@@ -324,3 +324,32 @@ body, html {
     display: none;
 }
 
+.input-table-head {
+    position: relative;
+    min-width: 300px;
+}
+
+#searchbar {
+    width: 60%;
+}
+
+#reset-button {
+    width: 40%;
+}
+
+#searchbar,
+#reset-button {
+    display: block;
+    float: left;
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 500px;
+}
+
