@@ -2,20 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Mentat.Repository.Models;
+using Mentat.Repository.Options;
 using Mentat.Repository.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Mentat.Domain.Interfaces;
 using Mentat.Domain.IService;
 using Mentat.Domain.Service;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using Mentat.UI.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace Mentat.UI
 {
@@ -33,16 +31,30 @@ namespace Mentat.UI
         {
             services.AddControllersWithViews();
 
-            // Mapping to CardDatabaseSettings no longer works on NET 6.0; need to update Startup.cs to reflect migration to 6.0
-            // For now, mainly entered CardBaseSettings into the class - when migration complete, abstract with updated Configure
-            services.Configure<CardDatabaseSettings>(Configuration.GetSection(nameof(CardDatabaseSettings)));
+            // CardDatabaseOptions section of appsecrets.json mapped to CardDatabaseOptions class.
+            services.Configure<CardDatabaseOptions>(Configuration.GetSection(nameof(CardDatabaseOptions)));
+
+            // IdentityDatabaseOptions section of appsecrets.json mapped to IdentityDatabaseOptions class.
+            services.Configure<IdentityDatabaseOptions>(Configuration.GetSection(nameof(IdentityDatabaseOptions)));
 
             // Configure Dependency Injection classes here
-            services.AddSingleton<ICardDatabaseSettings, CardDatabaseSettings>();
-            services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetValue<string>("CardDatabaseSettings:ConnectionString")));
+            services.AddSingleton<CardDatabaseOptions>();
+            services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetValue<string>("CardDatabaseOptions:ConnectionString")));
 
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ICardService, CardService>();
+
+            // add an identity module using user and role models, add the mongodb stores, and add the default token providers alongside UI
+            services.AddIdentity<MentatUser, MentatUserRole>()
+            .AddMongoDbStores<MentatUser, MentatUserRole, Guid>
+                (
+                    Configuration.GetValue<string>("IdentityDatabaseOptions:ConnectionString"),
+                    Configuration.GetValue<string>("IdentityDatabaseOptions:DatabaseName")
+                )
+            .AddDefaultTokenProviders()
+            .AddDefaultUI();
+
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,12 +76,15 @@ namespace Mentat.UI
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapRazorPages();
             });
         }
     }
