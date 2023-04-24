@@ -143,7 +143,7 @@ function onClickFilterAccordian() {
 function tagFieldKeyup(e) {
     // If the user enters a comma, then embed a new element in the input field
     // containing the existing text that represents the tag.
-    if (event.keyCode === 188) {
+    if (event.keyCode === 188 || event.keyCode === 13) {
         e.parentNode.insertBefore(createTagItem(e.value), e);
         e.value = "";
     }
