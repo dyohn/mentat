@@ -1,71 +1,151 @@
 ﻿@model Mentat.UI.Models.Assignment
-
 @{
     ViewData["Title"] = "AddAssignment";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@using (Html.BeginForm("SubmitForm", "Mentor", FormMethod.Post))
-{
+@using (Html.BeginForm("SubmitForm", "Mentor", FormMethod.Post, new { id = "myForm" }))
+{   //var testFiles = new List<string>(); // define testFiles at the same scope as the Hidden helper
     <h2>Add Assignment Form</h2>
-    
     <!-- ID FIELD -->
     @Html.DisplayName("Id")
     <div>
         @Html.TextBoxFor(model=>model.Id)
         @Html.ValidationMessageFor(model => model.Id,
-        "", new { @class = "text-danger" })
+    "", new { @class = "text-danger" })
     </div>
-
     <!-- MENTOR NAME FIELD -->
     @Html.DisplayName("MentorName")
     <div>
         @Html.TextBoxFor(model => model.MentorName)
         @Html.ValidationMessageFor(model => model.MentorName,
-            "", new { @class = "text-danger" })
+    "", new { @class = "text-danger" })
     </div>
-
     <!-- ASSIGNMENT NAME FIELD -->
     @Html.DisplayName("AssignmentName")
     <div>
         @Html.TextBoxFor(model => model.AssignmentName)
         @Html.ValidationMessageFor(model => model.AssignmentName,
-        "", new { @class = "text-danger" })
+    "", new { @class = "text-danger" })
     </div>
-
     <!-- ASSIGNMENT FILE TYPE FIELD -->
     @Html.DisplayName("AssignmentType")
     <div>
         @Html.RadioButtonFor(m => m.AssignmentType, "c",
-            new { @checked = "checked" })
+    new { @checked = "checked" })
         <span>C</span>
     </div>
     <div>
-        @Html.RadioButtonFor(m => m.AssignmentType, "c++")
+        @Html.RadioButtonFor(m => m.AssignmentType, "cpp")
         <span>C++</span>
     </div>
-
+    <!-- COLORIZE DIFF REPORT FIELD -->
+    @Html.DisplayName("AddColor")
+    <div>
+        @Html.CheckBoxFor(m => m.ColorText)
+        <span>Color Text</span>
+        <span style="margin-left: 20px;"></span>
+        @Html.CheckBoxFor(m => m.HighlightText)
+        <span>Highlight Text</span>
+        <span style="margin-left: 20px;"></span>
+        @Html.CheckBoxFor(m => m.ApplyTextModifiers)
+        <span>Apply Text Modifiers</span>
+    </div>
     <!-- SELECT & UPLOAD SAMPLE FILE -->
     @Html.DisplayName("SampleExecutableName")
     <div>
-        @Html.TextBoxFor(model => model.SampleExecutableName)
+        @Html.TextBoxFor(model => model.SampleExecutableName, new { id = "sampleExecutableName" })
         @Html.ValidationMessageFor(model => model.SampleExecutableName,
-        "", new { @class = "text-danger" })
+    "", new { @class = "text-danger" })
     </div>
-    
     <!--SELECT & UPLOAD TEST FILE -->
     @Html.DisplayName("TestFileName")
     <div>
-        @Html.TextBoxFor(model => model.TestFileName)
-        @Html.ValidationMessageFor(model => model.TestFileName,
-        "", new { @class = "text-danger" })
+        @Html.TextBoxFor(model => model.TestFileName, new { id = "txtTestFile" })
+        <button type="button" button id="btnAddTestFile" CausesValidation="False">Add Test File</button>
+        @Html.ValidationMessageFor(model => model.TestFileName, "", new { @class = "text-danger" })
     </div>
 
+    @Html.HiddenFor(model => model.TestFiles, new { id = "hiddenTestFiles" })
+    <div id="testFilesList"></div>
     <div>
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <input type="button" value="Create" id="createButton" class="btn btn-primary" />
     </div>
 }
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            var testFiles = []; //initialize empty array for file names
+            // Disable "Create" button initially
+            $("#createButton").attr("disabled", true);
+            // Check if both fields have values
+            function checkBothFields() {
+                var sampleFileName = $("#sampleExecutableName").val();
+                var selectedAssignmentType = $("input[type=radio][name=AssignmentType]:checked").val();
+                if (sampleFileName.length > 0 && testFiles.length > 0 && selectedAssignmentType != undefined) {
+                    $("#createButton").attr("disabled", false);
+                } else {
+                    $("#createButton").attr("disabled", true);
+                }
+            }
+            // Enable/disable "Create" button based on Sample File Name field
+            $("#sampleExecutableName").on("input", function () {
+                checkBothFields();
+            });
+            // Enable/disable "Create" button based on Assignment Type change
+            $("input[type=radio][name=AssignmentType]").on("change", function () {
+                checkBothFields();
+            });
+            $("#btnAddTestFile").click(function () {
+                var fileName = $("#txtTestFile").val().trim(); //fetch the file name from the text field
+                breakme: if (fileName) { //if the file name is not empty
+                    testFiles.push(fileName); //add file name to the array
+                    updateHiddenField();
+                    $("#txtTestFile").val(""); //clear textbox for next entry
+                    checkBothFields(); //Enable create button button
+                    displayTestFiles(); //update list
+
+                } else {
+                    alert("You must input a test file."); //error message
+                }
+            });
+
+            function displayTestFiles() {
+                var listHtml = "";
+                for (var i = 0; i < testFiles.length; i++) {
+                    listHtml += "<div>" + testFiles[i] + " <button class='removeFileButton' data-index='" + i + "'>x</button></div>";
+                }
+                $("#testFilesList").html(listHtml);
+                $(".removeFileButton").click(function () {
+                    var index = $(this).data("index");
+                    testFiles.splice(index, 1); //remove the file name from the array
+                    checkBothFields(); //Do we need to disable the button again?
+                    displayTestFiles();
+                    updateHiddenField();
+                });
+            }
+
+            function updateHiddenField() {
+                $("#hiddenTestFiles").val(testFiles.join(","));
+            }
+
+            $("#createButton").click(function () {
+                if (testFiles.length == 0) {
+                    alert("Please add at least one test file.");
+                    return false;
+                }
+                else {
+                    // Submit the form
+                    $('#myForm').submit();
+                    setTimeout(function () {
+                        window.location.href = '@Url.Action("Success")';
+                    }, 1000);
+                }
+            });
+
+
+        });
+    </script>
 }

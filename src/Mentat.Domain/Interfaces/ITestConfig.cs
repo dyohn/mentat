@@ -37,5 +37,20 @@ namespace Mentat.Domain.Interfaces
         /// output from the sample executable.
         /// </summary>
         public string DiffCommand { get; }
+
+        /// <summary>
+        /// Bool for if user wants to color text in output.
+        /// </summary>
+        public bool ColorText { get; }
+
+        /// <summary>
+        /// Bool for if user wants to highlight text in output.
+        /// </summary>
+        public bool HighlightText { get; }
+
+        /// <summary>
+        /// Bool for if user wants to modify text in output.
+        /// </summary>
+        public bool ApplyTextModifiers { get; }
     }
 }
