@@ -49,17 +49,23 @@ namespace Mentat.Repository.Services
 
         public List<string> GetAllTags()
         {
-            var filter = Builders<Card>.Filter.Empty;
-
-            var documents = _cards.Find(filter).ToList();
-
-
             HashSet<string> uniqueTags = new HashSet<string>();
-            foreach (var doc in documents)
+            try
             {
-                if (doc.Tags != null)
-                    uniqueTags.UnionWith(doc.Tags);
+                var filter = Builders<Card>.Filter.Empty;
+                var documents = _cards.Find(filter).ToList();
+
+                foreach (var doc in documents)
+                {
+                    if (doc.Tags != null)
+                        uniqueTags.UnionWith(doc.Tags);
+                }
             }
+            catch
+            {
+                // return empty tag list upon error
+            }
+            
             return uniqueTags.ToList();
 
         }

@@ -55,9 +55,6 @@
                 @Html.DisplayFor(modelItem => card.Notes)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => card.Tags)
-            </td>
-            <td>
                 @Html.ActionLink("Edit", "AddEditCard", new {  id=card.Id }) |
                 @Html.ActionLink("Details", "Details", new { id=card.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id=card.Id })
