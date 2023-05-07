@@ -7,6 +7,7 @@ namespace Mentat.Domain.Models
         public int SelectedCardIndex { get; set; }
         public int FilterCount { get; set; }
         public List<string> SelectedDifficulties { get; set; }
+        public List<string> AllUniqueTags { get; set; }
         public int CurrentIndex => SelectedCardIndex;
         public List<FlashCardVM> AvailableCards { get; set; }
         public int NumberOfFlashCards => AvailableCards.Count;
@@ -29,6 +30,7 @@ namespace Mentat.Domain.Models
         public string HiddenCardAnswer { get; set; }
         public string CardAnswerOverlay => "";
         public string CardColor { get; set; }
+        public List<string> Tags { get; set; }
         public bool CanEditOrDelete { get; set; }
     }
 }

@@ -8,6 +8,8 @@ namespace Mentat.Repository.Services
 
         List<Card> GetFilteredCardsList(List<string> difficultyLevels);
 
+        List<string> GetAllTags();
+
         Card GetCard(string id);
         
         void RemoveCard(string id);
