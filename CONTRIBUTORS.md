@@ -28,3 +28,22 @@ in reverse-chronological order. Within each group, contributors are ordered alph
 - Nicholoas Tallarico
 - Colton Winfield
 - Jonathan Wright
+## Spring 2023
+- Julian Cajuste
+- Carlos Cuellar
+- Laura Green
+- Furkan Goktas
+- Akbar Habib
+- Alexander Kanotz
+- Jacob Mannix
+- Mercedes Merryman
+- William Miller
+- Jeremiah Osborne
+- Guzman Sanchez Tudisco
+- Austin Schmid
+- Joseph Schmitt
+- Zayn Severance
+- Lloyd Smith
+- Kenneth Terwilliger
+- Keith Wilson
+- Wyatt Wood
