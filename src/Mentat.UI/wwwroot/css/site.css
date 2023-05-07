@@ -2,73 +2,76 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-  height: 100% !important;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    height: 100% !important;
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
 }
 
 /* FSU Theme Colors */
@@ -122,13 +125,13 @@ body, html {
 }
 
 .dot {
-    height: 1750px;
-    width: 1750px;
+    height: 125%;
+    width: 90%;
     background-color: #CEB888;
     border-radius: 50%;
     position: absolute;
-    top: -1000px;
-    left: -250px;
+    top: -50%;
+    left: -10%;
 }
 
 .navbar {
@@ -188,3 +191,165 @@ body, html {
     -webkit-line-clamp: 2;
     overflow: hidden;
 }
+
+.input-group-password {
+    display: flex;
+    align-items: center;
+}
+
+.form-control-password {
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem 0 0 .25rem;
+    border-right: none;
+}
+
+.view-password-toggle {
+    height: calc(1.5em + .75rem + 2px);
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0 .25rem .25rem 0;
+    border-left: none;
+}
+
+.form-control-password:focus,
+.input-group-password:focus-within .view-password-toggle {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+}
+
+.view-password-toggle:focus,
+.input-group-password:focus-within .form-control-password {
+    height: calc(1.5em + .75rem + 2px);
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+}
+
+.flex-container {
+    display: flex;
+}
+
+.default-user-pic {
+    color: #CEB888;
+    background: #782F40;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+.tag-field {
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    padding: 3px;
+    min-height: 26px;
+}
+
+    .tag-field > input {
+        border: 0px;
+        outline: none;
+        font-size: 20px;
+    }
+
+.tag-item {
+    margin: 2px;
+    padding: 2px 24px 2px 8px;
+    float: left;
+    display: flex;
+    background-color: rgb(204, 204, 204);
+    color: rgb(51, 51, 51);
+    border-radius: 3px;
+    position: relative;
+}
+
+    .tag-item > span {
+        font-family: 'Muli';
+        line-height: 18px;
+    }
+
+    .tag-item > .fa {
+        font-size: 12px;
+        line-height: 18px;
+        margin-left: 8px;
+        position: absolute;
+        right: 8px;
+        top: 2px;
+    }
+
+.tag-button {
+    background-color: #e6e6e6;
+    border: none;
+    border-radius: 4px;
+    color: #333;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    padding: 4px 8px;
+}
+
+    .tag-button.selected {
+        background-color: #333;
+        color: #fff;
+    }
+
+    .tag-button:hover {
+        background-color: #ccc;
+        color: #333;
+    }
+
+    .tag-button.selected:hover {
+        background-color: #333;
+        color: #fff;
+    }
+
+.hidden {
+    display: none;
+}
+
+.input-table-head {
+    position: relative;
+    min-width: 300px;
+}
+
+#searchbar {
+    width: 60%;
+}
+
+#reset-button {
+    width: 40%;
+}
+
+#searchbar,
+#reset-button {
+    display: block;
+    float: left;
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 500px;
+}
+

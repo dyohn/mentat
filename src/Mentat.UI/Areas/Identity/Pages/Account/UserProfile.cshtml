@@ -1,0 +1,89 @@
+@page
+@model UserProfileModel
+
+@{
+    //ViewData["Title"] = "Editing User Profile";
+}
+<div class="header">
+    <img src="/images/fluent_brain-circuit-20-filled.png" width="80px" height="80px" style="margin-top:-20px" alt="Logo">
+    <h3 style="display:inline">Editing @(Model.Input.UserName)'s Profile</h3>
+</div>
+
+<!--<h1>@ViewData["Title"]</h1>-->
+<div class="user-profile">
+    <section>
+        <hr/>
+        <div class="user-details">
+            <form id="account" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-floating">
+                    <label asp-for="Input.UserName" class="form-label" style="margin-left:33%"></label>
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                    <input asp-for="Input.UserName" class="form-control" aria-required="true" style="width:350px;margin-left:33%"/>
+
+                    <br>
+                    <label asp-for="Input.Email" class="form-label" style="width:350px;margin-left:33%"></label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    <input asp-for="Input.Email" class="form-control" aria-required="true" style="width:350px;margin-left:33%"/>
+
+                    <br>
+                    <label asp-for="Input.Password" class="form-label" style="width:350px;margin-left:33%"></label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <div class="input-group-password" style="width:350px;margin-left:33%">
+                        <input asp-for="Input.Password" class="form-control-password" aria-required="true" style="width: calc(100% - 42px);"/>
+                        <button type="button" class="view-password-toggle" id="show-password" style="width: 42px">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+
+                    <br>
+                    <label asp-for="Input.NewPassword" class="form-label" style="width:350px;margin-left:33%"></label>
+                    <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
+                    <div class="input-group-password" style="width:350px;margin-left:33%">
+                        <input asp-for="Input.NewPassword" class="form-control-password" aria-required="true" style="width: calc(100% - 42px);"/>
+                        <button type="button" class="view-password-toggle" id="show-new-password" style="width: 42px">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+
+                    <br>
+                    <label asp-for="Input.ConfirmPassword" class="form-label" style="width:350px;margin-left:33%"></label>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    <div class="input-group-password" style="width:350px;margin-left:33%">
+                        <input asp-for="Input.ConfirmPassword" class="form-control-password" aria-required="true" style="width: calc(100% - 42px);"/>
+                        <button type="button" class="view-password-toggle" id="show-confirm-password" style="width: 42px">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                    <br><br>
+
+                    <button style="width:140px;height:40px;margin-left:35%" type="submit" class="btn btn-primary rounded-pill">Save</button>
+                    <button style="width:140px;height:40px;margin-left:2%" type="button" class="btn btn-secondary rounded-pill" onclick="history.back()">Return</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+
+    <script>
+       let showButtons = document.querySelectorAll(".view-password-toggle");
+       
+       showButtons.forEach(function(btn) {
+           const passwordInput = btn.previousElementSibling;
+         
+           btn.addEventListener("click", function() {
+               if (passwordInput.type === "password") {
+                   passwordInput.type = "text";
+                   btn.innerHTML = '<i class="bi bi-eye-slash"></i>';
+               } else {
+                   passwordInput.type = "password";
+                   btn.innerHTML = '<i class="bi bi-eye"></i>';
+               }
+           });
+       });
+
+    </script>
+}

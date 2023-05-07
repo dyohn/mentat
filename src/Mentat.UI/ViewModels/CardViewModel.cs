@@ -21,6 +21,8 @@ namespace Mentat.UI.ViewModels
 
         public List<Card> Cards { get; set; }
 
+        public List<string> Tags { get; set; }
+
         public CardViewModel(Card card)
         {
             Id = card.Id;
@@ -29,7 +31,8 @@ namespace Mentat.UI.ViewModels
             Answer = card.Answer;
             IsCustom = card.IsCustom;    
             DifficultyLevel = card.DifficultyLevel;   
-            Notes = card.Notes; 
+            Notes = card.Notes;
+            Tags = card.Tags;
         }
 
         public CardViewModel(List<Card> cards)
