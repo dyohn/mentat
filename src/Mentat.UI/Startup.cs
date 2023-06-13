@@ -14,6 +14,11 @@ using Mentat.Domain.Service;
 using MongoDB.Driver;
 using Mentat.UI.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Mentat.UI.Areas.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Mentat.UI
 {
@@ -53,8 +58,24 @@ namespace Mentat.UI
                 )
             .AddDefaultTokenProviders()
             .AddDefaultUI();
+            
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Mentor", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.Requirements.Add(new UserRoleTypeRequirement("Mentor"));
+                });
 
-            services.AddRazorPages();
+                options.AddPolicy("Student", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.Requirements.Add(new UserRoleTypeRequirement("Student"));
+                    policy.Requirements.Add(new UserRoleTypeRequirement("Mentor"));
+                });
+            });
+            services.AddScoped<IAuthorizationHandler, UserRoleTypeRequirementHandler>();
+            services.AddRazorPages();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,8 +96,9 @@ namespace Mentat.UI
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
