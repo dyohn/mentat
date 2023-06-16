@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using Mentat.Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Mentat.UI.Controllers
 {
+    [Authorize(Policy = "Mentor")]
     public class MentorController : Controller
     {
         /// <summary>
