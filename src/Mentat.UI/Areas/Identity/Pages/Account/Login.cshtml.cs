@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using AspNetCore.Identity.MongoDbCore.Models;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace Mentat.UI.Areas.Identity.Pages.Account
 {
@@ -21,13 +24,16 @@ namespace Mentat.UI.Areas.Identity.Pages.Account
         private readonly UserManager<MentatUser> _userManager;
         private readonly SignInManager<MentatUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly RoleManager<MentatUserRole> _roleManager;
 
         public LoginModel(SignInManager<MentatUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<MentatUser> userManager)
+            UserManager<MentatUser> userManager,
+            RoleManager<MentatUserRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _logger = logger;
         }
 
@@ -93,9 +99,22 @@ namespace Mentat.UI.Areas.Identity.Pages.Account
                 {
                     // This doesn't count login failures towards account lockout
                     // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                    if(!await _roleManager.RoleExistsAsync("Mentor"))
+                    {
+                        await _roleManager.CreateAsync(new MentatUserRole { Id = Guid.NewGuid(), Name = "Mentor" });
+                    }
+                    if (!await _roleManager.RoleExistsAsync("Student"))
+                    {
+                        await _roleManager.CreateAsync(new MentatUserRole { Id = Guid.NewGuid(), Name = "Student" });
+                    }
                     var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                     if (result.Succeeded)
                     {
+                        if(! await _userManager.IsInRoleAsync(user, user.UserType))
+                        {
+                            await _userManager.AddToRoleAsync(user, user.UserType);
+                        }
+
                         _logger.LogInformation("User logged in.");
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToAction("Index", user.UserType);
