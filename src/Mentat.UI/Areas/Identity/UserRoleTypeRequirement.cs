@@ -6,7 +6,7 @@ namespace Mentat.UI.Areas.Identity
 {
     public class UserRoleTypeRequirement : IAuthorizationRequirement
     {
-        public IEnumerable<string> RequiredTypes { get; set; }
+        public IEnumerable<string> RequiredTypes { get; private set; }
 
         public UserRoleTypeRequirement(params string []type)
         {
