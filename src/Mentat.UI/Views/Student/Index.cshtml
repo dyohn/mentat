@@ -141,6 +141,7 @@
 		<table id="flashcard-list" class="table top-buffer">
 			<thead>
                 <tr>
+                    <th> Index </th>
                     <th align="center">List of Flashcards</th>
                     <!--Add search bar-->
 					<th class="input-table-head">
@@ -152,6 +153,7 @@
                 </tr>
 			</thead>
 			<colgroup>
+                <col span="1" style="width: 5%;">
 				<col span="1" style="width: 85%;">
 				<col span="1" style="width: 10%;">
 			</colgroup>
@@ -168,6 +170,9 @@
 							classes += tag.Replace(" ", "_") + ' ';
 						}
 						<tr class="@classes">
+                            <td> 
+                                @i 
+                            </td>
 							<td>
 								@Html.DisplayFor(m => m.AvailableCards[i - 1].CardQuestion)
 							</td>
@@ -178,7 +183,7 @@
                                     <text> | </text>
                                     <a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen fsu-black-color" onclick="location.href='@Url.Action("AddEditCard", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
                                     <text> | </text>
-                                    <a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can fsu-maroon-color" data-id="@Model.AvailableCards[i - 1].CardID" data-togle="modal" data-target="#deleteModal"></i></a>
+                                    <a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can fsu-maroon-color" data-id="@Model.AvailableCards[i - 1].CardID" data-toggle="modal" data-target="#deleteModal"></i></a>
                                 }
                             </td>
 						</tr>

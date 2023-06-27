@@ -30,5 +30,8 @@ namespace Mentat.Repository.Models
         [BsonElement("tags")]
         [BsonIgnoreIfNull]
         public List<string> Tags { get; set; }
+
+        // Converts List<string> to a comma-delimited string for use in displaying tags. 
+        public string TagsAsString => Tags != null ? string.Join(", ", Tags) : string.Empty;
     }
 }
