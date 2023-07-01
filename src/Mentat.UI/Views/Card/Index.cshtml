@@ -22,6 +22,9 @@
                 @Html.DisplayNameFor(model => model.Answer)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.IsCustom)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.DifficultyLevel)
             </th>
             <th>
@@ -45,6 +48,9 @@
             <td>
                 @Html.DisplayFor(modelItem => card.Answer)
             </td>
+            <th>
+                @Html.DisplayFor(model => model.IsCustom)
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => card.DifficultyLevel)
             </td>
