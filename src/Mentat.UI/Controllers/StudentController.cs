@@ -18,5 +18,10 @@ namespace Mentat.UI.Controllers
             var vm = _studentService.GetStudentVM(studentVM.SelectedDifficulties);
             return View(vm);
         }
+
+        public ActionResult Latest()
+        {
+            return View();
+        }
     }
 }
