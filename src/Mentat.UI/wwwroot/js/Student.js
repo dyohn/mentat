@@ -16,7 +16,7 @@ function toggleShowHideOfFlashCard(index) {
     } else {
         showHideLink.text("Hide");
         $("[id$=CardAnswerOverlay_" + index + "]").val($("[id$=HiddenCardAnswer_" + index + "]").val());
-    }  
+    }
 }
 
 function hideCardAndClearOverlay(showHideLink, index) {
@@ -200,3 +200,5 @@ function rebuildCarousel(selectedTags) {
     // having rebuilt the carousel, load the first card that still exists
     goToFirst(); 
 }
+
+//SAMS//

@@ -3,25 +3,40 @@
 @model FlashCardVM
 
 @Html.HiddenFor(m => m.CardID)
-<div class="row bottom-buffer col-sm-12" style="display:inline-block;">
-    @Html.TextAreaFor(m => m.CardQuestion, 5, 90, new { @maxLength = "250", disabled = true, id = "CardQuestion_"+ @ViewData["index"] })
-    <text>&nbsp;</text><span class="fa fa-circle fa-1x fsu-maroon-color"></span>
-    <text>&nbsp;</text><span class="fa fa-circle fa-1x fsu-black-color"></span>
-    <text>&nbsp;</text><span class="fa fa-circle fa-1x fsu-maroon-color"></span>
-</div>
-<div class="row col-sm-12">
-    <div class="col-sm-2"></div>
-    <a href="javascript:;" onclick="goToPrevious(@ViewData["index"]);"><span class="fa fa-arrow-circle-left fa-3x fsu-maroon-color"></span></a>
-    <div class="col-sm-1"></div>
-    <div class="vertical-line-center">
-        <a href="javascript:;" class="fsu-black-color" id="show-hide_@ViewData["index"]" onclick="toggleShowHideOfFlashCard(@ViewData["index"]);">Show</a>
+@Html.HiddenFor(m => m.HiddenCardAnswer, new { @maxLength = "250", disabled = true, id = "HiddenCardAnswer_" + @ViewData["index"] })
+<div class="card" style="width:75%">
+    <div class="card-header" style="background-color:@Html.DisplayFor(m=>m.DifficultyLevelColor);"></div>
+    <div class="card-body" style="height:fit-content">
+        <h4 class="card-title" style="text-align:center">Question: @Html.DisplayFor(m => m.CardQuestion, new { @maxLength = "250", disabled = true, id = "CardQuestion_" + @ViewData["index"] })</h4>
+        <div class="card-text">
+            <div>
+                @Html.TextAreaFor(m => m.CardAnswerOverlay, 10, 65, new { @maxLength = "250", disabled = true, id = "CardAnswerOverlay_" + @ViewData["index"] })
+            </div>
+        </div>
+        <div class="card-footer " style="background-color:white; display:inline-block; border-block-color:transparent">
+            <button class="button">EASY</button>
+            <button class="button">MEDIUM</button>
+            <button class="button">HARD</button>
+        </div>
     </div>
-    <div class="col-sm-1"></div>
-    <a href="javascript:;" onclick="goToNext(@ViewData["index"]);"><span class="fa fa-arrow-circle-right fa-3x fsu-maroon-color"></span></a>
 </div>
-<div style="display:none">
-    @Html.TextAreaFor(m => m.HiddenCardAnswer, 0, 0, new { @maxLength = "250", disabled = true, id = "HiddenCardAnswer_" + @ViewData["index"] })
-</div>
-<div class="row top-buffer col-sm-12 light-text">
-    @Html.TextAreaFor(m => m.CardAnswerOverlay, 5, 117, new { @maxLength = "250", disabled = true, id = "CardAnswerOverlay_" + @ViewData["index"] })
+<div>
+    <div class="flex-container" style="display:flex; align-content:center; justify-content:center">
+        <br />
+        <table class="table" style="align-content:center">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="javascript:;" onclick="goToPrevious(@ViewData["index"]);"><span class="fa fa-arrow-circle-left fa-3x fsu-maroon-color"></span></a>
+                    </th>
+                    <th>
+                        <a href="javascript:;" class="fsu-black-color" id="show-hide_@ViewData["index"]" onclick="toggleShowHideOfFlashCard(@ViewData["index"]);">Show</a>
+                    </th>
+                    <th>
+                        <a href="javascript:;" onclick="goToNext(@ViewData["index"]);"><span class="fa fa-arrow-circle-right fa-3x fsu-maroon-color"></span></a>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </div>
