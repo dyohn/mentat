@@ -240,5 +240,4 @@ function getUserDifficultyLevel(cardId)
             document.getElementById('hardButton').style.backgroundColor = 'silver'; color = 'black';
             break;
     }
-
 }

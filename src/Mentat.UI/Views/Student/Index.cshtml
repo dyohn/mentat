@@ -4,11 +4,12 @@
 @model StudentVM
 
 @{
-	ViewData["Title"] = "Student";
+    ViewData["Title"] = "Student";
 }
 
 @Html.HiddenFor(m => m.NumberOfFlashCards)
 @Html.HiddenFor(m => m.CurrentIndex)
+getUserDifficultyLevel("0")
 <span class="dot"></span>
 <div class="col-sm-12">
     <div class="row bottom-buffer col-sm-12">
