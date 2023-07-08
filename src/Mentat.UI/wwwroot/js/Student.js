@@ -221,23 +221,23 @@ function getUserDifficultyLevel(cardId)
     switch (userRating) {
         case 'easy':
             document.getElementById('easyButton').style.backgroundColor = 'green'; color = 'white';
-            document.getElementById('mediumButton').style.backgroundColor = 'gray'; color = 'black';
-            document.getElementById('hardButton').style.backgroundColor = 'gray'; color = 'black';
+            document.getElementById('mediumButton').style.backgroundColor = 'silver'; color = 'black';
+            document.getElementById('hardButton').style.backgroundColor = 'silver'; color = 'black';
             break;
         case 'medium':
-            document.getElementById('easyButton').style.backgroundColor = 'gray'; color = 'black';
+            document.getElementById('easyButton').style.backgroundColor = 'silver'; color = 'black';
             document.getElementById('mediumButton').style.backgroundColor = 'Orange'; color = 'black';
-            document.getElementById('hardButton').style.backgroundColor = 'gray'; color = 'black';
+            document.getElementById('hardButton').style.backgroundColor = 'silver'; color = 'black';
             break;
         case 'hard':
-            document.getElementById('easyButton').style.backgroundColor = 'gray'; color = 'black';
-            document.getElementById('mediumButton').style.backgroundColor = 'gray'; color = 'black';
+            document.getElementById('easyButton').style.backgroundColor = 'silver'; color = 'black';
+            document.getElementById('mediumButton').style.backgroundColor = 'silver'; color = 'black';
             document.getElementById('hardButton').style.backgroundColor = 'Red'; color = 'white';
             break;
         default:
-            document.getElementById('easyButton').style.backgroundColorr = 'gray'; color = 'black';
-            document.getElementById('mediumButton').style.backgroundColor = 'gray'; color = 'black';
-            document.getElementById('hardButton').style.backgroundColor = 'gray'; color = 'black';
+            document.getElementById('easyButton').style.backgroundColorr = 'silver'; color = 'black';
+            document.getElementById('mediumButton').style.backgroundColor = 'silver'; color = 'black';
+            document.getElementById('hardButton').style.backgroundColor = 'silver'; color = 'black';
             break;
     }
 

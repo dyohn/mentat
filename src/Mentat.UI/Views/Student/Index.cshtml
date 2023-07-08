@@ -130,12 +130,16 @@
             </div>
         }
     </div>
-    <br />
-    <br />
-    <div class="container" style="background-color:transparent; display:inline-block; border-block-color:transparent">
-        <button id="easyButton" class="button" onclick="setUserDifficultyLevel('@Model.AvailableCards[@Model.CurrentIndex].CardID','easy')">EASY</button>
-        <button id="mediumButton" class="button" onclick="setUserDifficultyLevel('@Model.AvailableCards[@Model.CurrentIndex].CardID','medium')">MEDIUM</button>
-        <button id="hardButton" class="button" onclick="setUserDifficultyLevel('@Model.AvailableCards[@Model.CurrentIndex].CardID','hard')">HARD</button>
+    <div class="row">
+        <div class="col-sm-3">
+            <button id="easyButton" class="button" onclick="setUserDifficultyLevel('@Model.AvailableCards[@Model.CurrentIndex].CardID','easy')">EASY</button>
+        </div>
+        <div class="col-sm-3">
+            <button id="mediumButton" class="button" onclick="setUserDifficultyLevel('@Model.AvailableCards[@Model.CurrentIndex].CardID','medium')">MEDIUM</button>
+        </div>
+        <div class="col-sm-3">
+            <button id="hardButton" class="button" onclick="setUserDifficultyLevel('@Model.AvailableCards[@Model.CurrentIndex].CardID','hard')">HARD</button>
+        </div>
     </div>
     <div class="row top-buffer col-sm-12">
         <button type="button" class="bg-black text-on-dark font-weight-bold" onclick="location.href='@Url.Action("AddEditCard", "Card")';">Add Flashcard</button>
