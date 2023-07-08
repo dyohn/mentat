@@ -5,6 +5,14 @@
     });
 
     $('#SelectedDifficulties').multiselect();
+
+    // Create a localstorage variable for user feedback of flashcard
+    if ((typeof userFeedback === 'undefined'))
+    {
+        cardId = "NoNumber";
+        userRating = "NoLeVeL";
+        setUserDifficultyLevel(cardId, userRating);
+    }
 };
 
 const originalCarouselItems = Array.from(document.querySelectorAll('[id^="flashcard_"]'));
@@ -201,4 +209,36 @@ function rebuildCarousel(selectedTags) {
     goToFirst(); 
 }
 
-//SAMS//
+
+function setUserDifficultyLevel(cardId, userRating)
+{
+    window.localStorage.setItem(JSON.stringify(cardId), JSON.stringify(userRating));
+}
+
+function getUserDifficultyLevel(cardId)
+{
+    var userRating = JSON.parse(localStorage.getItem(JSON.stringify(cardId)));
+    switch (userRating) {
+        case 'easy':
+            document.getElementById('easyButton').style.backgroundColor = 'green'; color = 'white';
+            document.getElementById('mediumButton').style.backgroundColor = 'gray'; color = 'black';
+            document.getElementById('hardButton').style.backgroundColor = 'gray'; color = 'black';
+            break;
+        case 'medium':
+            document.getElementById('easyButton').style.backgroundColor = 'gray'; color = 'black';
+            document.getElementById('mediumButton').style.backgroundColor = 'Orange'; color = 'black';
+            document.getElementById('hardButton').style.backgroundColor = 'gray'; color = 'black';
+            break;
+        case 'hard':
+            document.getElementById('easyButton').style.backgroundColor = 'gray'; color = 'black';
+            document.getElementById('mediumButton').style.backgroundColor = 'gray'; color = 'black';
+            document.getElementById('hardButton').style.backgroundColor = 'Red'; color = 'white';
+            break;
+        default:
+            document.getElementById('easyButton').style.backgroundColorr = 'gray'; color = 'black';
+            document.getElementById('mediumButton').style.backgroundColor = 'gray'; color = 'black';
+            document.getElementById('hardButton').style.backgroundColor = 'gray'; color = 'black';
+            break;
+    }
+
+}

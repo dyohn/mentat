@@ -2,7 +2,7 @@
 
 @model FlashCardVM
 
-@Html.HiddenFor(m => m.CardID)
+@Html.HiddenFor(m => m.CardID, new { id = "CardId_" + ViewData["index"] })
 @Html.HiddenFor(m => m.HiddenCardAnswer, new { @maxLength = "250", disabled = true, id = "HiddenCardAnswer_" + @ViewData["index"] })
 <div class="card" style="width:75%">
     <div class="card-header" style="background-color:@Html.DisplayFor(m=>m.DifficultyLevelColor);"></div>
@@ -13,11 +13,11 @@
                 @Html.TextAreaFor(m => m.CardAnswerOverlay, 10, 65, new { @maxLength = "250", disabled = true, id = "CardAnswerOverlay_" + @ViewData["index"] })
             </div>
         </div>
-        <div class="card-footer " style="background-color:white; display:inline-block; border-block-color:transparent">
-            <button class="button">EASY</button>
-            <button class="button">MEDIUM</button>
-            <button class="button">HARD</button>
-        </div>
+        @*<div class="card-footer" style="background-color:white; display:inline-block; border-block-color:transparent">
+                <button id="easyButton" class="button" onclick="setUserDifficultyLevel('@Model.CardID','easy')">EASY</button>
+                <button id="mediumButton" class="button" onclick="setUserDifficultyLevel('@Model.CardID','medium')">MEDIUM</button>
+                <button id="hardButton" class="button" onclick="setUserDifficultyLevel('@Model.CardID','hard')">HARD</button>
+            </div>*@
     </div>
 </div>
 <div>
@@ -27,13 +27,13 @@
             <thead>
                 <tr>
                     <th>
-                        <a href="javascript:;" onclick="goToPrevious(@ViewData["index"]);"><span class="fa fa-arrow-circle-left fa-3x fsu-maroon-color"></span></a>
+                        <a href="javascript:getUserDifficultyLevel('@Model.CardID');" id="flashCardPrev" onclick="goToPrevious(@ViewData["index"]);"><span class="fa fa-arrow-circle-left fa-3x fsu-maroon-color"></span></a>
                     </th>
                     <th>
                         <a href="javascript:;" class="fsu-black-color" id="show-hide_@ViewData["index"]" onclick="toggleShowHideOfFlashCard(@ViewData["index"]);">Show</a>
                     </th>
                     <th>
-                        <a href="javascript:;" onclick="goToNext(@ViewData["index"]);"><span class="fa fa-arrow-circle-right fa-3x fsu-maroon-color"></span></a>
+                        <a href="javascript:getUserDifficultyLevel('@Model.CardID');" id="flashCardNext" onclick="goToNext(@ViewData["index"]);"><span class="fa fa-arrow-circle-right fa-3x fsu-maroon-color"></span></a>
                     </th>
                 </tr>
             </thead>
