@@ -9,9 +9,8 @@
     // Create a localstorage variable for user feedback of flashcard
     if ((typeof userFeedback === 'undefined'))
     {
-        cardId = "NoNumber";
-        userRating = "NoLeVeL";
-        setUserDifficultyLevel(cardId, userRating);
+        currentCardId = getCurrentCardId(1);
+        getUserDifficultyLevel(currentCardId);
     }
 };
 
@@ -88,7 +87,9 @@ function processCardChange(index, indexToShow) {
     hideCurrentCard(index);
     showCard(indexToShow);
     hideAnswerOfCardNoLongerVisible(index);
-    $("#CurrentIndex").val(indexToShow);   
+    $("#CurrentIndex").val(indexToShow);
+    var curCardId = getCurrentCardId(indexToShow);// current card id
+    getUserDifficultyLevel(curCardId);  // get the users difficulty
 }
 
 function getCardCount() {
@@ -209,35 +210,60 @@ function rebuildCarousel(selectedTags) {
     goToFirst(); 
 }
 
-
-function setUserDifficultyLevel(cardId, userRating)
-{
-    window.localStorage.setItem(JSON.stringify(cardId), JSON.stringify(userRating));
+// Get the current flashcards id number
+function getCurrentCardId(indexToShow) {
+   currentCardId = document.querySelector('#CardId_' + indexToShow).value;
+    return currentCardId;
 }
 
-function getUserDifficultyLevel(cardId)
+// Set the users card difficulty level in local storage and then change the color of the button
+function setUserDifficultyLevel(userRating)
 {
-    var userRating = JSON.parse(localStorage.getItem(JSON.stringify(cardId)));
-    switch (userRating) {
+    localStorage.setItem(JSON.stringify(currentCardId), JSON.stringify(userRating));
+    setUserRatingButtonColor(userRating);
+    
+}
+
+// Get the current flashcards user difficulty level and change color of the buttons
+function getUserDifficultyLevel(currentCardId)
+{
+    var userRating = JSON.parse(localStorage.getItem(JSON.stringify(currentCardId)));
+    setUserRatingButtonColor(userRating);
+    
+}
+
+// Set the button color based on the users feedback
+function setUserRatingButtonColor(ur) {
+    switch (ur) {
         case 'easy':
             document.getElementById('easyButton').style.backgroundColor = 'green'; color = 'white';
-            document.getElementById('mediumButton').style.backgroundColor = 'silver'; color = 'black';
-            document.getElementById('hardButton').style.backgroundColor = 'silver'; color = 'black';
+            document.getElementById('mediumButton').style.backgroundColor = '#CEB888'; color = 'black';
+            document.getElementById('hardButton').style.backgroundColor = '#CEB888'; color = 'black';
+            document.getElementById('expertButton').style.backgroundColor = '#CEB888'; color = 'black';
             break;
         case 'medium':
-            document.getElementById('easyButton').style.backgroundColor = 'silver'; color = 'black';
-            document.getElementById('mediumButton').style.backgroundColor = 'Orange'; color = 'black';
-            document.getElementById('hardButton').style.backgroundColor = 'silver'; color = 'black';
+            document.getElementById('easyButton').style.backgroundColor = '#CEB888'; color = 'black';
+            document.getElementById('mediumButton').style.backgroundColor = 'yellow'; color = 'black';
+            document.getElementById('hardButton').style.backgroundColor = '#CEB888'; color = 'black';
+            document.getElementById('expertButton').style.backgroundColor = '#CEB888'; color = 'black';
             break;
         case 'hard':
-            document.getElementById('easyButton').style.backgroundColor = 'silver'; color = 'black';
-            document.getElementById('mediumButton').style.backgroundColor = 'silver'; color = 'black';
-            document.getElementById('hardButton').style.backgroundColor = 'Red'; color = 'white';
+            document.getElementById('easyButton').style.backgroundColor = '#CEB888'; color = 'black';
+            document.getElementById('mediumButton').style.backgroundColor = '#CEB888'; color = 'black';
+            document.getElementById('hardButton').style.backgroundColor = 'orange'; color = 'white';
+            document.getElementById('expertButton').style.backgroundColor = '#CEB888'; color = 'black';
+            break;
+        case 'expert':
+            document.getElementById('easyButton').style.backgroundColor = '#CEB888'; color = 'black';
+            document.getElementById('mediumButton').style.backgroundColor = '#CEB888'; color = 'black';
+            document.getElementById('hardButton').style.backgroundColor = '#CEB888'; color = 'white';
+            document.getElementById('expertButton').style.backgroundColor = 'red'; color = 'black';
             break;
         default:
-            document.getElementById('easyButton').style.backgroundColorr = 'silver'; color = 'black';
-            document.getElementById('mediumButton').style.backgroundColor = 'silver'; color = 'black';
-            document.getElementById('hardButton').style.backgroundColor = 'silver'; color = 'black';
+            document.getElementById('easyButton').style.backgroundColor = '#CEB888'; color = 'black';
+            document.getElementById('mediumButton').style.backgroundColor = '#CEB888'; color = 'black';
+            document.getElementById('hardButton').style.backgroundColor = '#CEB888'; color = 'black';
+            document.getElementById('expertButton').style.backgroundColor = '#CEB888'; color = 'black';
             break;
     }
 }

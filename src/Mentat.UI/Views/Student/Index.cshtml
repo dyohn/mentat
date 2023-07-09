@@ -9,7 +9,16 @@
 
 @Html.HiddenFor(m => m.NumberOfFlashCards)
 @Html.HiddenFor(m => m.CurrentIndex)
-getUserDifficultyLevel("0")
+@Html.HiddenFor(m => m.AvailableCards[Model.CurrentIndex].CardID)
+
+<style>
+    .fb-container {
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        gap: 10px;
+    }
+</style>
+
 <span class="dot"></span>
 <div class="col-sm-12">
     <div class="row bottom-buffer col-sm-12">
@@ -131,16 +140,13 @@ getUserDifficultyLevel("0")
             </div>
         }
     </div>
-    <div class="row">
-        <div class="col-sm-3">
-            <button id="easyButton" class="button" onclick="setUserDifficultyLevel('@Model.AvailableCards[@Model.CurrentIndex].CardID','easy')">EASY</button>
-        </div>
-        <div class="col-sm-3">
-            <button id="mediumButton" class="button" onclick="setUserDifficultyLevel('@Model.AvailableCards[@Model.CurrentIndex].CardID','medium')">MEDIUM</button>
-        </div>
-        <div class="col-sm-3">
-            <button id="hardButton" class="button" onclick="setUserDifficultyLevel('@Model.AvailableCards[@Model.CurrentIndex].CardID','hard')">HARD</button>
-        </div>
+    <br />
+    <!--user feedback difficulty level; send the level rating only, card id will already be there-->
+    <div class="fb-container">
+        <button class="button" id="easyButton" onclick="setUserDifficultyLevel('easy');">EASY</button>
+        <button class="button" id="mediumButton" onclick="setUserDifficultyLevel('medium');">MEDIUM</button>
+        <button class="button" id="hardButton" onclick="setUserDifficultyLevel('hard');">HARD</button>
+        <button class="button" id="expertButton" onclick="setUserDifficultyLevel('expert');">EXPERT</button>
     </div>
     <div class="row top-buffer col-sm-12">
         <button type="button" class="bg-black text-on-dark font-weight-bold" onclick="location.href='@Url.Action("AddEditCard", "Card")';">Add Flashcard</button>
@@ -327,3 +333,8 @@ getUserDifficultyLevel("0")
 </div>
 
 <script src="~/js/Student.js"></script>
+
+@*<div class="form-group float-left"><button class="button" id="easyButton" onclick="setUserDifficultyLevel('easy');">EASY</button></div>
+<button class="button" id="mediumButton" onclick="setUserDifficultyLevel('medium');">MEDIUM</button>
+<button class="button" id="hardButton" onclick="setUserDifficultyLevel('hard');">HARD</button>
+<div class="form-group float-right"><button class="button" id="expertButton" onclick="setUserDifficultyLevel('expert');">EXPERT</button></div>*@
