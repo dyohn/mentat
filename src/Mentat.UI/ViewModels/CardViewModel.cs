@@ -7,6 +7,8 @@ namespace Mentat.UI.ViewModels
     {
         public string Id { get; set; }
 
+        public string Owner { get; set; }
+
         public string Subject { get; set; }
 
         public string Question { get; set; }
@@ -26,6 +28,7 @@ namespace Mentat.UI.ViewModels
         public CardViewModel(Card card)
         {
             Id = card.Id;
+            Owner = card.Owner;
             Subject = card.Subject;
             Question = card.Question;
             Answer = card.Answer;
