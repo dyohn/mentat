@@ -267,3 +267,23 @@ function setUserRatingButtonColor(ur) {
             break;
     }
 }
+
+// Allow the arrow keys to move the cards left/right and the Enter key to show/hide the answer
+window.addEventListener("keydown", function (event) {
+    if (event.defaultPrevented) {
+        return;
+    }
+    if (event.code == "Enter") {
+        //hide card
+        toggleShowHideOfFlashCard(parseInt($("#CurrentIndex").val()));
+    }
+    else if (event.code == "ArrowLeft") {
+        //show previous card
+        goToPrevious(parseInt($("#CurrentIndex").val()));
+    }
+    else if (event.code == "ArrowRight") {
+        //show next card
+        goToNext(parseInt($("#CurrentIndex").val()));
+    }
+
+}, true);
