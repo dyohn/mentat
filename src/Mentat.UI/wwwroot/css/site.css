@@ -109,6 +109,14 @@ body {
     line-height: 1;
 }
 
+.cuttoff-text{
+    --max-lines: 3;
+    overflow: hidden;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--max-lines);
+}
 .title-text {
     font-size: 3.5rem;
     color: #782F40;
