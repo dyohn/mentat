@@ -14,7 +14,7 @@
 <style>
     .fb-container {
         display: grid;
-        grid-template-columns: repeat(4,1fr);
+        grid-template-columns: repeat(3,1fr);
         gap: 10px;
     }
 </style>
@@ -143,10 +143,9 @@
     <br />
     <!--user feedback difficulty level; send the level rating only, card id will already be there-->
     <div class="fb-container">
-        <button class="button" id="easyButton" onclick="setUserDifficultyLevel('easy');">EASY</button>
-        <button class="button" id="mediumButton" onclick="setUserDifficultyLevel('medium');">MEDIUM</button>
-        <button class="button" id="hardButton" onclick="setUserDifficultyLevel('hard');">HARD</button>
-        <button class="button" id="expertButton" onclick="setUserDifficultyLevel('expert');">EXPERT</button>
+        <button class="button" id="easyButton" onclick="setUserDifficultyLevel('easy');">I Know It</button>
+        <button class="button" id="mediumButton" onclick="setUserDifficultyLevel('medium');">Partially Know It</button>
+        <button class="button" id="hardButton" onclick="setUserDifficultyLevel('hard');">I Don't Know It</button>
     </div>
     <div class="row top-buffer col-sm-12">
         <button type="button" class="bg-black text-on-dark font-weight-bold" onclick="location.href='@Url.Action("AddEditCard", "Card")';">Add Flashcard</button>

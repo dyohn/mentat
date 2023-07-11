@@ -239,31 +239,21 @@ function setUserRatingButtonColor(ur) {
             document.getElementById('easyButton').style.backgroundColor = 'green'; color = 'white';
             document.getElementById('mediumButton').style.backgroundColor = '#CEB888'; color = 'black';
             document.getElementById('hardButton').style.backgroundColor = '#CEB888'; color = 'black';
-            document.getElementById('expertButton').style.backgroundColor = '#CEB888'; color = 'black';
             break;
         case 'medium':
             document.getElementById('easyButton').style.backgroundColor = '#CEB888'; color = 'black';
             document.getElementById('mediumButton').style.backgroundColor = 'yellow'; color = 'black';
             document.getElementById('hardButton').style.backgroundColor = '#CEB888'; color = 'black';
-            document.getElementById('expertButton').style.backgroundColor = '#CEB888'; color = 'black';
             break;
         case 'hard':
             document.getElementById('easyButton').style.backgroundColor = '#CEB888'; color = 'black';
             document.getElementById('mediumButton').style.backgroundColor = '#CEB888'; color = 'black';
-            document.getElementById('hardButton').style.backgroundColor = 'orange'; color = 'white';
-            document.getElementById('expertButton').style.backgroundColor = '#CEB888'; color = 'black';
-            break;
-        case 'expert':
-            document.getElementById('easyButton').style.backgroundColor = '#CEB888'; color = 'black';
-            document.getElementById('mediumButton').style.backgroundColor = '#CEB888'; color = 'black';
-            document.getElementById('hardButton').style.backgroundColor = '#CEB888'; color = 'white';
-            document.getElementById('expertButton').style.backgroundColor = 'red'; color = 'black';
+            document.getElementById('hardButton').style.backgroundColor = 'red'; color = 'black';
             break;
         default:
             document.getElementById('easyButton').style.backgroundColor = '#CEB888'; color = 'black';
             document.getElementById('mediumButton').style.backgroundColor = '#CEB888'; color = 'black';
             document.getElementById('hardButton').style.backgroundColor = '#CEB888'; color = 'black';
-            document.getElementById('expertButton').style.backgroundColor = '#CEB888'; color = 'black';
             break;
     }
 }
