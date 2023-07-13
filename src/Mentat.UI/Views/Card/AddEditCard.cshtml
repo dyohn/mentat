@@ -1,4 +1,8 @@
-﻿@using static Mentat.Domain.Constants
+﻿@using Microsoft.AspNetCore.Identity
+@using Mentat.UI.Areas.Identity.Data
+@using static Mentat.Domain.Constants
+
+@inject UserManager<MentatUser> UserManager
 
 @model Mentat.UI.ViewModels.CardViewModel
 
@@ -16,6 +20,12 @@
     <div class="col-md-4">
         <form asp-action="SaveCard" asp-route-id="@Model.Id">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div hidden class="form-group">
+                <label asp-for="Owner" class="control-label"></label>
+                <input asp-for="Owner" readonly class="form-control"
+                    value="@UserManager.GetUserName(User)"/>
+                <span asp-validation-for="Owner" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Subject" class="control-label"></label>
                 <input asp-for="Subject" class="form-control" />
