@@ -46,6 +46,11 @@
                     <input class="form-check-input" asp-for="IsCustom" /> @Html.DisplayNameFor(model => model.IsCustom)
                 </label>
             </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsPrivate" /> @Html.DisplayNameFor(model => model.IsPrivate)
+                </label>
+            </div>
             <div class="form-group">
                 <label asp-for="DifficultyLevel" class="control-label"></label>
                 @Html.DropDownListFor(m => m.DifficultyLevel, ((DifficultyLevel[]) Enum.GetValues(typeof(DifficultyLevel))).ToList()
