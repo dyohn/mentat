@@ -12,6 +12,7 @@
         currentCardId = getCurrentCardId(1);
         getUserDifficultyLevel(currentCardId);
     }
+    getUserScore();
 };
 
 const originalCarouselItems = Array.from(document.querySelectorAll('[id^="flashcard_"]'));
@@ -216,15 +217,16 @@ function getCurrentCardId(indexToShow) {
     return currentCardId;
 }
 
-// Set the users card difficulty level in local storage and then change the color of the button
+// Set the users response in local storage and then change the color of the button
 function setUserDifficultyLevel(userRating)
 {
     localStorage.setItem(JSON.stringify(currentCardId), JSON.stringify(userRating));
     setUserRatingButtonColor(userRating);
+    getUserScore();
     
 }
 
-// Get the current flashcards user difficulty level and change color of the buttons
+// Get the current flashcard response and change color of the buttons
 function getUserDifficultyLevel(currentCardId)
 {
     var userRating = JSON.parse(localStorage.getItem(JSON.stringify(currentCardId)));
@@ -232,28 +234,56 @@ function getUserDifficultyLevel(currentCardId)
     
 }
 
-// Set the button color based on the users feedback
+// Calculate the users score
+function getUserScore() {
+    var score = 0.0;
+    for (var i = 0; i < localStorage.length; i++) {
+        var r = JSON.parse(localStorage.getItem(localStorage.key(i)))
+        if (r == 'yes') {
+            score = score + 1.0;
+        }
+        else if (r == 'partial') {
+            score = score + 0.5
+        }
+    }
+    let userScore = document.getElementById('score');
+    userScore.innerText = score;
+}
+
+// Set the button color based on the user response
 function setUserRatingButtonColor(ur) {
     switch (ur) {
-        case 'easy':
-            document.getElementById('easyButton').style.backgroundColor = 'green'; color = 'white';
-            document.getElementById('mediumButton').style.backgroundColor = '#CEB888'; color = 'black';
-            document.getElementById('hardButton').style.backgroundColor = '#CEB888'; color = 'black';
+        case 'yes':
+            document.getElementById('yesButton').style.backgroundColor = 'green';
+            document.getElementById('yesButton').style.color = 'white';
+            document.getElementById('partialButton').style.backgroundColor = '#CEB888';
+            document.getElementById('partialButton').style.color = 'black';
+            document.getElementById('noButton').style.backgroundColor = '#CEB888';
+            document.getElementById('noButton').style.color = 'black';
             break;
-        case 'medium':
-            document.getElementById('easyButton').style.backgroundColor = '#CEB888'; color = 'black';
-            document.getElementById('mediumButton').style.backgroundColor = 'yellow'; color = 'black';
-            document.getElementById('hardButton').style.backgroundColor = '#CEB888'; color = 'black';
+        case 'partial':
+            document.getElementById('yesButton').style.backgroundColor = '#CEB888';
+            document.getElementById('yesButton').style.color = 'black';
+            document.getElementById('partialButton').style.backgroundColor = 'yellow';
+            document.getElementById('partialButton').style.color = 'black';
+            document.getElementById('noButton').style.backgroundColor = '#CEB888';
+            document.getElementById('noButton').style.color = 'black';
             break;
-        case 'hard':
-            document.getElementById('easyButton').style.backgroundColor = '#CEB888'; color = 'black';
-            document.getElementById('mediumButton').style.backgroundColor = '#CEB888'; color = 'black';
-            document.getElementById('hardButton').style.backgroundColor = 'red'; color = 'black';
+        case 'no':
+            document.getElementById('yesButton').style.backgroundColor = '#CEB888';
+            document.getElementById('yesButton').style.color = 'black';
+            document.getElementById('partialButton').style.backgroundColor = '#CEB888';
+            document.getElementById('partialButton').style.color = 'black';
+            document.getElementById('noButton').style.backgroundColor = 'red';
+            document.getElementById('noButton').style.color = 'black';
             break;
         default:
-            document.getElementById('easyButton').style.backgroundColor = '#CEB888'; color = 'black';
-            document.getElementById('mediumButton').style.backgroundColor = '#CEB888'; color = 'black';
-            document.getElementById('hardButton').style.backgroundColor = '#CEB888'; color = 'black';
+            document.getElementById('yesButton').style.backgroundColor = '#CEB888';
+            document.getElementById('yesButton').style.color = 'black';
+            document.getElementById('partialButton').style.backgroundColor = '#CEB888';
+            document.getElementById('partialButton').style.color = 'black';
+            document.getElementById('noButton').style.backgroundColor = '#CEB888';
+            document.getElementById('noButton').style.color = 'black';
             break;
     }
 }

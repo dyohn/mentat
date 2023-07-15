@@ -35,6 +35,7 @@
             <div class="row top-buffer">
                 <div class="col-sm-6">
                     @Html.TextBoxFor(m => m.SelectedCardIndex, new { style = "width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
+                    <div><text style="font-size:20px">Points: <text id="score"></text></text></div>
                 </div>
             </div>
         </div>
@@ -43,7 +44,7 @@
     @using (Html.BeginForm())
     {
         <div class="row accordion col-sm-12 bottom-buffer">
-            <a class="fsu-black-color" onclick="onClickFilterAccordian();" style="font-size: 20px" aria-expanded="false">
+            <a class="fsu-black-color" onclick="onClickFilterAccordian();" style="font-size: 18px" aria-expanded="false">
                 <span class="fa fa-caret-right fsu-black-color" id="caret-right"></span> @Model.FilterCount filter(s) applied
             </a>
             <div class="row top-buffer col-sm-12 collapse in" id="filters">
@@ -143,9 +144,9 @@
     <br />
     <!--user feedback difficulty level; send the level rating only, card id will already be there-->
     <div class="fb-container">
-        <button class="button" id="easyButton" onclick="setUserDifficultyLevel('easy');">I Know It</button>
-        <button class="button" id="mediumButton" onclick="setUserDifficultyLevel('medium');">Partially Know It</button>
-        <button class="button" id="hardButton" onclick="setUserDifficultyLevel('hard');">I Don't Know It</button>
+        <button class="button" id="yesButton" data-toggle="tooltip" data-placement="top" title="1 point" onclick="setUserDifficultyLevel('yes');">I Know It</button>
+        <button class="button" id="partialButton" data-toggle="tooltip" data-placement="top" title="1/2 point" onclick="setUserDifficultyLevel('partial');">Partially Know It</button>
+        <button class="button" id="noButton" data-toggle="tooltip" data-placement="top" title="0 point" onclick="setUserDifficultyLevel('no');">I Don't Know It</button>
     </div>
     <div class="row top-buffer col-sm-12">
         <button type="button" class="bg-black text-on-dark font-weight-bold" onclick="location.href='@Url.Action("AddEditCard", "Card")';">Add Flashcard</button>
