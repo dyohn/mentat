@@ -17,6 +17,8 @@ namespace Mentat.UI.ViewModels
 
         public bool IsCustom { get; set; }
 
+        public bool IsPrivate { get; set; }
+
         public string DifficultyLevel { get; set; }
 
         public string Notes { get; set; }
@@ -32,7 +34,8 @@ namespace Mentat.UI.ViewModels
             Subject = card.Subject;
             Question = card.Question;
             Answer = card.Answer;
-            IsCustom = card.IsCustom;    
+            IsCustom = card.IsCustom;
+            IsPrivate = card.IsPrivate;    
             DifficultyLevel = card.DifficultyLevel;   
             Notes = card.Notes;
             Tags = card.Tags;
