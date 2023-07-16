@@ -15,5 +15,7 @@ namespace Mentat.Repository.Services
         void RemoveCard(string id);
 
         void SaveCard(string id, Card card);
+
+        public void CowCard(string id, string newOwner);
     }
 }

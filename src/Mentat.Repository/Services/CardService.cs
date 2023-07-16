@@ -121,5 +121,16 @@ namespace Mentat.Repository.Services
             }
 
         }
+
+        public void CowCard(string id, string newOwner)
+        {
+            string newId = Guid.NewGuid().ToString();
+            Card card = GetCard(id);
+            card.Id = newId;
+            card.Owner = newOwner;
+            SaveCard(newId, card);
+            return;
+        }
+
     }
 }
