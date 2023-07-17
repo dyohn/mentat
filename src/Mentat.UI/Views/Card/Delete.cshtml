@@ -35,6 +35,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IsCustom)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsPrivate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsPrivate)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.DifficultyLevel)
         </dt>
@@ -46,6 +52,12 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Notes)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Owner)
         </dd>
     </dl>
     
