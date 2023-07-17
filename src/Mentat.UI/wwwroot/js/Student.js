@@ -65,7 +65,7 @@ function goToNext(index) {
             break;
         }
     }
-    
+  
     processCardChange(index, indexToShow);
     updateSelectedCardIndex(indexToShow);
 }
@@ -79,7 +79,6 @@ function goToFirst() {
             break;
         }
     }
-
     processCardChange($("#CurrentIndex").val(), indexToShow);
     updateSelectedCardIndex(indexToShow);
 }

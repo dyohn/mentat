@@ -3,7 +3,6 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Mentat.Repository.Models
 {
-    [BsonIgnoreExtraElements]
     public class Card
     {
         [BsonId]

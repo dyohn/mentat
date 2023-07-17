@@ -35,7 +35,9 @@
             <div class="row top-buffer">
                 <div class="col-sm-6">
                     @Html.TextBoxFor(m => m.SelectedCardIndex, new { style = "width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
-                    <div><text style="font-size:20px">Points: <text id="score"></text></text></div>
+                    <div>
+                        <text style="font-size:20px">Points: <text id="score"></text></text>
+                    </div>
                 </div>
             </div>
         </div>
