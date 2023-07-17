@@ -26,7 +26,7 @@ namespace Mentat.UI.Areas.Identity.Pages.Account
         private readonly ILogger<LoginModel> _logger;
         private readonly RoleManager<MentatUserRole> _roleManager;
 
-        public LoginModel(SignInManager<MentatUser> signInManager, 
+        public LoginModel(SignInManager<MentatUser> signInManager,
             ILogger<LoginModel> logger,
             UserManager<MentatUser> userManager,
             RoleManager<MentatUserRole> roleManager)
@@ -83,7 +83,7 @@ namespace Mentat.UI.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        
+
             if (ModelState.IsValid)
             {
                 // Try to find user by email address:
