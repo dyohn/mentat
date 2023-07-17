@@ -1,4 +1,9 @@
-﻿@model Mentat.UI.ViewModels.CardViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@using Mentat.UI.Areas.Identity.Data
+
+@inject UserManager<MentatUser> UserManager
+
+@model Mentat.UI.ViewModels.CardViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -69,7 +74,7 @@
             <td>
                 @Html.ActionLink("Edit", "AddEditCard", new {  id=card.Id }) |
                 @Html.ActionLink("Details", "Details", new { id=card.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=card.Id })
+                @Html.ActionLink("Delete", "Delete", new { id=card.Id, user=UserManager.GetUserName(User) })
             </td>
         </tr>
 }

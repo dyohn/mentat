@@ -74,19 +74,6 @@ namespace Mentat.UI.Controllers
             }
         }
 
-        // DEPRICATED - Please use the Delete function below with a user parameter
-        // GET: CardController/Delete/5
-        public ActionResult Delete(string id)
-        {
-            var card = _cardService.GetCard(id);
-            if (card == null)
-            {
-                return NotFound($"Card with ID = {id} not found");
-            }
-
-            return View(new CardViewModel(card));
-        }
-
         // GET: CardController/Delete/5
         public ActionResult Delete(string id, string user)
         {
