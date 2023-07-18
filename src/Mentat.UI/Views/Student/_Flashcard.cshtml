@@ -4,20 +4,29 @@
 @Html.HiddenFor(m => m.CardID, new { id = "CardId_" + ViewData["index"] })
 @Html.HiddenFor(m => m.HiddenCardAnswer, new { @maxLength = "250", disabled = true, id = "HiddenCardAnswer_" + @ViewData["index"] })
 <div class="card" style="width:75%">
-    <div class="card-header" style="background-color:@Html.DisplayFor(m=>m.DifficultyLevelColor);">
+    <div class="card-header" style="background-color:@Html.DisplayFor(m => m.DifficultyLevelColor);">
     </div>
     <div class="card-body" style="height:fit-content">
-        <p class="card-text cuttoff-text" style="text-align:center" id="CardQuestion">@Html.DisplayFor(m => m.CardQuestion, new { @maxLength = "250", disabled = true, id = "CardQuestion_" + @ViewData["index"] })</p>
-        <p class="card-text" style="text-align:center" id="CardAnswer"> @Html.TextAreaFor(m => m.CardAnswerOverlay, 10, 65, new { @style = "border:none;background-color:white", @align = "center", cols = "50", rows = "10", @maxLength = "250", disabled = true, id = "CardAnswerOverlay_" + @ViewData["index"] })</p>
+
+        <p class="card-text cuttoff-text" style="text-align:center" id="CardQuestion">@Html.DisplayFor(m => m.CardQuestion,
+                 new { @maxLength = "250", disabled = true, id = "CardQuestion_" + @ViewData["index"] })
+        </p>
+
+        <p class="card-text" style="text-align:center" id="CardAnswer"> @Html.TextAreaFor(m => m.CardAnswerOverlay, 10, 65,
+                 new { @style = "border:none;background-color:white", @align = "center", cols = "50", rows = "10",
+                 @maxLength = "250", disabled = true, id = "CardAnswerOverlay_" + @ViewData["index"] })
+        </p>
     </div>
 </div>
 @*<div class="row top-buffer col-sm-12">*@
 <div class="card-footer text-center" style="border:none; background-color:transparent; width:75%">
     <div class="form-group float-left">
-        <a float="left" href="javascript:;" id="flashCardPrev" onclick="goToPrevious(@ViewData["index"]);"><span class="fa fa-arrow-circle-left fa-3x fsu-maroon-color"></span></a>
+        <a float="left" href="javascript:;" id="flashCardPrev" onclick="goToPrevious(@ViewData["index"]);">
+        <span class="fa fa-arrow-circle-left fa-3x fsu-maroon-color"></span></a>
     </div>
     <a href="javascript:;" class="fsu-black-color" id="show-hide_@ViewData["index"]" onclick="toggleShowHideOfFlashCard(@ViewData["index"]);">Show</a>
     <div class="form-group float-right">
-        <a float="right" href="javascript:;" id="flashCardNext" onclick="goToNext(@ViewData["index"]);"><span class="fa fa-arrow-circle-right fa-3x fsu-maroon-color"></span></a>
+        <a float="right" href="javascript:;" id="flashCardNext" onclick="goToNext(@ViewData["index"]);">
+        <span class="fa fa-arrow-circle-right fa-3x fsu-maroon-color"></span></a>
     </div>
 </div>
