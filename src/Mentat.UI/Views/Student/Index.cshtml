@@ -1,5 +1,9 @@
 ﻿@using Mentat.Domain.Models
 @using static Mentat.Domain.Constants
+@using Microsoft.AspNetCore.Identity
+@using Mentat.UI.Areas.Identity.Data
+
+@inject UserManager<MentatUser> UserManager
 
 @model StudentVM
 
@@ -178,7 +182,7 @@
                                     <text> | </text>
                                     <a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen fsu-black-color" onclick="location.href='@Url.Action("AddEditCard", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
                                     <text> | </text>
-                                    <a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can fsu-maroon-color" data-id="@Model.AvailableCards[i - 1].CardID" data-togle="modal" data-target="#deleteModal"></i></a>
+                                    <a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can fsu-maroon-color" onclick="location.href='@Url.Action("Delete", "Card", new { id = Model.AvailableCards[i - 1].CardID, user=UserManager.GetUserName(User) })';"></i></a>
                                 }
                             </td>
 						</tr>
