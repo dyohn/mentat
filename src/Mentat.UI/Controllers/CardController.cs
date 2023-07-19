@@ -113,6 +113,10 @@ namespace Mentat.UI.Controllers
             {
                 return NotFound($"{user} is not the owner of this card and cannot delete it.");
             }
+            if (!card.IsPrivate)
+            {
+                return NotFound($"The card is not set to private and cannot be deleted.");
+            }
             if (card == null)
             {
                 return NotFound($"Card with ID = {id} not found");
