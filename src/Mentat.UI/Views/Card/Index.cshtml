@@ -30,6 +30,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Notes)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tags)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -45,9 +48,9 @@
             <td>
                 @Html.DisplayFor(modelItem => card.Answer)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => card.IsCustom)
-            </td>
+            <th>
+                @Html.DisplayFor(model => model.IsCustom)
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => card.DifficultyLevel)
             </td>
@@ -55,9 +58,12 @@
                 @Html.DisplayFor(modelItem => card.Notes)
             </td>
             <td>
-                @Html.ActionLink("Edit", "AddEditCard", new {  id=card.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=card.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=card.Id })
+                @Html.DisplayFor(modelItem => card.TagsAsString)
+            </td>
+            <td style="white-space: nowrap;">
+                @Html.ActionLink("Edit", "AddEditCard", new {  id = card.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = card.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = card.Id })
             </td>
         </tr>
 }
