@@ -1,27 +1,32 @@
 ﻿@using Mentat.Domain.Models
 
 @model FlashCardVM
-
-@Html.HiddenFor(m => m.CardID)
-<div class="row bottom-buffer col-sm-12" style="display:inline-block;">
-    @Html.TextAreaFor(m => m.CardQuestion, 5, 90, new { @maxLength = "250", disabled = true, id = "CardQuestion_"+ @ViewData["index"] })
-    <text>&nbsp;</text><span class="fa fa-circle fa-1x fsu-maroon-color"></span>
-    <text>&nbsp;</text><span class="fa fa-circle fa-1x fsu-black-color"></span>
-    <text>&nbsp;</text><span class="fa fa-circle fa-1x fsu-maroon-color"></span>
-</div>
-<div class="row col-sm-12">
-    <div class="col-sm-2"></div>
-    <a href="javascript:;" onclick="goToPrevious(@ViewData["index"]);"><span class="fa fa-arrow-circle-left fa-3x fsu-maroon-color"></span></a>
-    <div class="col-sm-1"></div>
-    <div class="vertical-line-center">
-        <a href="javascript:;" class="fsu-black-color" id="show-hide_@ViewData["index"]" onclick="toggleShowHideOfFlashCard(@ViewData["index"]);">Show</a>
+@Html.HiddenFor(m => m.CardID, new { id = "CardId_" + ViewData["index"] })
+@Html.HiddenFor(m => m.HiddenCardAnswer, new { @maxLength = "250", disabled = true, id = "HiddenCardAnswer_" + @ViewData["index"] })
+<div class="card" style="width:75%">
+    <div class="card-header" style="background-color:@Html.DisplayFor(m => m.DifficultyLevelColor);">
     </div>
-    <div class="col-sm-1"></div>
-    <a href="javascript:;" onclick="goToNext(@ViewData["index"]);"><span class="fa fa-arrow-circle-right fa-3x fsu-maroon-color"></span></a>
+    <div class="card-body" style="height:fit-content">
+
+        <p class="card-text cuttoff-text" style="text-align:center" id="CardQuestion">@Html.DisplayFor(m => m.CardQuestion,
+                 new { @maxLength = "250", disabled = true, id = "CardQuestion_" + @ViewData["index"] })
+        </p>
+
+        <p class="card-text" style="text-align:center" id="CardAnswer"> @Html.TextAreaFor(m => m.CardAnswerOverlay, 10, 65,
+                 new { @style = "border:none;background-color:white", @align = "center", cols = "50", rows = "10",
+                 @maxLength = "250", disabled = true, id = "CardAnswerOverlay_" + @ViewData["index"] })
+        </p>
+    </div>
 </div>
-<div style="display:none">
-    @Html.TextAreaFor(m => m.HiddenCardAnswer, 0, 0, new { @maxLength = "250", disabled = true, id = "HiddenCardAnswer_" + @ViewData["index"] })
-</div>
-<div class="row top-buffer col-sm-12 light-text">
-    @Html.TextAreaFor(m => m.CardAnswerOverlay, 5, 117, new { @maxLength = "250", disabled = true, id = "CardAnswerOverlay_" + @ViewData["index"] })
+@*<div class="row top-buffer col-sm-12">*@
+<div class="card-footer text-center" style="border:none; background-color:transparent; width:75%">
+    <div class="form-group float-left">
+        <a float="left" href="javascript:;" id="flashCardPrev" onclick="goToPrevious(@ViewData["index"]);">
+        <span class="fa fa-arrow-circle-left fa-3x fsu-maroon-color"></span></a>
+    </div>
+    <a href="javascript:;" class="fsu-black-color" id="show-hide_@ViewData["index"]" onclick="toggleShowHideOfFlashCard(@ViewData["index"]);">Show</a>
+    <div class="form-group float-right">
+        <a float="right" href="javascript:;" id="flashCardNext" onclick="goToNext(@ViewData["index"]);">
+        <span class="fa fa-arrow-circle-right fa-3x fsu-maroon-color"></span></a>
+    </div>
 </div>

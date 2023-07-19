@@ -5,6 +5,14 @@
     });
 
     $('#SelectedDifficulties').multiselect();
+
+    // Create a localstorage variable for user feedback of flashcard
+    if ((typeof userFeedback === 'undefined'))
+    {
+        currentCardId = getCurrentCardId(1);
+        getUserDifficultyLevel(currentCardId);
+    }
+    getUserScore();
 };
 
 const originalCarouselItems = Array.from(document.querySelectorAll('[id^="flashcard_"]'));
@@ -16,7 +24,7 @@ function toggleShowHideOfFlashCard(index) {
     } else {
         showHideLink.text("Hide");
         $("[id$=CardAnswerOverlay_" + index + "]").val($("[id$=HiddenCardAnswer_" + index + "]").val());
-    }  
+    }
 }
 
 function hideCardAndClearOverlay(showHideLink, index) {
@@ -57,7 +65,7 @@ function goToNext(index) {
             break;
         }
     }
-    
+  
     processCardChange(index, indexToShow);
     updateSelectedCardIndex(indexToShow);
 }
@@ -71,7 +79,6 @@ function goToFirst() {
             break;
         }
     }
-
     processCardChange($("#CurrentIndex").val(), indexToShow);
     updateSelectedCardIndex(indexToShow);
 }
@@ -80,7 +87,9 @@ function processCardChange(index, indexToShow) {
     hideCurrentCard(index);
     showCard(indexToShow);
     hideAnswerOfCardNoLongerVisible(index);
-    $("#CurrentIndex").val(indexToShow);   
+    $("#CurrentIndex").val(indexToShow);
+    var curCardId = getCurrentCardId(indexToShow);// current card id
+    getUserDifficultyLevel(curCardId);  // get the users difficulty
 }
 
 function getCardCount() {
@@ -200,3 +209,100 @@ function rebuildCarousel(selectedTags) {
     // having rebuilt the carousel, load the first card that still exists
     goToFirst(); 
 }
+
+// Get the current flashcards id number
+function getCurrentCardId(indexToShow) {
+   currentCardId = document.querySelector('#CardId_' + indexToShow).value;
+    return currentCardId;
+}
+
+// Set the users response in local storage and then change the color of the button
+function setUserDifficultyLevel(userRating)
+{
+    localStorage.setItem(JSON.stringify(currentCardId), JSON.stringify(userRating));
+    setUserRatingButtonColor(userRating);
+    getUserScore();
+    
+}
+
+// Get the current flashcard response and change color of the buttons
+function getUserDifficultyLevel(currentCardId)
+{
+    var userRating = JSON.parse(localStorage.getItem(JSON.stringify(currentCardId)));
+    setUserRatingButtonColor(userRating);
+    
+}
+
+// Calculate the users score
+function getUserScore() {
+    var score = 0.0;
+    for (var i = 0; i < localStorage.length; i++) {
+        var r = JSON.parse(localStorage.getItem(localStorage.key(i)))
+        if (r == 'yes') {
+            score = score + 1.0;
+        }
+        else if (r == 'partial') {
+            score = score + 0.5
+        }
+    }
+    let userScore = document.getElementById('score');
+    userScore.innerText = score;
+}
+
+// Set the button color based on the user response
+function setUserRatingButtonColor(ur) {
+    switch (ur) {
+        case 'yes':
+            document.getElementById('yesButton').style.backgroundColor = 'green';
+            document.getElementById('yesButton').style.color = 'white';
+            document.getElementById('partialButton').style.backgroundColor = '#CEB888';
+            document.getElementById('partialButton').style.color = 'black';
+            document.getElementById('noButton').style.backgroundColor = '#CEB888';
+            document.getElementById('noButton').style.color = 'black';
+            break;
+        case 'partial':
+            document.getElementById('yesButton').style.backgroundColor = '#CEB888';
+            document.getElementById('yesButton').style.color = 'black';
+            document.getElementById('partialButton').style.backgroundColor = 'yellow';
+            document.getElementById('partialButton').style.color = 'black';
+            document.getElementById('noButton').style.backgroundColor = '#CEB888';
+            document.getElementById('noButton').style.color = 'black';
+            break;
+        case 'no':
+            document.getElementById('yesButton').style.backgroundColor = '#CEB888';
+            document.getElementById('yesButton').style.color = 'black';
+            document.getElementById('partialButton').style.backgroundColor = '#CEB888';
+            document.getElementById('partialButton').style.color = 'black';
+            document.getElementById('noButton').style.backgroundColor = 'red';
+            document.getElementById('noButton').style.color = 'black';
+            break;
+        default:
+            document.getElementById('yesButton').style.backgroundColor = '#CEB888';
+            document.getElementById('yesButton').style.color = 'black';
+            document.getElementById('partialButton').style.backgroundColor = '#CEB888';
+            document.getElementById('partialButton').style.color = 'black';
+            document.getElementById('noButton').style.backgroundColor = '#CEB888';
+            document.getElementById('noButton').style.color = 'black';
+            break;
+    }
+}
+
+// Allow the arrow keys to move the cards left/right and the Enter key to show/hide the answer
+window.addEventListener("keydown", function (event) {
+    if (event.defaultPrevented) {
+        return;
+    }
+    if (event.code == "Enter") {
+        //hide card
+        toggleShowHideOfFlashCard(parseInt($("#CurrentIndex").val()));
+    }
+    else if (event.code == "ArrowLeft") {
+        //show previous card
+        goToPrevious(parseInt($("#CurrentIndex").val()));
+    }
+    else if (event.code == "ArrowRight") {
+        //show next card
+        goToNext(parseInt($("#CurrentIndex").val()));
+    }
+
+}, true);

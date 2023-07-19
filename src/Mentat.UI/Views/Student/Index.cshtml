@@ -4,37 +4,51 @@
 @model StudentVM
 
 @{
-	ViewData["Title"] = "Student";
+    ViewData["Title"] = "Student";
 }
 
 @Html.HiddenFor(m => m.NumberOfFlashCards)
 @Html.HiddenFor(m => m.CurrentIndex)
+@Html.HiddenFor(m => m.AvailableCards[Model.CurrentIndex].CardID)
+
+<style>
+    .fb-container {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap: 10px;
+    }
+</style>
+
 <span class="dot"></span>
 <div class="col-sm-12">
-	<div class="row bottom-buffer col-sm-12">
-		<div class="col-sm-9">
-			<span><img src="/images/fluent_brain-circuit-20-filled.png"></span>
-			<span class="align-middle title-text">Study</span>
-		</div>
-		<div class="col-sm-3">
-			<div class="row">
-				<div class="col-sm-3">
-					<a href="javascript:;" onclick="refreshFlashcardList();"><span class="fa fa-refresh fa-2x fsu-maroon-color"></span></a>
-				</div>
-			</div>
-			<div class="row top-buffer">
-				<div class="col-sm-6">
-					@Html.TextBoxFor(m => m.SelectedCardIndex, new { style="width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="row bottom-buffer col-sm-12">
+        <div class="col-sm-9">
+            <span><img src="/images/fluent_brain-circuit-20-filled.png"></span>
+            <span class="align-middle title-text">Study</span>
+        </div>
+        <div class="col-sm-3">
+            <div class="row">
+                <div class="col-sm-3">
+                    <a href="javascript:;" onclick="refreshFlashcardList();"><span class="fa fa-refresh fa-2x fsu-maroon-color"></span></a>
+                </div>
+            </div>
+            <div class="row top-buffer">
+                <div class="col-sm-6">
+                    @Html.TextBoxFor(m => m.SelectedCardIndex, new { style = "width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
+                    <div>
+                        <text style="font-size:20px">Points: <text id="score"></text></text>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	@using(Html.BeginForm())
-        {
+    @using (Html.BeginForm())
+    {
         <div class="row accordion col-sm-12 bottom-buffer">
-            <a class="fsu-black-color" onclick="onClickFilterAccordian();" style="font-size: 20px" aria-expanded="false">
-            <span class="fa fa-caret-right fsu-black-color" id="caret-right"></span> @Model.FilterCount filter(s) applied</a>
+            <a class="fsu-black-color" onclick="onClickFilterAccordian();" style="font-size: 18px" aria-expanded="false">
+                <span class="fa fa-caret-right fsu-black-color" id="caret-right"></span> @Model.FilterCount filter(s) applied
+            </a>
             <div class="row top-buffer col-sm-12 collapse in" id="filters">
 
                 <div id="tag-buttons">
@@ -52,62 +66,60 @@
                             }
                             if (counter % 4 == 0)
                             {
-                                @:</div><div>
+                            @:</div><div>
                             }
                             <button type="button" class="btn btn-primary tag-button" data-tag=@tag.Replace(' ', '_')>@tag</button>
                             counter++;
                         }
                     </div>
                 </div>
-                <script>
-                    var container = document.getElementById("tag-buttons");
-					var selectedTags = [];
-					var filteredCards = [];
+                <script>var container = document.getElementById("tag-buttons");
+                    var selectedTags = [];
+                    var filteredCards = [];
                     // add a click event listener to the tag buttons
                     var buttons = document.getElementsByClassName("tag-button");
                     for (var i = 0; i < buttons.length; i++) {
-						buttons[i].addEventListener("click", function () {
-							resetFlashCards();
-							var tag = this.getAttribute("data-tag").replace(/ /g, "_");
-							if (selectedTags.includes(tag)) {
-								selectedTags.splice(selectedTags.indexOf(tag), 1); // remove the tag from the list of selected tags
-								this.classList.remove("selected"); // remove the "selected" class from the button
-							} else {
-                              selectedTags.push(tag); // add the tag to the list of selected tags
-                              this.classList.add("selected"); // add the "selected" class to the button
-							}
-							var tableRows = document.querySelectorAll('#flashcard-list tbody tr');
-							if (selectedTags.length == 0) {
-								filteredCards = [];
-								for (var i = 0; i < tableRows.length; i++) {
-									tableRows[i].classList.remove('hidden');
-								}
-							}
-							else {
-								for (var i = 0; i < tableRows.length; i++) {
-									for (var j = 0; j < selectedTags.length; j++) {
-										if (tableRows[i].classList.contains(selectedTags[j])) {
-											tableRows[i].classList.remove('hidden');
-											filteredCards.splice(i);
-											break;
-										} else {
-											tableRows[i].classList.add('hidden');
-											filteredCards.push(i);
-										}
-									}
-								}
-							}
-							rebuildCarousel(selectedTags);
-						});
-                    }
-                </script>
+                        buttons[i].addEventListener("click", function () {
+                            resetFlashCards();
+                            var tag = this.getAttribute("data-tag").replace(/ /g, "_");
+                            if (selectedTags.includes(tag)) {
+                                selectedTags.splice(selectedTags.indexOf(tag), 1); // remove the tag from the list of selected tags
+                                this.classList.remove("selected"); // remove the "selected" class from the button
+                            } else {
+                                selectedTags.push(tag); // add the tag to the list of selected tags
+                                this.classList.add("selected"); // add the "selected" class to the button
+                            }
+                            var tableRows = document.querySelectorAll('#flashcard-list tbody tr');
+                            if (selectedTags.length == 0) {
+                                filteredCards = [];
+                                for (var i = 0; i < tableRows.length; i++) {
+                                    tableRows[i].classList.remove('hidden');
+                                }
+                            }
+                            else {
+                                for (var i = 0; i < tableRows.length; i++) {
+                                    for (var j = 0; j < selectedTags.length; j++) {
+                                        if (tableRows[i].classList.contains(selectedTags[j])) {
+                                            tableRows[i].classList.remove('hidden');
+                                            filteredCards.splice(i);
+                                            break;
+                                        } else {
+                                            tableRows[i].classList.add('hidden');
+                                            filteredCards.push(i);
+                                        }
+                                    }
+                                }
+                            }
+                            rebuildCarousel(selectedTags);
+                        });
+                    }</script>
 
                 <text>&nbsp;&nbsp;&nbsp;&nbsp;</text>
                 <div style="display:inline-block;">
-                    @Html.Label(null, "Difficulty:", new { style="font-size: 15px; font-weight: bold;" })
+                    @Html.Label(null, "Difficulty:", new { style = "font-size: 15px; font-weight: bold;" })
                     <text>&nbsp;</text>
-                    @Html.ListBoxFor(m => m.SelectedDifficulties, ((DifficultyLevel[]) Enum.GetValues(typeof(DifficultyLevel))).ToList()
-                        .Select(d => new SelectListItem { Text = d.ToString(), Value = d.ToString() } ), new { @multiple = "multiple" })
+                    @Html.ListBoxFor(m => m.SelectedDifficulties, ((DifficultyLevel[])Enum.GetValues(typeof(DifficultyLevel))).ToList()
+                        .Select(d => new SelectListItem { Text = d.ToString(), Value = d.ToString() }), new { @multiple = "multiple" })
                     <text>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>
                     <button type="submit" class="bg-black text-on-dark font-weight-bold">Apply</button>
                 </div>
@@ -116,76 +128,81 @@
     }
     <div id="carousel-items" class="carousel-container">
         @for (var i = 1; i <= Model.NumberOfFlashCards; i++)
+        {
+            var classes = "";
+            foreach (var tag in Model.AvailableCards[i - 1].Tags ?? Enumerable.Empty<string>())
             {
-                var classes = "";
-                foreach (var tag in Model.AvailableCards[i - 1].Tags ?? Enumerable.Empty<string>())
-                {
-                    if (@tag == null) { continue; }
-                    classes += @tag.Replace(" ", "_") + ' ';
-                }
-                var display = i == 1 ? "inline" : "none";
+                if (@tag == null) { continue; }
+                classes += @tag.Replace(" ", "_") + ' ';
+            }
+            var display = i == 1 ? "inline" : "none";
             <div id="flashcard_@i" style="display:@display" class="@classes">
-                <div style="width:10px; float:left; height:126px; background-color: @Model.AvailableCards[i - 1].DifficultyLevelColor; border:1px solid gray">&nbsp;</div>
                 <div>
                     @Html.Partial("_Flashcard", Model.AvailableCards[i - 1], new ViewDataDictionary(ViewData) { { "index", i } })
                 </div>
             </div>
         }
     </div>
-
-	<div class="row top-buffer col-sm-12">
-		<button type="button" class="bg-black text-on-dark font-weight-bold" onclick="location.href='@Url.Action("AddEditCard", "Card")';">Add Flashcard</button>
-	</div>
-	<hr class="bold-black top-buffer col-sm-12">
-	<div class="row top-buffer col-sm-12">
-		<table id="flashcard-list" class="table top-buffer">
-			<thead>
+    <br />
+    <!--user feedback difficulty level; send the level rating only, card id will already be there-->
+    <div class="fb-container">
+        <button class="button" id="yesButton" data-toggle="tooltip" data-placement="top" title="1 point" onclick="setUserDifficultyLevel('yes');">I Know It</button>
+        <button class="button" id="partialButton" data-toggle="tooltip" data-placement="top" title="1/2 point" onclick="setUserDifficultyLevel('partial');">Partially Know It</button>
+        <button class="button" id="noButton" data-toggle="tooltip" data-placement="top" title="0 point" onclick="setUserDifficultyLevel('no');">I Don't Know It</button>
+    </div>
+    <div class="row top-buffer col-sm-12">
+        <button type="button" class="bg-black text-on-dark font-weight-bold" onclick="location.href='@Url.Action("AddEditCard", "Card")';">Add Flashcard</button>
+    </div>
+    <hr class="bold-black top-buffer col-sm-12">
+    <div class="row top-buffer col-sm-12">
+        <table id="flashcard-list" class="table top-buffer">
+            <thead>
                 <tr>
                     <th align="center">List of Flashcards</th>
                     <!--Add search bar-->
-					<th class="input-table-head">
+                    <th class="input-table-head">
                         <div class="input-wrapper">
                             <input id="searchbar" type="text" placeholder="Search..">
                             <button id="reset-button" class="bg-black text-on-dark font-weight-bold" type="button" onclick="resetFlashCards()">Show All</button>
-						</div>
-					</th>
+                        </div>
+                    </th>
                 </tr>
-			</thead>
-			<colgroup>
-				<col span="1" style="width: 85%;">
-				<col span="1" style="width: 10%;">
-			</colgroup>
+            </thead>
+            <colgroup>
+                <col span="1" style="width: 85%;">
+                <col span="1" style="width: 10%;">
+            </colgroup>
             <tbody id="cardbody">
                 @for (var i = 1; i <= Model.NumberOfFlashCards; i++)
+                {
+                    var classes = "";
+                    foreach (var tag in Model.AvailableCards[i - 1].Tags ?? Enumerable.Empty<string>())
                     {
-                        var classes = "";
-                        foreach (var tag in Model.AvailableCards[i - 1].Tags ?? Enumerable.Empty<string>())
-						{
-							if (tag == null)
-							{
-								continue;
-							}
-							classes += tag.Replace(" ", "_") + ' ';
-						}
-						<tr class="@classes">
-							<td>
-								@Html.DisplayFor(m => m.AvailableCards[i - 1].CardQuestion)
-							</td>
-                            <td>
-                                <a href="javascript:;" title="View Details"><i class="fa-solid fa-eye fsu-maroon-color" onclick="location.href='@Url.Action("Details", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
-                                @if (Model.AvailableCards[i - 1].CanEditOrDelete)
-                                {
-                                    <text> | </text>
-                                    <a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen fsu-black-color" onclick="location.href='@Url.Action("AddEditCard", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
-                                    <text> | </text>
-                                    <a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can fsu-maroon-color" data-id="@Model.AvailableCards[i - 1].CardID" data-togle="modal" data-target="#deleteModal"></i></a>
-                                }
-                            </td>
-						</tr>
+                        if (tag == null)
+                        {
+                            continue;
+                        }
+                        classes += tag.Replace(" ", "_") + ' ';
                     }
-				</tbody>
-			</table>
-		</div>
+                    <tr class="@classes">
+                        <td>
+                            @Html.DisplayFor(m => m.AvailableCards[i - 1].CardQuestion)
+                        </td>
+                        <td>
+                            <a href="javascript:;" title="View Details"><i class="fa-solid fa-eye fsu-maroon-color" onclick="location.href='@Url.Action("Details", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
+                            @if (Model.AvailableCards[i - 1].CanEditOrDelete)
+                            {
+                                <text> | </text>
+                                <a href="javascript:;" title="Edit Flashcard"><i class="fa-solid fa-file-pen fsu-black-color" onclick="location.href='@Url.Action("AddEditCard", "Card", new { id = Model.AvailableCards[i - 1].CardID })';"></i></a>
+                                <text> | </text>
+                                <a href="javascript:;" title="Delete Flashcard"><i class="fa-solid fa-trash-can fsu-maroon-color" data-id="@Model.AvailableCards[i - 1].CardID" data-togle="modal" data-target="#deleteModal"></i></a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
     <script>
 		//grab cards
 		var cardtable = [];
@@ -295,26 +312,26 @@
 
     </script>
 
-	<!-- Delete Modal -->
-	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="deleteModalLabel">Delete Flashcard</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					Are you sure you want to delete this flashcard?
-				</div>
-				<div class="modal-footer justify-content-center">
-					<button type="button" class="btn btn-secondary" onclick="deleteFlashcard(this)" id="confirmDelete" data-id-to-delete="">Delete</button>
-					<button type="button" class="btn bg-primary text-white" data-dismiss="modal">Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Flashcard</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this flashcard?
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" onclick="deleteFlashcard(this)" id="confirmDelete" data-id-to-delete="">Delete</button>
+                    <button type="button" class="btn bg-primary text-white" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="~/js/Student.js"></script>
