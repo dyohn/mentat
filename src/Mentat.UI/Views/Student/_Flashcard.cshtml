@@ -20,12 +20,12 @@
 @*<div class="row top-buffer col-sm-12">*@
 <div class="card-footer text-center" style="border:none; background-color:transparent; width:75%">
     <div class="form-group float-left">
-        <a float="left" href="javascript:;" id="flashCardPrev" onclick="goToPrevious(@ViewData["index"]);">
+        <a float="left" href="javascript:;" title="Left Arrow to Previous Card" id="flashCardPrev" onclick="goToPrevious(@ViewData["index"]);">
         <span class="fa fa-arrow-circle-left fa-3x fsu-maroon-color"></span></a>
     </div>
-    <a href="javascript:;" class="fsu-black-color" id="show-hide_@ViewData["index"]" onclick="toggleShowHideOfFlashCard(@ViewData["index"]);">Show</a>
+    <a href="javascript:;" class="fsu-black-color" title="Enter to Show Answer" id="show-hide_@ViewData["index"]" onclick="toggleShowHideOfFlashCard(@ViewData["index"]);">Show</a>
     <div class="form-group float-right">
-        <a float="right" href="javascript:;" id="flashCardNext" onclick="goToNext(@ViewData["index"]);">
+        <a float="right" href="javascript:;" title="Right Arrow to Next Card" id="flashCardNext" onclick="goToNext(@ViewData["index"]);">
         <span class="fa fa-arrow-circle-right fa-3x fsu-maroon-color"></span></a>
     </div>
 </div>

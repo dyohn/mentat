@@ -36,7 +36,7 @@
                 <div class="col-sm-6">
                     @Html.TextBoxFor(m => m.SelectedCardIndex, new { style = "width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
                     <div>
-                        <text style="font-size:20px">Points: <text id="score"></text></text>
+                        <text style="font-size:20px; white-space:nowrap">Points: <text id="score"></text></text>
                     </div>
                 </div>
             </div>
