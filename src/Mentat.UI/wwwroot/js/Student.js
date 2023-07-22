@@ -19,17 +19,20 @@ const originalCarouselItems = Array.from(document.querySelectorAll('[id^="flashc
 
 function toggleShowHideOfFlashCard(index) {
     var showHideLink = $("[id$=show-hide_" + index + "]");
+    var showAnswer = $("[id$=CardAnswer_" + index + "]");
     if (showHideLink.text() === "Hide") {
         hideCardAndClearOverlay(showHideLink, index);
     } else {
         showHideLink.text("Hide");
-        $("[id$=CardAnswerOverlay_" + index + "]").val($("[id$=HiddenCardAnswer_" + index + "]").val());
+        showAnswer.text($("[id$=HiddenCardAnswer_" + index + "]").val());
     }
 }
 
 function hideCardAndClearOverlay(showHideLink, index) {
     showHideLink.text("Show");
+    var showAnswer = $("[id$=CardAnswer_" + index + "]");
     $("[id$=CardAnswerOverlay_" + index + "]").val("");
+    showAnswer.text("");
 }
 
 function goToPrevious(index) {
