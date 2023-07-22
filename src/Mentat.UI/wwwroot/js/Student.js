@@ -295,8 +295,9 @@ window.addEventListener("keydown", function (event) {
     if (event.defaultPrevented) {
         return;
     }
-    if (event.code == "Enter") {
+    if (event.code == "Space") {
         //hide card
+        event.preventDefault();
         toggleShowHideOfFlashCard(parseInt($("#CurrentIndex").val()));
     }
     else if (event.code == "ArrowLeft") {
@@ -306,6 +307,18 @@ window.addEventListener("keydown", function (event) {
     else if (event.code == "ArrowRight") {
         //show next card
         goToNext(parseInt($("#CurrentIndex").val()));
+    }
+    else if (event.code == "Digit1") {
+        //show next card
+        setUserRatingButtonColor('yes');
+    }
+    else if (event.code == "Digit2") {
+        //show next card
+        setUserRatingButtonColor('partial');
+    }
+    else if (event.code == "Digit3") {
+        //show next card
+        setUserRatingButtonColor('no');
     }
 
 }, true);

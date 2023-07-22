@@ -8,11 +8,11 @@
     </div>
     <div class="card-body" style="height:fit-content">
 
-        <p class="card-text cuttoff-text" style="text-align:center" id="CardQuestion">@Html.DisplayFor(m => m.CardQuestion,
+        <p class="card-text cuttoff-text" style="text-align: center; font-size: 1vw" id="CardQuestion">@Html.DisplayFor(m => m.CardQuestion,
                  new { @maxLength = "250", disabled = true, id = "CardQuestion_" + @ViewData["index"] })
         </p>
 
-        <p class="card-text" style="text-align:center" id="CardAnswer_@ViewData["index"]"> @Html.DisplayFor(m => m.CardAnswerOverlay,
+        <p class="card-text cutoff-text" style="text-align:center; font-size: 1vw" id="CardAnswer_@ViewData["index"]"> @Html.DisplayFor(m => m.CardAnswerOverlay,
                  new {@maxLength = "250", disabled = true, id = "CardAnswerOverlay_" + @ViewData["index"] })
         </p>
     </div>
