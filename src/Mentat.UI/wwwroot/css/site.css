@@ -372,8 +372,9 @@ body, html {
 
 /* Overlay Background */
 .overlay {
-    height: 0%;
+    height: 100%;
     width: 100%;
+    display: none;
     position: fixed;
     z-index: 1;
     left: 0;
@@ -381,7 +382,6 @@ body, html {
     background-color: rgb(206,184,136);
     background-color: rgb(206,184,136, 0.95);
     overflow-x: hidden;
-    transition: 0.5s;
 }
 
 .overlay-content{
@@ -402,7 +402,6 @@ body, html {
     font-size: 35px;
     color: black;
     display: block;
-    transition: 0.25s;
 }
 
 .overlay .closebtn{

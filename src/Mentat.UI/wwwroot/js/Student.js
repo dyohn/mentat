@@ -324,9 +324,9 @@ window.addEventListener("keydown", function (event) {
 }, true);
 
 function openFCHelpNav() {
-    document.getElementById("flashCardInfoNav").style.height = "100%";
+    document.getElementById("flashCardInfoNav").style.display = "block";
 }
 
 function closeFCHelpNav() {
-    document.getElementById("flashCardInfoNav").style.height = "0%";
+    document.getElementById("flashCardInfoNav").style.display = "none";
 }
