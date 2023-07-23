@@ -1,6 +1,6 @@
 ﻿@using static Mentat.Domain.Constants
 
-@model Mentat.UI.ViewModels.CardViewModel
+@model Mentat.UI.ViewModels.SetViewModel
 
 @{
     ViewData["Title"] = "Create Set";
@@ -12,11 +12,11 @@
 <hr/>
 
 <div>
-    <form>
+    <form asp-action="SaveSet" asp-route-id="@Model.Id">
         <div>
-            <input class="form-control" placeholder="Enter a Title" />
-            <textarea class="form-control" placeholder="Add a description..."></textarea>
-            <input type="radio" id="public" name="visibility" checked="checked" value="Public" />
+            <input asp-for="Title" class="form-control" placeholder="Enter a Title" />
+            <textarea asp-for="Description" class="form-control" placeholder="Add a description..."></textarea>
+            <input asp-for="IsPublic" type="radio" id="public" name="visibility" checked="checked" value="Public" />
             <label for="public">Public</label>
             <input type="radio" id="private" name="visibility" value="Private" />
             <label for="private">Private</label>
@@ -25,32 +25,32 @@
             @for (int i = 0; i < cardCount; i++)
             {
                 <div class="card-box">
-                    <h4>@(cardCount)</h4>
+                    <h4>@(i + 1)</h4>
                     <hr />
                     <div class="form-row">
                         <div class="form-group col">
-                            <textarea asp-for="Question" id="question-@i" class="form-control" placeholder="Question"></textarea>
+                            <textarea asp-for="Cards[i].Question" id="question-@i" class="form-control" placeholder="Question"></textarea>
                         </div>
                         <div class="form-group col">
-                            <textarea asp-for="Answer" id="answer-@i" class="form-control" placeholder="Answer"></textarea>
+                            <textarea asp-for="Cards[i].Answer" id="answer-@i" class="form-control" placeholder="Answer"></textarea>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col">
-                            <input asp-for="Subject" id="subject-@i" class="form-control" placeholder="Subject" />
+                            <input asp-for="Cards[i].Subject" id="subject-@i" class="form-control" placeholder="Subject" />
                         </div>
                         <div class="form-group col">
-                            @Html.DropDownListFor(m => m.DifficultyLevel, ((DifficultyLevel[])Enum.GetValues(typeof(DifficultyLevel))).ToList()
+                            @Html.DropDownListFor(m => m.Cards[i].DifficultyLevel, ((DifficultyLevel[])Enum.GetValues(typeof(DifficultyLevel))).ToList()
                                 .Select(d => new SelectListItem { Text = d.ToString(), Value = d.ToString() }), null, new { @class = "form-control" })
                         </div>
                         <div class="form-group col">
-                            <input asp-for="Notes" id="notes-@i" class="form-control" placeholder="Notes" />
+                            <input asp-for="Cards[i].Notes" id="notes-@i" class="form-control" placeholder="Notes" />
                         </div>
                         <div class="form-group col">
                             <div class="tag-field" onclick="Array.from(this.children).find(n => n.tagName === 'INPUT').focus()">
                                 <input type="text" onkeyup="tagFieldKeyup(this)" placeholder="Tags" />
                             </div>
-                            <span asp-validation-for="Tags" class="text-danger"></span>
+                            <span asp-validation-for="Cards[i].Tags" class="text-danger"></span>
                         </div>
                         <div class="form-group col">
                             <button type="button" class="bg-black text-on-dark font-weight-bold" onclick="removeCard(this)">Remove Card</button>
@@ -60,7 +60,7 @@
             }
         </div>
         <button type="button" class="bg-black text-on-dark font-weight-bold" onclick="addCard()">Add Card</button>
-        <button type="button" class="bg-black text-on-dark font-weight-bold" onclick="addCard()">Add Existing</button>
+        <button type="button" class="bg-black text-on-dark font-weight-bold">Add Existing</button>
         <button type="button" class="bg-black text-on-dark font-weight-bold" onclick="removeAllCards()">Remove All</button>
         <button type="submit" class="bg-black text-on-dark font-weight-bold">Create Set</button>
     </form>

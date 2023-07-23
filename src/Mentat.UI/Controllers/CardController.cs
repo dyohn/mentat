@@ -63,8 +63,8 @@ namespace Mentat.UI.Controllers
                 {
                     string[] stringArray = tagList.Split(',');
                     card.Tags = new List<String>(stringArray).ConvertAll(d => d.ToUpper());
-                } 
-                
+                }
+
                 _cardService.SaveCard(id, card);
                 return RedirectToAction(nameof(Index));
             }

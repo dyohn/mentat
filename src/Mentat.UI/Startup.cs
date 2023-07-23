@@ -37,12 +37,19 @@ namespace Mentat.UI
             // IdentityDatabaseOptions section of appsecrets.json mapped to IdentityDatabaseOptions class.
             services.Configure<IdentityDatabaseOptions>(Configuration.GetSection(nameof(IdentityDatabaseOptions)));
 
+            // SetDatabaseOptions section of appsectets.json mapped to SetDatabaseOptions class.
+            services.Configure<SetDatabaseOptions>(Configuration.GetSection(nameof(SetDatabaseOptions)));
+
             // Configure Dependency Injection classes here
             services.AddSingleton<CardDatabaseOptions>();
             services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetValue<string>("CardDatabaseOptions:ConnectionString")));
 
+            services.AddSingleton<CardDatabaseOptions>();
+            services.AddSingleton<IMongoClient>(s => new MongoClient(Configuration.GetValue<string>("SetDatabaseOptions:ConnectionString")));
+
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ICardService, CardService>();
+            services.AddScoped<ISetService, SetService>();
 
             // add an identity module using user and role models, add the mongodb stores, and add the default token providers alongside UI
             services.AddIdentity<MentatUser, MentatUserRole>()

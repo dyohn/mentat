@@ -23,6 +23,8 @@ namespace Mentat.UI.ViewModels
 
         public List<string> Tags { get; set; }
 
+        public string SetId { get; set; }
+
         public CardViewModel(Card card)
         {
             Id = card.Id;

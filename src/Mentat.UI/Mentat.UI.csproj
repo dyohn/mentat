@@ -5,6 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\Set\" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="wwwroot\js\Student.js" />
   </ItemGroup>
 
@@ -35,6 +38,9 @@
     <Content Update="wwwroot\lib\bootstrap\dist\js\bootstrap.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Set\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

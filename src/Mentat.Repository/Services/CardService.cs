@@ -1,7 +1,9 @@
-﻿using Mentat.Repository.Models;
+﻿using System.Data;
+using Mentat.Repository.Models;
 using Mentat.Repository.Options;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Configuration;
 
 namespace Mentat.Repository.Services
 {
@@ -45,6 +47,12 @@ namespace Mentat.Repository.Services
                 cards.Add(c);
             }
             return cards;
+        }
+
+        public List<Card> GetCardsBySet(string setId)
+        {
+            var filter = Builders<Card>.Filter.Eq(c => c.SetId, setId);
+            return _cards.Find(filter).ToList();
         }
 
         public List<string> GetAllTags()

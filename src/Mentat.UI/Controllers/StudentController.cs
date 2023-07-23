@@ -23,10 +23,5 @@ namespace Mentat.UI.Controllers
         {
             return View();
         }
-
-        public ActionResult AddSet()
-        {
-            return View();
-        }
     }
 }

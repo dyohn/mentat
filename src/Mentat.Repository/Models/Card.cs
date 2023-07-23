@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Mentat.Repository.Models
@@ -31,5 +32,8 @@ namespace Mentat.Repository.Models
         [BsonElement("tags")]
         [BsonIgnoreIfNull]
         public List<string> Tags { get; set; }
+
+        [BsonElement("_setId")]
+        public string SetId { get; set; } // Reference to the Set
     }
 }
