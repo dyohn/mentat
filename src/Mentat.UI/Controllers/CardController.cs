@@ -55,37 +55,29 @@ namespace Mentat.UI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SaveCard(string id, [FromForm] Card card, [FromForm] string tagList)
         {
-            //private new owner
-            //private existing owner
-            //public existing owner
-            //public new owner
-
+            // Checks if card provided is new or exists. If the card exists, checks owner changes.
             Card oldCard;
-            // check if this is a new card that's being created.
             if (id == null)
             {
                 oldCard = null;
             }
-            // load old card.
             else
             {
                 oldCard = _cardService.GetCard(id);
-                oldCard.Owner ??= card.Owner; // set old Owner to new owner if old owner is null
+                oldCard.Owner ??= card.Owner;
             }
             if ((oldCard != null) && (oldCard.Owner != card.Owner))
             {
-                // check if old card owner is not who modified card and private.
                 if (oldCard.IsPrivate)
                 {
                     return NotFound($"{card.Owner} is not the owner of this card and cannot edit it while it is set to private.");
                 }
-                else // check if public and new owner setting private
+                else
                 {
                     id = null;
                     card.Id = null;
                 }
             }
-            // should be old owner updating card or new owner adding card.
             try
             {
                 // If tags were provided, they are submitted as a comma-separated string
