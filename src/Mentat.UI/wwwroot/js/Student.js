@@ -322,3 +322,11 @@ window.addEventListener("keydown", function (event) {
     }
 
 }, true);
+
+function openFCHelpNav() {
+    document.getElementById("flashCardInfoNav").style.height = "100%";
+}
+
+function closeFCHelpNav() {
+    document.getElementById("flashCardInfoNav").style.height = "0%";
+}

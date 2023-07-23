@@ -18,6 +18,21 @@
         gap: 10px;
     }
 </style>
+<!-- Card Instructions Overlay -->
+<div id="flashCardInfoNav" class="overlay">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeFCHelpNav()">&times;</a>
+    <!-- content -->
+    <div class="overlay-content">
+        <a>Previous Card - Right Arrow </a>
+        <a>Next Card - Left Arrow </a>
+        <a>Show or Hide the answer - Space</a>
+        <br />
+        <a>Selecting "I Know It" earns 1 point</a>
+        <a>Selecting "Partially Know It" earns 1/2 a point</a>
+        <a>Selecting "I Don't Know It'" earns 1 point</a>
+    </div>
+    
+</div>
 
 <span class="dot"></span>
 <div class="col-sm-12">
@@ -37,6 +52,9 @@
                     @Html.TextBoxFor(m => m.SelectedCardIndex, new { style = "width:40px;", @onchange = "updateSelectedCard(this);" }) <text>&nbsp;</text> of @Model.NumberOfFlashCards
                     <div>
                         <text style="font-size:20px; white-space:nowrap">Points: <text id="score"></text></text>
+                    </div>
+                    <div>
+                        <button onclick="openFCHelpNav()" class="bg-black text-on-dark font-weight-bold">Info</button>
                     </div>
                 </div>
             </div>

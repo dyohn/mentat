@@ -109,14 +109,23 @@ body {
     line-height: 1;
 }
 
-.cuttoff-text{
-    --max-lines: 3;
+.cutoff-text-question{
+    --max-lines: 5;
     overflow: hidden;
 
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: var(--max-lines);
 }
+
+.cutoff-text-answer {
+    --max-lines: 9;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--max-lines);
+}
+
 .title-text {
     font-size: 3.5rem;
     color: #782F40;
@@ -360,3 +369,46 @@ body, html {
     width: 100%;
     max-width: 500px;
 }
+
+/* Overlay Background */
+.overlay {
+    height: 0%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    background-color: rgb(206,184,136);
+    background-color: rgb(206,184,136, 0.95);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content{
+    position:center;
+    top: 25%;
+    width: 50%;
+    text-align: center;
+    margin-top: 10%;
+    margin-left: 25%;
+    border: 4px;
+    border-style:solid;
+    padding:50px;
+}
+
+.overlay a{
+    padding: 10px;
+    text-decoration: none;
+    font-size: 35px;
+    color: black;
+    display: block;
+    transition: 0.25s;
+}
+
+.overlay .closebtn{
+    position: absolute;
+    top: 1px;
+    right: 45px;
+    font-size:50px;
+}
+
