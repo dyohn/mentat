@@ -107,6 +107,7 @@ body {
 .card-text {
     font-size: 1.5rem;
     line-height: 1;
+    padding: 4px;
 }
 
 .cutoff-text-question{
