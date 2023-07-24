@@ -377,7 +377,7 @@ body, html {
     width: 100%;
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 99999;
     left: 0;
     top: 0;
     background-color: rgb(206,184,136);
@@ -407,8 +407,8 @@ body, html {
 
 .overlay .closebtn{
     position: absolute;
-    top: 1px;
-    right: 45px;
-    font-size:50px;
+    top: 25px;
+    right: 25px;
+    font-size:35px;
 }
 
