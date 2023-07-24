@@ -24,6 +24,9 @@ namespace Mentat.Repository.Models
         [BsonElement("difficultyLevel")]
         public string DifficultyLevel { get; set; }
 
+        [BsonElement("owner")]
+        public string Owner { get; set; }
+
         [BsonElement("notes")]
         public string Notes { get; set; }
 
