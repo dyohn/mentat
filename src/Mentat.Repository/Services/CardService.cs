@@ -23,18 +23,18 @@ namespace Mentat.Repository.Services
 
         public List<Card> GetFilteredCardsList(List<string> difficultyLevels)
         {
-            List<Card> cards = new List<Card>();
+            // Removed the creation of a new list directly
             try
             {
-                // Get all cards if list of difficulty levels empty.
+                // Get all cards if list of difficulty levels is empty.
                 if (difficultyLevels == null)
                 {
-                    cards = _cards.Find(card => true).ToList();
+                    return _cards.Find(card => true).ToList();
                 }
                 // Else get the cards of specified difficulty.
                 else
                 {
-                    cards = _cards.Find(c => difficultyLevels.Contains(c.DifficultyLevel)).ToList();
+                    return _cards.Find(c => difficultyLevels.Contains(c.DifficultyLevel)).ToList();
                 }
             }
             // Add a card marked with error info in case of exception.
@@ -42,9 +42,9 @@ namespace Mentat.Repository.Services
             {
                 Card c = new Card();
                 c.Answer = $"There was a problem retrieving cards.";
-                cards.Add(c);
+                // Instead, result of ToList() is called and the returned list is a new instance
+                return new List<Card> { c };
             }
-            return cards;
         }
 
         public List<string> GetAllTags()
