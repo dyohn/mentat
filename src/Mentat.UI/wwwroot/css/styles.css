@@ -1,0 +1,67 @@
+﻿.star {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    color: #ccc; 
+}
+.star.starred {
+   color: #ffc107 !important; 
+}
+.flashcardsContainer {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 30px;
+    width: 81.5%;
+    border-radius: 2px;
+    background-color: #E9E5DD;
+}
+.flashcardCountsContainer {
+    display: flex;
+    justify-content: space-between; 
+}
+.flashcardCountsBox {
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid #000;
+    box-sizing: border-box;
+    color: #000;
+    cursor: pointer;
+    display: inline-flex;
+    fill: #000;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    height: 48px;
+    justify-content: center;
+    letter-spacing: -.8px;
+    line-height: 24px;
+    min-width: 140px;
+    outline: 0;
+    padding: 0 17px;
+    text-align: center;
+    text-decoration: none;
+    margin-left: 10px;
+    margin-right: 370px;
+}
+.flashcardCountsBox:last-child {
+    margin-right: 0;
+}
+.flashcardCounts span {
+    font-weight: bold; 
+}
+
+/*
+.masteredCount,
+.learningCount {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-left: 8px;
+    background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient( #820000 75%, #696464 0);
+}
+*/
+.masteredCount,
+.learningCount {
+    margin-left: 8px;
+}

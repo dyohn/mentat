@@ -17,6 +17,7 @@ namespace Mentat.Domain.Models
     {
         public string CardID { get; set; }
         public string Subject { get; set; }
+        public bool IsStarred { get; set; }
         public string DifficultyLevel { get; set; }
         public string DifficultyLevelColor => DifficultyLevel switch
         {

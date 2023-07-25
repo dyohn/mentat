@@ -5,9 +5,11 @@
     });
 
     $('#SelectedDifficulties').multiselect();
-};
 
-const originalCarouselItems = Array.from(document.querySelectorAll('[id^="flashcard_"]'));
+    // Update the counter based on the initial starred state
+    updateFlashcardCounts();
+
+};
 
 function toggleShowHideOfFlashCard(index) {
     var showHideLink = $("[id$=show-hide_" + index + "]");
@@ -16,7 +18,17 @@ function toggleShowHideOfFlashCard(index) {
     } else {
         showHideLink.text("Hide");
         $("[id$=CardAnswerOverlay_" + index + "]").val($("[id$=HiddenCardAnswer_" + index + "]").val());
-    }  
+    }
+
+    // Update the star button onclick attribute for the current card
+    const currentCardID = $("#CardID_" + index).val();
+    const starButton = document.querySelector('[data-flashcard-id="' + currentCardID + '"]');
+    starButton.onclick = function () {
+        toggleStar(this);
+    };
+
+    // Update the flashcard counts
+    updateFlashcardCounts();
 }
 
 function hideCardAndClearOverlay(showHideLink, index) {
@@ -41,6 +53,11 @@ function goToPrevious(index) {
 
     processCardChange(index, indexToShow);
     updateSelectedCardIndex(indexToShow);
+
+
+    // Update the flashcard counts
+    updateStarButtonEvent(indexToShow);
+    updateFlashcardCounts();
 }
 
 function goToNext(index) {
@@ -57,9 +74,13 @@ function goToNext(index) {
             break;
         }
     }
-    
+
     processCardChange(index, indexToShow);
     updateSelectedCardIndex(indexToShow);
+
+    // Update the flashcard counts
+    updateStarButtonEvent(indexToShow);
+    updateFlashcardCounts();
 }
 
 function goToFirst() {
@@ -74,13 +95,17 @@ function goToFirst() {
 
     processCardChange($("#CurrentIndex").val(), indexToShow);
     updateSelectedCardIndex(indexToShow);
+
+    // Update the flashcard counts
+    updateStarButtonEvent(indexToShow);
+    updateFlashcardCounts();
 }
 
 function processCardChange(index, indexToShow) {
     hideCurrentCard(index);
     showCard(indexToShow);
     hideAnswerOfCardNoLongerVisible(index);
-    $("#CurrentIndex").val(indexToShow);   
+    $("#CurrentIndex").val(indexToShow);
 }
 
 function getCardCount() {
@@ -132,7 +157,7 @@ function deleteFlashcard(sender) {
                 refreshFlashcardList();
             }
         }
-    ); 
+    );
 }
 
 function onClickFilterAccordian() {
@@ -177,7 +202,7 @@ function rebuildCarousel(selectedTags) {
             newCarouselItems.push(originalCarouselItems[i]);
         }
     }
-    else {   
+    else {
         for (let i = 0; i < originalCarouselItems.length; i++) {
             var classes = originalCarouselItems[i].getAttribute('class');
 
@@ -197,6 +222,48 @@ function rebuildCarousel(selectedTags) {
         carouselContainer.appendChild(newCarouselItems[i]);
     }
 
-    // having rebuilt the carousel, load the first card that still exists
-    goToFirst(); 
+    // After rebuilding the carousel, update the star button events
+    const carouselFlashcards = document.querySelectorAll(".carousel-item");
+    carouselFlashcards.forEach((flashcard, index) => {
+        updateStarButtonEvent(index + 1);
+    });
+}
+
+function updateFlashcardCounts() {
+    const masteredCount = document.querySelector(".masteredCount");
+    const learningCount = document.querySelector(".learningCount");
+    const starredFlashcards = document.querySelectorAll(".star.starred").length;
+    const totalFlashcards = document.querySelectorAll(".star").length;
+
+    masteredCount.innerText = starredFlashcards.toString();
+    learningCount.innerText = (totalFlashcards - starredFlashcards).toString();
+}
+
+function toggleStar(starButton) {
+    starButton.classList.toggle("starred");
+
+    // Update the counts in the UI
+    const totalFlashcards = document.querySelectorAll(".star").length;
+    const starredFlashcards = document.querySelectorAll(".star.starred").length;
+    const masteredCount = document.querySelector(".masteredCount");
+    const learningCount = document.querySelector(".learningCount");
+    masteredCount.innerText = starredFlashcards.toString();
+    learningCount.innerText = (totalFlashcards - starredFlashcards).toString();
+}
+
+// Attach event delegation on the document body to handle clicks on star buttons
+document.body.addEventListener("click", function (event) {
+    if (event.target && event.target.classList.contains("star")) {
+        toggleStar(event.target);
+    }
+});
+
+
+// Function to update the star button event for a specific flashcard index
+function updateStarButtonEvent(indexToShow) {
+    const currentCardID = $("#CardID_" + indexToShow + "_@Model.CardID").val();
+    const starButton = document.querySelector('[data-flashcard-id="' + currentCardID + '"]');
+    starButton.onclick = function () {
+        toggleStar(this);
+    };
 }
