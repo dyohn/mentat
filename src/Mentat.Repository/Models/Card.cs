@@ -10,7 +10,7 @@ namespace Mentat.Repository.Models
         [BsonElement("_id")]
         public string Id { get; set; }
 
-        [BsonElement("_owner")]
+        [BsonElement("owner")]
         public string Owner { get; set; }
 
         [BsonElement("subject")]
