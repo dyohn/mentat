@@ -1,0 +1,121 @@
+﻿@model Mentat.UI.ViewModels.SetViewModel
+
+@{
+    ViewData["Title"] = "Latest";
+}
+@*USERS SETS - PUBLIC/PRIVATE*@
+<div class="d-flex justify-content-between align-items-center" style="padding-left: 30px; padding-right: 30px;">
+    <h2 class="title-text">My Sets</h2>
+    <a asp-controller="Set" asp-action="AddSet" class="btn btn-gold btn-sm rounded-pill align-self-center mt-auto mb-3" style="width: 230px">Create From Scratch</a>
+</div>
+<hr />
+@*CAROUSEL*@
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="false">
+    @* CARSOUSEL SLIDE *@
+    <div class="carousel-inner" style="padding-left: 30px; padding-right: 30px;">
+        @for (var i = 0; i < Model.Sets.Count(); i += 4)
+        {
+            var active = i == 0 ? "active" : "";
+            <div class="carousel-item @active">
+                <div class="row">
+                    @* Make sure to display max 4 cards per slide *@
+                    @if (i + 4 > Model.Sets.Count())
+                    {
+                        @for (var q = 0; q < Model.Sets.Count() - i; q++)
+                        {
+                            @* INDIVIDUAL CARDS IN SLIDE *@
+                            <div class="col-sm-3">
+                                <div class="card" style="height:auto;">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="color: #782F40;">
+                                            @Model.Sets[i + q].Title
+                                        </h5>
+                                        <p class="card-subtitle mb-2 text-muted">
+                                            @Model.Sets[i + q].Description
+                                        </p>
+                                        <form asp-action="StudySet" asp-route-id="@Model.Sets[i+q].Id">
+                                            <input type="submit" value="Study" class="btn btn-sm btn-dark btn-block" />
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        @for (var j = 0; j < 4; j++)
+                        {
+                            @* INDIVIDUAL CARDS IN SLIDE *@
+                            <div class="col-sm-3">
+                                <div class="card" style="height:auto;">
+                                    <div class="card-body">
+                                        <h5 class="card-title" style="color: #782F40;">
+                                            @Model.Sets[i + j].Title
+                                        </h5>
+                                        <p class="card-subtitle mb-2 text-muted">
+                                            @Model.Sets[i + j].Description
+                                        </p>
+                                        <form asp-action="StudySet" asp-route-id="@Model.Sets[i+j].Id">
+                                            <input type="submit" value="Study" class="btn btn-sm btn-dark btn-block" />
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        }
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev" style="width: 1.5rem;">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next" style="width: 1.5rem;">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<br />
+<br />
+<br />
+
+@*ALL PUBLIC SETS*@
+<div class="d-flex justify-content-between align-items-center" style="padding-left: 30px; padding-right: 30px;">
+    <h2 class="title-text">Latest Sets</h2>
+    <a asp-controller="Student" asp-action="Index" class="btn btn-gold btn-sm rounded-pill align-self-center mt-auto mb-3" style="width: 230px">Create From Existing</a>
+</div>
+<hr />
+@*Can be easily made into carousel if preferred*@
+<div id="carouselExampleControls2" class="carousel slide" data-ride="carousel" data-interval="false">
+    <div class="carousel-inner" style="padding-left: 30px; padding-right: 30px;">
+        <div class="carousel-item active">
+            <div class="row">
+                @*Display all sets which are public*@
+                @foreach (var set in Model.Sets.Where(t => t.IsPublic == true))
+                    {
+                    <div class="col-sm-3 mb-4">
+                        <div class="card" style="height:auto;">
+                            <div class="card-body">
+                                <h5 class="card-title" style="color: #782F40;">
+                                    @set.Title
+                                </h5>
+                                <p class="card-subtitle mb-2 text-muted">
+                                    @set.Description
+                                </p>
+                                <form asp-action="StudySet" asp-route-id="@set.Id">
+                                    <input type="submit" value="Study" class="btn btn-sm btn-dark btn-block" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+<br />

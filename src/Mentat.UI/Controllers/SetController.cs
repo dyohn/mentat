@@ -32,6 +32,12 @@ namespace Mentat.UI.Controllers
             return View(new SetViewModel(_setService.GetAllSets()));
         }
 
+        // GET: Set/Latest
+        public ActionResult Latest()
+        {
+            return View(new SetViewModel(_setService.GetAllSets()));
+        }
+
         // GET: Set/StudySet
         public ActionResult StudySet(string id)
         {
@@ -68,7 +74,7 @@ namespace Mentat.UI.Controllers
                 _setService.SaveSet(id, set);
 
                 // Log the Set information
-                Console.WriteLine($"Set ID: {set.Id}, Title: {set.Title}");
+                Console.WriteLine($"Set ID: {set.Id}, Title: {set.Title}, Privacy: {set.IsPublic}");
 
                 foreach (var card in cards)
                 {

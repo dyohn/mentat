@@ -19,9 +19,5 @@ namespace Mentat.UI.Controllers
             return View(vm);
         }
 
-        public ActionResult Latest()
-        {
-            return View();
-        }
     }
 }
