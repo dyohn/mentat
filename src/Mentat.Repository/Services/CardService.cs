@@ -81,6 +81,7 @@ namespace Mentat.Repository.Services
             {
                 card.Subject = "There was a problem retrieving the card";
             }
+
             return card;
         }
 
@@ -109,6 +110,15 @@ namespace Mentat.Repository.Services
             else
             {
                 card.Id = Guid.NewGuid().ToString();
+                if (card.IsPrivate == true)
+                {
+                    card.IsCustom = true;
+                }
+                if (card.IsPrivate == false)
+                {
+                    card.IsCustom = false;
+                    card.Owner = "mentat";
+                }
             }
 
             try
