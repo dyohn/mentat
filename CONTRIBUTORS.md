@@ -47,3 +47,17 @@ in reverse-chronological order. Within each group, contributors are ordered alph
 - Kenneth Terwilliger
 - Keith Wilson
 - Wyatt Wood
+## Summer 2023
+- Roy Avrett
+- Renzo Broggi
+- Cody Carmona
+- Edwin Diaz
+- Lucca Francica
+- James Griffith
+- Brian Hinestroza
+- Jackson McAffee
+- Hayden Nichols
+- Davis Phillips
+- Gisel Rodriguez
+- Robert Sams
+- Alejandro Santiago
